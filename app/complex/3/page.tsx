@@ -2,13 +2,39 @@
 import type { Metadata } from "next";
 import ComplexDetail from "../ComplexDetail";
 
+const SITE = "https://cheonaniparkcity34.com";
+const URL = `${SITE}/complex/3`;
+
+const TITLE =
+  "천안아이파크시티3단지 | 모델하우스·견본주택·분양정보";
+
+const DESCRIPTION =
+  "천안 아이파크 시티 3단지(성성아이파크시티3단지) 분양정보 안내. 천안시 서북구 부대동 394-2, 896세대. 단지개요, 입지환경, 평면도 및 모델하우스·견본주택 관련 상담 정보를 확인하세요. 미소부동산 041-556-0303.";
+
 export const metadata: Metadata = {
-  title: "천안 아이파크 시티 3단지 | 사업개요·입지환경·분양안내",
-  description:
-    "천안 아이파크 시티 3단지. 천안시 서북구 부대동 394-2, 896세대. 사업개요, 입지환경, 프리미엄, 단지안내 및 분양 관련 정보. 미소부동산 041-556-0303.",
+  title: {
+    absolute: TITLE,
+  },
+  description: DESCRIPTION,
   alternates: {
-    canonical:
-      "https://cheonaniparkcity34.com/complex/3",
+    canonical: URL,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    url: URL,
+    siteName: "천안 아이파크 시티 3·4단지 분양정보",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
