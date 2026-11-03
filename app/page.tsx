@@ -1,220 +1,154 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
   Phone,
-  SkipForward,
 } from "lucide-react";
 
 const PHONE = "041-556-0303";
 const TEL = "tel:0415560303";
 
 export default function Home() {
-  const [finished, setFinished] = useState(false);
-
-  useEffect(() => {
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (reducedMotion) {
-      setFinished(true);
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setFinished(true);
-    }, 4200);
-
-    return () => window.clearTimeout(timer);
-  }, []);
-
   return (
-    <main className="luxury-home">
-      {/* B안: 럭셔리 브랜드 오프닝 */}
-      {!finished && (
-        <div className="brand-intro">
-          <div className="intro-texture" aria-hidden="true" />
-          <div className="intro-glow" aria-hidden="true" />
+    <main className="ipark-home">
+      {/* 메인 조감도 */}
+      <section className="hero">
+        <div className="hero-photo" />
+        <div className="hero-overlay" />
 
-          <div className="intro-frame" aria-hidden="true">
-            <span className="frame-top" />
-            <span className="frame-right" />
-            <span className="frame-bottom" />
-            <span className="frame-left" />
-          </div>
-
-          <div className="intro-center">
-            <div className="intro-emblem">
-              <span>I</span>
-            </div>
-
-            <div className="intro-small-line" />
-
-            <span className="intro-eyebrow">
-              A NEW STANDARD OF LIVING
-            </span>
-
-            <h1 className="intro-title">
-              CHEONAN
-              <br />
-              <em>IPARK CITY</em>
-            </h1>
-
-            <div className="intro-divider">
-              <span />
-              <b>03 &amp; 04</b>
-              <span />
-            </div>
-
-            <p className="intro-korean">
-              천안 아이파크 시티 3 · 4단지
-            </p>
-          </div>
-
-          <div className="intro-bottom">
-            <span>THE EXCLUSIVE COLLECTION</span>
-            <span>WELCOME TO YOUR NEW BEGINNING</span>
-          </div>
-
-          <button
-            className="skip-intro"
-            type="button"
-            onClick={() => setFinished(true)}
-          >
-            SKIP INTRO
-            <SkipForward size={15} />
-          </button>
-        </div>
-      )}
-
-      {/* 기존 메인 화면 유지 */}
-      <div className={`main-screen ${finished ? "visible" : ""}`}>
-        <header className="main-header">
+        <header className="header">
           <Link href="/" className="brand">
-            <span className="brand-emblem">I</span>
-
-            <span className="brand-copy">
-              <strong>IPARK CITY</strong>
-              <small>CHEONAN 03 · 04</small>
-            </span>
+            <strong>IPARK CITY</strong>
+            <span>CHEONAN 03 · 04</span>
           </Link>
 
-          <a href={TEL} className="header-call">
+          <a href={TEL} className="header-contact">
             <Phone size={17} />
             <span>{PHONE}</span>
           </a>
         </header>
 
-        <section className="selection-section">
-          <div className="selection-heading">
-            <span className="selection-eyebrow">
-              THE EXCLUSIVE COLLECTION
-            </span>
+        <div className="hero-content">
+          <span className="hero-eyebrow">
+            CHEONAN IPARK CITY
+          </span>
 
-            <h2>
-              당신의 새로운 삶,
-              <br />
-              <em>그 시작을 선택하세요.</em>
-            </h2>
-
-            <p>천안 아이파크 시티 3 · 4단지</p>
-          </div>
-
-          <div className="premium-grid">
-            {/* 3단지 */}
-            <Link href="/complex/3" className="premium-panel panel-3">
-              <div className="premium-image" />
-              <div className="premium-overlay" />
-
-              <div className="premium-panel-top">
-                <span>CHEONAN IPARK CITY</span>
-                <ArrowUpRight size={23} />
-              </div>
-
-              <div className="premium-panel-content">
-                <span className="premium-eyebrow">
-                  THE THIRD COLLECTION
-                </span>
-
-                <strong className="premium-number">
-                  03
-                </strong>
-
-                <h3>3단지</h3>
-                <p>천안 아이파크 시티 3단지</p>
-
-                <div className="premium-enter">
-                  <span>3단지 입장하기</span>
-                  <span className="enter-circle">
-                    <ArrowRight size={20} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            {/* 4단지 */}
-            <Link href="/complex/4" className="premium-panel panel-4">
-              <div className="premium-image" />
-              <div className="premium-overlay" />
-
-              <div className="premium-panel-top">
-                <span>CHEONAN IPARK CITY</span>
-                <ArrowUpRight size={23} />
-              </div>
-
-              <div className="premium-panel-content">
-                <span className="premium-eyebrow">
-                  THE FOURTH COLLECTION
-                </span>
-
-                <strong className="premium-number">
-                  04
-                </strong>
-
-                <h3>4단지</h3>
-                <p>천안 아이파크 시티 4단지</p>
-
-                <div className="premium-enter">
-                  <span>4단지 입장하기</span>
-                  <span className="enter-circle">
-                    <ArrowRight size={20} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </section>
-
-        <footer className="site-footer">
-          <div className="footer-info">
-            <span>MI SO REAL ESTATE</span>
-            <a href={TEL}>상담문의 {PHONE}</a>
-          </div>
+          <h1>
+            천안 아이파크 시티
+            <br />
+            <span>3 · 4단지</span>
+          </h1>
 
           <p>
-            본 홈페이지는 미소부동산이 운영하는
-            부동산 정보 및 상담 안내 사이트이며,
-            시행사·시공사·공식 분양사무소의
-            공식 홈페이지가 아닙니다.
-            사업 및 분양 정보는 공식 자료를
-            우선하여 확인해 주세요.
+            새로운 일상의 시작,
+            <br />
+            당신의 선택을 기다립니다.
           </p>
-        </footer>
-      </div>
+
+          <div className="complex-actions">
+            <Link
+              href="/complex/3"
+              className="complex-button"
+            >
+              <div>
+                <small>CHEONAN IPARK CITY 03</small>
+                <strong>3단지 바로가기</strong>
+              </div>
+              <ArrowUpRight size={22} />
+            </Link>
+
+            <Link
+              href="/complex/4"
+              className="complex-button"
+            >
+              <div>
+                <small>CHEONAN IPARK CITY 04</small>
+                <strong>4단지 바로가기</strong>
+              </div>
+              <ArrowUpRight size={22} />
+            </Link>
+          </div>
+        </div>
+
+        <div className="hero-bottom">
+          <span>MI SO REAL ESTATE</span>
+          <span>CHEONAN IPARK CITY</span>
+        </div>
+      </section>
+
+      {/* 단지 선택 */}
+      <section className="selection">
+        <div className="selection-heading">
+          <span>EXPLORE THE COMPLEX</span>
+          <h2>원하시는 단지를 선택하세요.</h2>
+          <p>
+            천안 아이파크 시티 3단지 · 4단지
+            상세 안내
+          </p>
+        </div>
+
+        <div className="selection-grid">
+          <Link
+            href="/complex/3"
+            className="selection-card"
+          >
+            <span className="selection-number">
+              03
+            </span>
+
+            <div className="selection-card-content">
+              <span>CHEONAN IPARK CITY</span>
+              <h3>3단지</h3>
+              <div className="selection-link">
+                자세히 보기
+                <ArrowRight size={18} />
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            href="/complex/4"
+            className="selection-card"
+          >
+            <span className="selection-number">
+              04
+            </span>
+
+            <div className="selection-card-content">
+              <span>CHEONAN IPARK CITY</span>
+              <h3>4단지</h3>
+              <div className="selection-link">
+                자세히 보기
+                <ArrowRight size={18} />
+              </div>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* 하단 */}
+      <footer className="footer">
+        <div className="footer-top">
+          <strong>미소부동산</strong>
+          <a href={TEL}>
+            상담문의 {PHONE}
+          </a>
+        </div>
+
+        <p>
+          본 홈페이지는 미소부동산이 운영하는
+          부동산 정보 및 상담 안내 사이트이며,
+          시행사·시공사·공식 분양사무소의
+          공식 홈페이지가 아닙니다.
+          사업 및 분양 정보는 공식 자료를
+          우선하여 확인해 주세요.
+        </p>
+      </footer>
 
       <style jsx global>{`
-        :root {
-          --gold: #c7a878;
-          --gold-light: #e8d2ac;
-          --navy: #0b1624;
-          --ivory: #f5f1e9;
-        }
-
         * {
           box-sizing: border-box;
         }
@@ -222,13 +156,13 @@ export default function Home() {
         html,
         body {
           margin: 0;
-          min-height: 100%;
-          background: var(--navy);
+          padding: 0;
         }
 
         body {
-          font-family: "Noto Sans KR", sans-serif;
+          background: #111;
           color: #fff;
+          font-family: "Noto Sans KR", sans-serif;
         }
 
         a {
@@ -236,652 +170,465 @@ export default function Home() {
           text-decoration: none;
         }
 
-        button {
-          font: inherit;
+        .ipark-home {
+          min-height: 100vh;
         }
 
-        .luxury-home {
-          min-height: 100svh;
-          background: var(--navy);
-        }
+        /* 메인 조감도 */
 
-        /* 브랜드 오프닝 */
-
-        .brand-intro {
-          position: fixed;
-          inset: 0;
-          z-index: 1000;
+        .hero {
+          position: relative;
           display: flex;
-          align-items: center;
-          justify-content: center;
+          flex-direction: column;
+          min-height: 100svh;
           overflow: hidden;
-          background:
-            linear-gradient(
-              145deg,
-              #eee7db 0%,
-              #faf7f0 45%,
-              #e8dfd0 100%
-            );
-          animation: introExit 4.2s ease both;
+          background: #242a30;
         }
 
-        @keyframes introExit {
-          0%, 80% {
+        .hero-photo {
+          position: absolute;
+          inset: 0;
+          background-image:
+            url("/IMG_2125.jpeg");
+          background-position: center;
+          background-size: cover;
+          animation: photoReveal 2s ease-out both;
+        }
+
+        @keyframes photoReveal {
+          from {
+            opacity: .65;
+            transform: scale(1.05);
+          }
+
+          to {
             opacity: 1;
             transform: scale(1);
           }
-
-          100% {
-            opacity: 0;
-            transform: scale(1.055);
-          }
         }
 
-        .intro-texture {
+        .hero-overlay {
           position: absolute;
           inset: 0;
-          opacity: .3;
-          background:
-            repeating-linear-gradient(
-              115deg,
-              transparent 0,
-              transparent 80px,
-              rgba(149,119,80,.04) 81px
-            );
-        }
-
-        .intro-glow {
-          position: absolute;
-          inset: 0;
-          background:
-            radial-gradient(
-              ellipse at center,
-              rgba(255,255,255,.8),
-              transparent 68%
-            );
-        }
-
-        .intro-frame {
-          position: absolute;
-          inset: 6%;
-          pointer-events: none;
-        }
-
-        .intro-frame span {
-          position: absolute;
-          background: #b89a6e;
-          opacity: .75;
-        }
-
-        .frame-top,
-        .frame-bottom {
-          width: 100%;
-          height: 1px;
-          transform: scaleX(0);
-          animation: drawHorizontal 1.5s .15s ease forwards;
-        }
-
-        .frame-top {
-          top: 0;
-          left: 0;
-          transform-origin: left;
-        }
-
-        .frame-bottom {
-          bottom: 0;
-          right: 0;
-          transform-origin: right;
-        }
-
-        .frame-left,
-        .frame-right {
-          width: 1px;
-          height: 100%;
-          transform: scaleY(0);
-          animation: drawVertical 1.5s .4s ease forwards;
-        }
-
-        .frame-left {
-          left: 0;
-          bottom: 0;
-          transform-origin: bottom;
-        }
-
-        .frame-right {
-          right: 0;
-          top: 0;
-          transform-origin: top;
-        }
-
-        @keyframes drawHorizontal {
-          to {
-            transform: scaleX(1);
-          }
-        }
-
-        @keyframes drawVertical {
-          to {
-            transform: scaleY(1);
-          }
-        }
-
-        .intro-center {
-          position: relative;
-          z-index: 2;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 100%;
-          padding: 0 20px;
-          text-align: center;
-          color: #1d2b37;
-          animation: centerReveal 2.4s .4s both;
-        }
-
-        @keyframes centerReveal {
-          from {
-            opacity: 0;
-            transform: translateY(28px);
-            filter: blur(8px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-          }
-        }
-
-        .intro-emblem {
-          display: grid;
-          place-items: center;
-          width: 72px;
-          height: 72px;
-          border: 1px solid #b99a6c;
-          color: #a17e4d;
-          font: italic 48px Georgia, serif;
-        }
-
-        .intro-small-line {
-          width: 1px;
-          height: 45px;
-          margin: 22px 0;
-          background: #b99a6c;
-        }
-
-        .intro-eyebrow {
-          color: #9b805a;
-          font-size: 10px;
-          letter-spacing: 4px;
-        }
-
-        .intro-title {
-          margin: 23px 0 28px;
-          font: 400 clamp(46px, 7.5vw, 105px)/1.08 Georgia, serif;
-          letter-spacing: -2px;
-        }
-
-        .intro-title em {
-          color: #b49365;
-          font-style: normal;
-        }
-
-        .intro-divider {
-          display: flex;
-          align-items: center;
-          gap: 18px;
-          color: #9e8055;
-        }
-
-        .intro-divider span {
-          width: 55px;
-          height: 1px;
-          background: #b99a6c;
-        }
-
-        .intro-divider b {
-          font: 15px Georgia, serif;
-          letter-spacing: 3px;
-        }
-
-        .intro-korean {
-          margin-top: 24px;
-          color: #5b6268;
-          font-size: 13px;
-          letter-spacing: 2px;
-        }
-
-        .intro-bottom {
-          position: absolute;
-          left: 8%;
-          right: 8%;
-          bottom: 8%;
-          display: flex;
-          justify-content: space-between;
-          color: #a18a6c;
-          font-size: 9px;
-          letter-spacing: 2px;
-        }
-
-        .skip-intro {
-          position: absolute;
-          z-index: 10;
-          top: 28px;
-          right: 28px;
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          padding: 11px 14px;
-          border: 1px solid #bca888;
-          background: #ffffff88;
-          color: #685638;
-          cursor: pointer;
-          font-size: 10px;
-          letter-spacing: 1px;
-        }
-
-        /* 메인 */
-
-        .main-screen {
-          min-height: 100svh;
-          display: flex;
-          flex-direction: column;
           background:
             linear-gradient(
               180deg,
-              #0a1523,
-              #122236
+              rgba(0,0,0,.5) 0%,
+              rgba(0,0,0,.08) 30%,
+              rgba(0,0,0,.2) 52%,
+              rgba(0,0,0,.85) 100%
             );
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity 1s ease;
         }
 
-        .main-screen.visible {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        .main-header {
-          height: 88px;
-          padding: 0 5%;
+        .header {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          padding: 28px 5%;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid #ffffff22;
+          border-bottom:
+            1px solid rgba(255,255,255,.25);
         }
 
         .brand {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .brand-emblem {
-          display: grid;
-          place-items: center;
-          width: 42px;
-          height: 42px;
-          border: 1px solid var(--gold);
-          color: var(--gold);
-          font: italic 28px Georgia, serif;
-        }
-
-        .brand-copy {
           display: flex;
           flex-direction: column;
           gap: 5px;
         }
 
-        .brand-copy strong {
-          font: 18px Georgia, serif;
+        .brand strong {
+          font-family: Georgia, serif;
+          font-size: 25px;
           letter-spacing: 2px;
         }
 
-        .brand-copy small {
-          color: var(--gold);
-          font-size: 9px;
-          letter-spacing: 2px;
+        .brand span {
+          font-size: 10px;
+          letter-spacing: 3px;
         }
 
-        .header-call {
+        .header-contact {
           display: flex;
           align-items: center;
           gap: 10px;
-          color: var(--gold-light);
           font-size: 14px;
+          font-weight: 600;
         }
 
-        .selection-section {
-          flex: 1;
-          padding: 48px 4% 65px;
+        .hero-content {
+          position: relative;
+          z-index: 2;
+          width: min(1200px, 90%);
+          margin: auto auto 9vh;
+          animation: contentReveal 1.3s .3s both;
         }
 
-        .selection-heading {
-          margin-bottom: 35px;
-          text-align: center;
+        @keyframes contentReveal {
+          from {
+            opacity: 0;
+            transform: translateY(25px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
-        .selection-eyebrow {
-          color: var(--gold);
-          font-size: 10px;
+        .hero-eyebrow {
+          display: block;
+          margin-bottom: 20px;
+          font-size: 12px;
           letter-spacing: 4px;
         }
 
-        .selection-heading h2 {
-          margin: 20px 0;
-          font-size: clamp(30px, 4vw, 50px);
+        .hero-content h1 {
+          margin: 0;
+          font-size: clamp(42px, 6vw, 88px);
+          font-weight: 500;
+          line-height: 1.25;
+          letter-spacing: -3px;
+          text-shadow:
+            0 3px 20px rgba(0,0,0,.3);
+        }
+
+        .hero-content h1 span {
           font-weight: 300;
-          line-height: 1.55;
-          letter-spacing: -1.5px;
         }
 
-        .selection-heading h2 em {
-          color: var(--gold-light);
-          font-style: normal;
+        .hero-content p {
+          margin: 25px 0 35px;
+          font-size: 17px;
+          line-height: 1.9;
+          color: rgba(255,255,255,.93);
         }
 
-        .selection-heading p {
-          color: #b7c0ca;
-          font-size: 13px;
-        }
-
-        .premium-grid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 12px;
-          max-width: 1500px;
-          margin: 0 auto;
-        }
-
-        .premium-panel {
-          position: relative;
-          isolation: isolate;
-          min-height: 620px;
-          padding: 35px;
+        .complex-actions {
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          overflow: hidden;
-          border: 1px solid rgba(214,187,145,.35);
-          background: #17283a;
-          transition: transform .4s, border-color .4s;
+          gap: 12px;
+          max-width: 680px;
         }
 
-        .premium-panel:hover {
-          transform: translateY(-5px);
-          border-color: #d6bb91;
-        }
-
-        .premium-image {
-          position: absolute;
-          inset: 0;
-          z-index: -2;
-          background-position: center;
-          background-size: cover;
-          transition: transform .9s;
-        }
-
-        .panel-3 .premium-image {
-          background-color: #233b50;
-          background-image: url("/complex3.jpg");
-        }
-
-        .panel-4 .premium-image {
-          background-color: #3b4551;
-          background-image: url("/complex4.jpg");
-        }
-
-        .premium-panel:hover .premium-image {
-          transform: scale(1.08);
-        }
-
-        .premium-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: -1;
-          background:
-            linear-gradient(
-              180deg,
-              rgba(5,12,22,.28),
-              rgba(5,12,22,.12) 30%,
-              rgba(5,12,22,.92)
-            );
-        }
-
-        .premium-panel-top {
+        .complex-button {
+          flex: 1;
+          min-width: 0;
+          padding: 22px 24px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          color: #e9d8b9;
-          font-size: 11px;
+          gap: 12px;
+          background: rgba(255,255,255,.96);
+          color: #171717;
+          transition:
+            transform .3s ease,
+            background .3s ease;
+        }
+
+        .complex-button:hover {
+          background: #fff;
+          transform: translateY(-4px);
+        }
+
+        .complex-button div {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .complex-button small {
+          color: #777;
+          font-size: 9px;
+          letter-spacing: 1.3px;
+        }
+
+        .complex-button strong {
+          font-size: 17px;
+          font-weight: 600;
+        }
+
+        .hero-bottom {
+          position: relative;
+          z-index: 2;
+          padding: 22px 5%;
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          border-top:
+            1px solid rgba(255,255,255,.25);
+          font-size: 10px;
           letter-spacing: 2px;
         }
 
-        .premium-eyebrow {
-          display: block;
-          color: #d6bb91;
+        /* 단지 선택 */
+
+        .selection {
+          padding: 100px 5%;
+          background: #f7f7f5;
+          color: #191919;
+        }
+
+        .selection-heading {
+          margin-bottom: 45px;
+          text-align: center;
+        }
+
+        .selection-heading > span {
+          color: #777;
           font-size: 11px;
           letter-spacing: 3px;
         }
 
-        .premium-number {
-          display: block;
-          font: 400 clamp(100px, 13vw, 190px)/1 Georgia, serif;
-          color: rgba(255,255,255,.3);
-          letter-spacing: -8px;
+        .selection-heading h2 {
+          margin: 20px 0 12px;
+          font-size: clamp(28px, 4vw, 45px);
+          font-weight: 500;
+          letter-spacing: -1.5px;
         }
 
-        .premium-panel-content h3 {
-          margin: -10px 0 8px;
-          font-size: 48px;
-          font-weight: 400;
-          letter-spacing: -2px;
-        }
-
-        .premium-panel-content p {
-          color: #e1e3e6;
+        .selection-heading p {
+          color: #777;
           font-size: 14px;
         }
 
-        .premium-enter {
-          margin-top: 32px;
-          padding-top: 22px;
-          border-top: 1px solid rgba(255,255,255,.4);
+        .selection-grid {
+          display: grid;
+          grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+          gap: 15px;
+          max-width: 1250px;
+          margin: 0 auto;
+        }
+
+        .selection-card {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-height: 360px;
+          padding: 35px;
+          overflow: hidden;
+          background: #1b2835;
+          color: white;
+          transition:
+            transform .3s ease,
+            background .3s ease;
+        }
+
+        .selection-card:nth-child(2) {
+          background: #343c45;
+        }
+
+        .selection-card:hover {
+          transform: translateY(-5px);
+          background: #253c50;
+        }
+
+        .selection-number {
+          align-self: flex-end;
+          color: rgba(255,255,255,.15);
+          font-family: Georgia, serif;
+          font-size: clamp(100px, 13vw, 180px);
+          line-height: 1;
+          letter-spacing: -7px;
+        }
+
+        .selection-card-content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .selection-card-content > span {
+          font-size: 10px;
+          letter-spacing: 2px;
+          color: #c4cbd2;
+        }
+
+        .selection-card-content h3 {
+          margin: 13px 0 22px;
+          font-size: 42px;
+          font-weight: 400;
+        }
+
+        .selection-link {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          gap: 12px;
           font-size: 14px;
         }
 
-        .enter-circle {
-          display: grid;
-          place-items: center;
-          width: 46px;
-          height: 46px;
-          border: 1px solid var(--gold);
-          border-radius: 50%;
-          color: var(--gold);
-          transition: .3s;
+        /* 하단 */
+
+        .footer {
+          padding: 35px 5%;
+          background: #10151b;
         }
 
-        .premium-panel:hover .enter-circle {
-          background: var(--gold);
-          color: var(--navy);
-        }
-
-        .site-footer {
-          padding: 25px 5%;
-          background: #07101b;
-          border-top: 1px solid #ffffff22;
-        }
-
-        .footer-info {
+        .footer-top {
           display: flex;
           justify-content: space-between;
           gap: 15px;
-          color: var(--gold);
-          font-size: 12px;
-          letter-spacing: 1px;
+          font-size: 14px;
         }
 
-        .site-footer p {
-          margin: 15px 0 0;
-          color: #9faab6;
+        .footer-top a {
+          font-weight: 600;
+        }
+
+        .footer p {
+          max-width: 1100px;
+          margin: 20px 0 0;
+          color: #9ca5ae;
           font-size: 11px;
           line-height: 1.9;
         }
 
+        /* 모바일 */
+
         @media (max-width: 700px) {
-          .intro-frame {
-            inset: 5%;
+          .hero {
+            min-height: 100svh;
           }
 
-          .intro-emblem {
-            width: 55px;
-            height: 55px;
-            font-size: 36px;
+          .hero-photo {
+            background-position: center;
           }
 
-          .intro-small-line {
-            height: 30px;
+          .header {
+            padding: 22px 20px;
           }
 
-          .intro-eyebrow {
-            font-size: 8px;
-            letter-spacing: 2px;
+          .brand strong {
+            font-size: 19px;
           }
 
-          .intro-title {
-            font-size: 47px;
-            letter-spacing: -1px;
-          }
-
-          .intro-korean {
-            font-size: 11px;
-          }
-
-          .intro-bottom {
-            left: 8%;
-            right: 8%;
+          .brand span {
             font-size: 8px;
           }
 
-          .intro-bottom span:last-child {
+          .header-contact {
+            font-size: 12px;
+          }
+
+          .header-contact span {
             display: none;
           }
 
-          .main-header {
-            height: 75px;
-            padding: 0 18px;
+          .hero-content {
+            width: calc(100% - 36px);
+            margin-bottom: 8vh;
           }
 
-          .brand-emblem {
-            width: 36px;
-            height: 36px;
-            font-size: 24px;
+          .hero-eyebrow {
+            font-size: 10px;
+            letter-spacing: 2.5px;
           }
 
-          .brand-copy strong {
+          .hero-content h1 {
+            font-size: clamp(35px, 9vw, 52px);
+            letter-spacing: -2px;
+          }
+
+          .hero-content p {
+            margin: 20px 0 30px;
             font-size: 14px;
           }
 
-          .brand-copy small {
-            font-size: 8px;
-          }
-
-          .header-call span {
-            display: none;
-          }
-
-          .selection-section {
-            padding: 40px 12px 50px;
-          }
-
-          .selection-heading h2 {
-            font-size: 27px;
-          }
-
-          .premium-grid {
+          .complex-actions {
             gap: 9px;
           }
 
-          .premium-panel {
-            min-height: 390px;
-            padding: 14px;
+          .complex-button {
+            padding: 17px 13px;
           }
 
-          .premium-panel-top {
+          .complex-button small {
             font-size: 8px;
-            letter-spacing: .5px;
+            letter-spacing: 0;
           }
 
-          .premium-panel-top svg {
+          .complex-button strong {
+            font-size: 13px;
+          }
+
+          .complex-button svg {
             width: 17px;
+            flex-shrink: 0;
           }
 
-          .premium-eyebrow {
+          .hero-bottom {
+            padding: 17px 20px;
             font-size: 8px;
             letter-spacing: 1px;
           }
 
-          .premium-number {
-            font-size: 76px;
-            letter-spacing: -4px;
+          .selection {
+            padding: 75px 16px;
           }
 
-          .premium-panel-content h3 {
+          .selection-heading h2 {
+            font-size: 28px;
+          }
+
+          .selection-heading p {
+            font-size: 12px;
+          }
+
+          .selection-grid {
+            gap: 10px;
+          }
+
+          .selection-card {
+            min-height: 280px;
+            padding: 18px;
+          }
+
+          .selection-number {
+            font-size: 90px;
+          }
+
+          .selection-card-content > span {
+            font-size: 8px;
+            letter-spacing: 1px;
+          }
+
+          .selection-card-content h3 {
             font-size: 30px;
           }
 
-          .premium-panel-content p {
-            font-size: 10px;
-            line-height: 1.6;
+          .selection-link {
+            font-size: 12px;
           }
 
-          .premium-enter {
-            font-size: 11px;
-            margin-top: 22px;
-            padding-top: 15px;
+          .footer {
+            padding: 28px 20px;
           }
 
-          .enter-circle {
-            width: 32px;
-            height: 32px;
+          .footer-top {
+            font-size: 12px;
           }
 
-          .enter-circle svg {
-            width: 17px;
-          }
-
-          .site-footer {
-            padding: 23px 18px;
-          }
-
-          .footer-info {
-            font-size: 10px;
-          }
-
-          .site-footer p {
+          .footer p {
             font-size: 10px;
           }
         }
 
         @media (max-width: 370px) {
-          .intro-title {
-            font-size: 39px;
+          .complex-button {
+            padding: 15px 10px;
           }
 
-          .premium-panel {
-            padding: 11px;
+          .complex-button strong {
+            font-size: 12px;
           }
 
-          .premium-number {
-            font-size: 65px;
+          .selection-card {
+            padding: 13px;
           }
 
-          .premium-panel-content h3 {
-            font-size: 25px;
+          .selection-number {
+            font-size: 75px;
           }
         }
 
