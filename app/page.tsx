@@ -6,11 +6,19 @@ import {
   ArrowRight,
   ArrowUpRight,
   Phone,
+  CalendarDays,
+  Clock3,
+  UserRound,
+  CheckCircle2,
 } from "lucide-react";
+import { useState } from "react";
 
 const SITE = "https://cheonaniparkcity34.com";
 const PHONE = "041-556-0303";
 const TEL = "tel:0415560303";
+
+// 문자 수신 가능한 번호인지 반드시 확인하세요.
+const SMS_PHONE = "0415560303";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -22,7 +30,7 @@ const structuredData = {
       url: SITE,
       inLanguage: "ko-KR",
       description:
-        "미소부동산이 운영하는 천안 아이파크 시티 3단지·4단지 부동산 정보 및 상담 안내 홈페이지",
+        "미소부동산 운영 천안 아이파크 시티 3단지·4단지 부동산 정보 및 상담 안내 홈페이지",
       publisher: {
         "@id": `${SITE}/#organization`,
       },
@@ -34,7 +42,7 @@ const structuredData = {
       telephone: PHONE,
       url: SITE,
       description:
-        "천안 아이파크 시티 3단지·4단지 부동산 정보 및 상담 안내",
+        "천안 아이파크 시티 3단지·4단지 부동산 정보 및 방문 상담 안내",
     },
     {
       "@type": "WebPage",
@@ -42,7 +50,7 @@ const structuredData = {
       url: `${SITE}/`,
       name: "천안아이파크시티 3·4단지 분양정보",
       description:
-        "천안아이파크시티3단지·4단지, 성성아이파크시티3단지·4단지 관련 사업개요와 분양정보 및 모델하우스·견본주택 상담 안내",
+        "천안아이파크시티3단지·4단지 및 성성아이파크시티3단지·4단지 분양정보, 모델하우스·견본주택 방문 상담 안내",
       isPartOf: {
         "@id": `${SITE}/#website`,
       },
@@ -63,7 +71,94 @@ const structuredData = {
   ],
 };
 
+const TIME_OPTIONS = [
+  "10:00",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+];
+
 export default function Home() {
+  const [complex, setComplex] = useState<"3" | "4">("3");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("11:00");
+  const [memo, setMemo] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [error, setError] = useState("");
+
+  const today = new Date();
+  const localToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
+
+  function handleReservation(
+    e: React.FormEvent<HTMLFormElement>
+  ) {
+    e.preventDefault();
+    setError("");
+
+    const cleanName = name.trim();
+    const cleanPhone = phone.replace(/[^0-9]/g, "");
+
+    if (!cleanName) {
+      setError("예약자 성함을 입력해 주세요.");
+      return;
+    }
+
+    if (
+      !/^01[016789][0-9]{7,8}$/.test(cleanPhone)
+    ) {
+      setError("올바른 휴대전화 번호를 입력해 주세요.");
+      return;
+    }
+
+    if (!date || date < localToday) {
+      setError("오늘 이후의 방문 희망일을 선택해 주세요.");
+      return;
+    }
+
+    if (!TIME_OPTIONS.includes(time)) {
+      setError("방문 희망 시간을 선택해 주세요.");
+      return;
+    }
+
+    if (!consent) {
+      setError("개인정보 수집·이용 동의가 필요합니다.");
+      return;
+    }
+
+    const message = [
+      "[천안 아이파크 시티 방문예약 신청]",
+      "",
+      `희망 단지: ${complex}단지`,
+      `예약자 성함: ${cleanName}`,
+      `연락처: ${cleanPhone}`,
+      `방문 희망일: ${date}`,
+      `방문 희망시간: ${time}`,
+      `문의사항: ${memo.trim() || "없음"}`,
+      "",
+      "※ 방문 일정은 담당자 확인 후 확정됩니다.",
+    ].join("\n");
+
+    const separator = /iPhone|iPad|iPod/i.test(
+      navigator.userAgent
+    )
+      ? "&"
+      : "?";
+
+    window.location.href =
+      `sms:${SMS_PHONE}${separator}body=` +
+      encodeURIComponent(message);
+  }
+
   return (
     <main className="ipark-home">
       <script
@@ -107,7 +202,7 @@ export default function Home() {
           <p>
             천안아이파크시티 3단지·4단지
             <br />
-            분양정보 및 상담 안내
+            분양정보 및 방문 상담 안내
           </p>
 
           <div className="complex-actions">
@@ -143,86 +238,272 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 단지 선택 */}
-      <section className="selection">
-        <div className="selection-heading">
-          <span>EXPLORE THE COMPLEX</span>
-          <h2>천안 아이파크 시티 3·4단지</h2>
-          <p>
-            단지별 사업개요, 입지환경, 평면도 및
-            분양정보를 확인하세요.
-          </p>
-        </div>
-
-        <div className="selection-grid">
-          <Link
-            href="/complex/3"
-            className="selection-card"
-          >
-            <span className="selection-number">
-              03
+      {/* 방문예약 */}
+      <section
+        className="reservation-section"
+        id="reservation"
+      >
+        <div className="reservation-container">
+          <div className="reservation-intro">
+            <span className="section-eyebrow">
+              VISIT RESERVATION
             </span>
 
-            <div className="selection-card-content">
-              <span>CHEONAN IPARK CITY</span>
-              <h3>3단지</h3>
-              <p className="selection-description">
-                천안아이파크시티3단지
-                <br />
-                성성아이파크시티3단지
-                <br />
-                모델하우스·견본주택·분양정보 안내
-              </p>
-              <div className="selection-link">
-                자세히 보기
-                <ArrowRight size={18} />
+            <h2>
+              모델하우스
+              <br />
+              방문예약
+            </h2>
+
+            <p>
+              천안 아이파크 시티 3·4단지
+              <br />
+              방문 상담을 신청해 주세요.
+            </p>
+
+            <div className="reservation-info">
+              <div>
+                <CalendarDays size={20} />
+                <span>방문 희망 날짜 및 시간 선택</span>
+              </div>
+              <div>
+                <UserRound size={20} />
+                <span>예약자 정보 입력</span>
+              </div>
+              <div>
+                <CheckCircle2 size={20} />
+                <span>담당자 확인 후 일정 안내</span>
               </div>
             </div>
-          </Link>
 
-          <Link
-            href="/complex/4"
-            className="selection-card"
+            <div className="reservation-contact">
+              <span>전화 상담</span>
+              <a href={TEL}>{PHONE}</a>
+            </div>
+          </div>
+
+          <form
+            className="reservation-form"
+            onSubmit={handleReservation}
           >
-            <span className="selection-number">
-              04
-            </span>
-
-            <div className="selection-card-content">
-              <span>CHEONAN IPARK CITY</span>
-              <h3>4단지</h3>
-              <p className="selection-description">
-                천안아이파크시티4단지
-                <br />
-                성성아이파크시티4단지
-                <br />
-                모델하우스·견본주택·분양정보 안내
+            <div className="form-heading">
+              <span>RESERVATION FORM</span>
+              <h3>방문예약 신청</h3>
+              <p>
+                아래 정보를 입력하신 후
+                문자로 신청해 주세요.
               </p>
-              <div className="selection-link">
-                자세히 보기
-                <ArrowRight size={18} />
+            </div>
+
+            <div className="form-field">
+              <label>방문 희망 단지 *</label>
+              <div className="complex-radio">
+                <button
+                  type="button"
+                  className={
+                    complex === "3" ? "selected" : ""
+                  }
+                  onClick={() => setComplex("3")}
+                >
+                  3단지
+                </button>
+                <button
+                  type="button"
+                  className={
+                    complex === "4" ? "selected" : ""
+                  }
+                  onClick={() => setComplex("4")}
+                >
+                  4단지
+                </button>
               </div>
             </div>
-          </Link>
-        </div>
 
-        <div className="information-note">
-          <h2>천안 아이파크 시티 분양정보 안내</h2>
+            <div className="form-field">
+              <label htmlFor="visitor-name">
+                예약자 성함 *
+              </label>
+              <input
+                id="visitor-name"
+                type="text"
+                value={name}
+                onChange={(e) =>
+                  setName(e.target.value)
+                }
+                placeholder="성함을 입력해 주세요"
+                maxLength={30}
+                required
+              />
+            </div>
+
+            <div className="form-field">
+              <label htmlFor="visitor-phone">
+                연락처 *
+              </label>
+              <input
+                id="visitor-phone"
+                type="tel"
+                inputMode="tel"
+                value={phone}
+                onChange={(e) =>
+                  setPhone(e.target.value)
+                }
+                placeholder="010-0000-0000"
+                maxLength={13}
+                required
+              />
+            </div>
+
+            <div className="form-row">
+              <div className="form-field">
+                <label htmlFor="visit-date">
+                  방문 희망일 *
+                </label>
+                <input
+                  id="visit-date"
+                  type="date"
+                  value={date}
+                  min={localToday}
+                  onChange={(e) =>
+                    setDate(e.target.value)
+                  }
+                  required
+                />
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="visit-time">
+                  방문 희망 시간 *
+                </label>
+                <select
+                  id="visit-time"
+                  value={time}
+                  onChange={(e) =>
+                    setTime(e.target.value)
+                  }
+                  required
+                >
+                  {TIME_OPTIONS.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="form-field">
+              <label htmlFor="visit-memo">
+                문의사항 (선택)
+              </label>
+              <textarea
+                id="visit-memo"
+                value={memo}
+                onChange={(e) =>
+                  setMemo(e.target.value)
+                }
+                placeholder="궁금하신 내용을 입력해 주세요"
+                maxLength={300}
+                rows={3}
+              />
+            </div>
+
+            <label className="privacy-check">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) =>
+                  setConsent(e.target.checked)
+                }
+                required
+              />
+              <span>
+                개인정보 수집·이용에 동의합니다.
+                (필수)
+              </span>
+            </label>
+
+            <div className="privacy-details">
+              <p>
+                수집 항목: 성함, 연락처,
+                방문 희망 단지·일시, 문의사항
+              </p>
+              <p>
+                이용 목적: 방문 상담 신청 확인
+                및 일정 안내
+              </p>
+              <p>
+                보유 기간: 상담 목적 달성 후
+                지체 없이 파기. 단, 법령상
+                보존 의무가 있는 경우 해당 기간 보관
+              </p>
+              <p>
+                동의를 거부할 수 있으나,
+                거부 시 방문예약 신청이 제한됩니다.
+              </p>
+            </div>
+
+            {error && (
+              <p className="form-error" role="alert">
+                {error}
+              </p>
+            )}
+
+            <button
+              className="reservation-submit"
+              type="submit"
+            >
+              문자로 방문예약 신청하기
+              <ArrowRight size={19} />
+            </button>
+
+            <p className="form-notice">
+              신청 버튼을 누르면 문자 앱이 열립니다.
+              문자 앱에서 전송을 완료해야 접수되며,
+              방문 일정은 담당자 확인 후 확정됩니다.
+            </p>
+          </form>
+        </div>
+      </section>
+
+      {/* 검색엔진과 방문객을 위한 단지 안내 */}
+      <section className="information-section">
+        <div className="information-container">
+          <span className="section-eyebrow">
+            CHEONAN IPARK CITY
+          </span>
+
+          <h2>천안 아이파크 시티 분양정보</h2>
+
           <p>
             천안 아이파크 시티 3단지는
-            충청남도 천안시 서북구 부대동 394-2
-            일원에 위치하며 896세대로 안내됩니다.
+            충청남도 천안시 서북구 부대동
+            394-2 일원에 위치하며
+            896세대로 안내됩니다.
             4단지는 부대동 384-20 일원에
             위치하며 818세대로 안내됩니다.
           </p>
+
           <p>
-            미소부동산은 천안 아이파크 시티
-            3·4단지의 단지별 정보와
-            모델하우스·견본주택 관련 상담을
-            안내합니다. 방문 가능 여부와
-            구체적인 분양 조건은 최신 공식 자료를
-            확인해 주세요.
+            미소부동산은 천안아이파크시티
+            3·4단지 및 성성아이파크시티
+            3·4단지 관련 사업개요,
+            입지환경, 평면도와
+            모델하우스·견본주택 방문 상담
+            정보를 안내합니다.
           </p>
+
+          <div className="information-links">
+            <Link href="/complex/3">
+              3단지 분양정보
+              <ArrowUpRight size={17} />
+            </Link>
+
+            <Link href="/complex/4">
+              4단지 분양정보
+              <ArrowUpRight size={17} />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -250,6 +531,10 @@ export default function Home() {
           box-sizing: border-box;
         }
 
+        html {
+          scroll-behavior: smooth;
+        }
+
         html,
         body {
           margin: 0;
@@ -267,9 +552,18 @@ export default function Home() {
           text-decoration: none;
         }
 
+        button,
+        input,
+        select,
+        textarea {
+          font: inherit;
+        }
+
         .ipark-home {
           min-height: 100vh;
         }
+
+        /* 메인 */
 
         .ipark-home .hero {
           position: relative;
@@ -447,127 +741,288 @@ export default function Home() {
           letter-spacing: 2px;
         }
 
-        .ipark-home .selection {
-          padding: 100px 5%;
-          background: #f7f7f5;
-          color: #191919;
+        /* 방문예약 */
+
+        .ipark-home .reservation-section {
+          padding: 110px 5%;
+          background: #f5f5f3;
+          color: #1b2228;
         }
 
-        .ipark-home .selection-heading {
-          margin-bottom: 45px;
-          text-align: center;
+        .ipark-home .reservation-container {
+          display: grid;
+          grid-template-columns: .9fr 1.1fr;
+          gap: 75px;
+          align-items: start;
+          max-width: 1180px;
+          margin: auto;
         }
 
-        .ipark-home .selection-heading > span {
-          color: #777;
+        .ipark-home .section-eyebrow {
+          display: block;
+          color: #78858e;
           font-size: 11px;
+          font-weight: 600;
           letter-spacing: 3px;
         }
 
-        .ipark-home .selection-heading h2 {
-          margin: 20px 0 12px;
-          font-size: clamp(28px, 4vw, 45px);
+        .ipark-home .reservation-intro h2 {
+          margin: 25px 0;
+          font-size: clamp(42px, 5vw, 66px);
+          line-height: 1.3;
           font-weight: 500;
-          letter-spacing: -1.5px;
+          letter-spacing: -2px;
         }
 
-        .ipark-home .selection-heading p {
-          color: #777;
+        .ipark-home .reservation-intro > p {
+          color: #6d777e;
+          font-size: 16px;
+          line-height: 2;
+        }
+
+        .ipark-home .reservation-info {
+          display: flex;
+          flex-direction: column;
+          gap: 23px;
+          margin-top: 55px;
+        }
+
+        .ipark-home .reservation-info > div {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          color: #505d66;
           font-size: 14px;
+        }
+
+        .ipark-home .reservation-info svg {
+          color: #536c7c;
+          flex-shrink: 0;
+        }
+
+        .ipark-home .reservation-contact {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 55px;
+          padding-top: 30px;
+          border-top: 1px solid #d5d9dc;
+        }
+
+        .ipark-home .reservation-contact span {
+          color: #777;
+          font-size: 12px;
+        }
+
+        .ipark-home .reservation-contact a {
+          font-size: 28px;
+          font-weight: 700;
+        }
+
+        .ipark-home .reservation-form {
+          padding: 45px;
+          background: #fff;
+          box-shadow: 0 20px 70px rgba(24,40,50,.06);
+        }
+
+        .ipark-home .form-heading {
+          margin-bottom: 35px;
+        }
+
+        .ipark-home .form-heading > span {
+          color: #87929a;
+          font-size: 10px;
+          letter-spacing: 2px;
+        }
+
+        .ipark-home .form-heading h3 {
+          margin: 12px 0;
+          font-size: 30px;
+          font-weight: 600;
+        }
+
+        .ipark-home .form-heading p {
+          color: #888;
+          font-size: 13px;
+        }
+
+        .ipark-home .form-field {
+          display: flex;
+          flex-direction: column;
+          gap: 11px;
+          margin-bottom: 23px;
+        }
+
+        .ipark-home .form-field > label {
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .ipark-home .form-field input,
+        .ipark-home .form-field select,
+        .ipark-home .form-field textarea {
+          width: 100%;
+          min-width: 0;
+          padding: 15px 16px;
+          border: 1px solid #dce0e3;
+          border-radius: 0;
+          background: #fff;
+          color: #20262a;
+          font-size: 14px;
+          outline: none;
+        }
+
+        .ipark-home .form-field input:focus,
+        .ipark-home .form-field select:focus,
+        .ipark-home .form-field textarea:focus {
+          border-color: #263d4d;
+        }
+
+        .ipark-home .form-field textarea {
+          resize: vertical;
+        }
+
+        .ipark-home .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+        }
+
+        .ipark-home .complex-radio {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+
+        .ipark-home .complex-radio button {
+          padding: 16px;
+          border: 1px solid #dce0e3;
+          background: #fff;
+          color: #343b40;
+          font-size: 14px;
+          cursor: pointer;
+        }
+
+        .ipark-home .complex-radio button.selected {
+          border-color: #253746;
+          background: #253746;
+          color: #fff;
+          font-weight: 600;
+        }
+
+        .ipark-home .privacy-check {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          margin-top: 8px;
+          font-size: 13px;
+          line-height: 1.7;
+          cursor: pointer;
+        }
+
+        .ipark-home .privacy-check input {
+          width: 17px;
+          height: 17px;
+          margin-top: 3px;
+          accent-color: #253746;
+        }
+
+        .ipark-home .privacy-details {
+          margin: 16px 0 25px;
+          padding: 16px;
+          background: #f4f5f5;
+        }
+
+        .ipark-home .privacy-details p {
+          margin: 5px 0;
+          color: #727a80;
+          font-size: 11px;
           line-height: 1.8;
         }
 
-        .ipark-home .selection-grid {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 15px;
-          max-width: 1250px;
-          margin: 0 auto;
+        .ipark-home .form-error {
+          margin-bottom: 15px;
+          color: #b42318;
+          font-size: 13px;
         }
 
-        .ipark-home .selection-card {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          min-height: 360px;
-          padding: 35px;
-          overflow: hidden;
-          background: #1b2835;
-          color: white;
-          transition: transform .3s ease, background .3s ease;
-        }
-
-        .ipark-home .selection-card:nth-child(2) {
-          background: #343c45;
-        }
-
-        .ipark-home .selection-card:hover {
-          transform: translateY(-5px);
-          background: #253c50;
-        }
-
-        .ipark-home .selection-number {
-          align-self: flex-end;
-          color: rgba(255,255,255,.15);
-          font-family: Georgia, serif;
-          font-size: clamp(100px, 13vw, 180px);
-          line-height: 1;
-          letter-spacing: -7px;
-        }
-
-        .ipark-home .selection-card-content {
-          position: relative;
-          z-index: 1;
-        }
-
-        .ipark-home .selection-card-content > span {
-          font-size: 10px;
-          letter-spacing: 2px;
-          color: #c4cbd2;
-        }
-
-        .ipark-home .selection-card-content h3 {
-          margin: 13px 0 12px;
-          font-size: 42px;
-          font-weight: 400;
-        }
-
-        .ipark-home .selection-description {
-          margin: 0 0 24px;
-          color: #d3dbe2;
-          font-size: 12px;
-          line-height: 1.9;
-          word-break: keep-all;
-        }
-
-        .ipark-home .selection-link {
+        .ipark-home .reservation-submit {
+          width: 100%;
+          padding: 20px;
           display: flex;
           align-items: center;
-          gap: 12px;
-          font-size: 14px;
-        }
-
-        .ipark-home .information-note {
-          max-width: 950px;
-          margin: 65px auto 0;
-          padding: 35px 0 0;
-          border-top: 1px solid #d6d8da;
-        }
-
-        .ipark-home .information-note h2 {
-          margin: 0 0 20px;
-          font-size: 24px;
+          justify-content: center;
+          gap: 18px;
+          border: 0;
+          background: #253746;
+          color: #fff;
+          font-size: 15px;
           font-weight: 600;
-          letter-spacing: -.5px;
+          cursor: pointer;
         }
 
-        .ipark-home .information-note p {
-          color: #60666a;
+        .ipark-home .reservation-submit:hover {
+          background: #172733;
+        }
+
+        .ipark-home .form-notice {
+          margin: 16px 0 0;
+          color: #90969b;
+          font-size: 11px;
+          line-height: 1.8;
+          text-align: center;
+        }
+
+        /* 분양정보 */
+
+        .ipark-home .information-section {
+          padding: 85px 5%;
+          background: #fff;
+          color: #1b2228;
+        }
+
+        .ipark-home .information-container {
+          max-width: 1000px;
+          margin: auto;
+        }
+
+        .ipark-home .information-container h2 {
+          margin: 20px 0 25px;
+          font-size: clamp(27px, 4vw, 40px);
+          font-weight: 600;
+          letter-spacing: -1px;
+        }
+
+        .ipark-home .information-container p {
+          color: #626d75;
           font-size: 14px;
           line-height: 2;
           word-break: keep-all;
         }
+
+        .ipark-home .information-links {
+          display: flex;
+          gap: 12px;
+          margin-top: 30px;
+        }
+
+        .ipark-home .information-links a {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 25px;
+          min-width: 190px;
+          padding: 17px 20px;
+          border: 1px solid #d9dfe3;
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .ipark-home .information-links a:hover {
+          border-color: #253746;
+        }
+
+        /* 하단 */
 
         .ipark-home .footer {
           padding: 35px 5%;
@@ -593,13 +1048,26 @@ export default function Home() {
           line-height: 1.9;
         }
 
+        /* 모바일 */
+
+        @media (max-width: 800px) {
+          .ipark-home .reservation-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+
+          .ipark-home .reservation-info {
+            margin-top: 30px;
+          }
+
+          .ipark-home .reservation-contact {
+            margin-top: 30px;
+          }
+        }
+
         @media (max-width: 700px) {
           .ipark-home .hero {
             min-height: 100svh;
-          }
-
-          .ipark-home .hero-photo {
-            background-position: center;
           }
 
           .ipark-home .header {
@@ -670,59 +1138,49 @@ export default function Home() {
             letter-spacing: 1px;
           }
 
-          .ipark-home .selection {
+          .ipark-home .reservation-section {
             padding: 75px 16px;
           }
 
-          .ipark-home .selection-heading h2 {
-            font-size: 28px;
+          .ipark-home .reservation-intro h2 {
+            font-size: 42px;
           }
 
-          .ipark-home .selection-heading p {
+          .ipark-home .reservation-intro > p {
+            font-size: 14px;
+          }
+
+          .ipark-home .reservation-form {
+            padding: 27px 19px;
+          }
+
+          .ipark-home .form-heading h3 {
+            font-size: 26px;
+          }
+
+          .ipark-home .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+          }
+
+          .ipark-home .information-section {
+            padding: 70px 20px;
+          }
+
+          .ipark-home .information-container h2 {
+            font-size: 26px;
+          }
+
+          .ipark-home .information-container p {
             font-size: 12px;
           }
 
-          .ipark-home .selection-grid {
-            gap: 10px;
+          .ipark-home .information-links {
+            flex-direction: column;
           }
 
-          .ipark-home .selection-card {
-            min-height: 310px;
-            padding: 18px;
-          }
-
-          .ipark-home .selection-number {
-            font-size: 90px;
-          }
-
-          .ipark-home .selection-card-content > span {
-            font-size: 8px;
-            letter-spacing: 1px;
-          }
-
-          .ipark-home .selection-card-content h3 {
-            font-size: 30px;
-          }
-
-          .ipark-home .selection-description {
-            font-size: 10px;
-            line-height: 1.8;
-          }
-
-          .ipark-home .selection-link {
-            font-size: 12px;
-          }
-
-          .ipark-home .information-note {
-            margin-top: 45px;
-          }
-
-          .ipark-home .information-note h2 {
-            font-size: 21px;
-          }
-
-          .ipark-home .information-note p {
-            font-size: 12px;
+          .ipark-home .information-links a {
+            width: 100%;
           }
 
           .ipark-home .footer {
@@ -745,14 +1203,6 @@ export default function Home() {
 
           .ipark-home .complex-button strong {
             font-size: 12px;
-          }
-
-          .ipark-home .selection-card {
-            padding: 13px;
-          }
-
-          .ipark-home .selection-number {
-            font-size: 75px;
           }
         }
 
