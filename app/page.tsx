@@ -4,8 +4,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  ArrowUpRight,
   ArrowRight,
+  ArrowUpRight,
   Phone,
   SkipForward,
 } from "lucide-react";
@@ -14,131 +14,136 @@ const PHONE = "041-556-0303";
 const TEL = "tel:0415560303";
 
 export default function Home() {
-  const [phase, setPhase] = useState(0);
+  const [stage, setStage] = useState(0);
   const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    const reduced = window.matchMedia(
+    const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    if (reduced) {
-      setPhase(3);
+    if (reducedMotion) {
       setFinished(true);
       return;
     }
 
     const timers = [
-      window.setTimeout(() => setPhase(1), 900),
-      window.setTimeout(() => setPhase(2), 2200),
-      window.setTimeout(() => {
-        setPhase(3);
-        setFinished(true);
-      }, 4100),
+      window.setTimeout(() => setStage(1), 800),
+      window.setTimeout(() => setStage(2), 2200),
+      window.setTimeout(() => setStage(3), 3600),
+      window.setTimeout(() => setFinished(true), 4900),
     ];
 
-    return () => timers.forEach(window.clearTimeout);
+    return () => timers.forEach(clearTimeout);
   }, []);
 
-  function skipIntro() {
-    setPhase(3);
-    setFinished(true);
-  }
-
   return (
-    <main className="luxury-site">
-      {/* 실내 공간 배경 */}
-      <div className="interior" aria-hidden="true">
-        <div className="interior-ceiling" />
-        <div className="interior-left-wall" />
-        <div className="interior-right-wall" />
-        <div className="interior-floor" />
-
-        <div className="window-view">
-          <div className="sky-glow" />
-          <div className="city city-back" />
-          <div className="city city-front" />
-          <div className="window-frame vertical-one" />
-          <div className="window-frame vertical-two" />
-          <div className="window-frame horizontal" />
-        </div>
-
-        <div className="interior-light" />
-      </div>
-
-      {/* 고급 현관문 오프닝 */}
+    <main className="home-page">
+      {/* 따뜻한 가정집 현관 오프닝 */}
       {!finished && (
-        <div className={`entrance phase-${phase}`}>
-          <div className="entrance-wall">
-            <div className="wall-left" />
-            <div className="wall-right" />
-          </div>
+        <div className={`home-intro stage-${stage}`}>
+          {/* 현관문 너머 거실 */}
+          <div className="warm-living-room">
+            <div className="room-ceiling" />
+            <div className="room-wall" />
 
-          <div className="door-frame">
-            <div className="door door-left">
-              <div className="door-groove" />
-              <div className="door-handle left-handle" />
+            <div className="room-window">
+              <div className="sunlight" />
+              <div className="curtain curtain-left" />
+              <div className="curtain curtain-right" />
             </div>
 
-            <div className="door door-right">
-              <div className="door-groove" />
-              <div className="door-handle right-handle" />
+            <div className="room-floor" />
+            <div className="room-rug" />
+
+            <div className="sofa">
+              <div className="sofa-back" />
+              <div className="sofa-seat" />
+              <div className="sofa-arm arm-left" />
+              <div className="sofa-arm arm-right" />
+              <div className="sofa-leg leg-left" />
+              <div className="sofa-leg leg-right" />
             </div>
+
+            <div className="coffee-table" />
+            <div className="warm-light" />
           </div>
 
-          <div className="entrance-title">
-            <span className="entrance-label">
-              WELCOME TO
+          {/* 현관 벽과 문틀 */}
+          <div className="entrance-surround">
+            <div className="entry-wall left-wall" />
+            <div className="entry-wall right-wall" />
+
+            <div className="entry-frame">
+              <div className="door-opening">
+                <div className="home-door">
+                  <div className="door-panel panel-top" />
+                  <div className="door-panel panel-bottom" />
+                  <div className="door-woodgrain" />
+                  <div className="door-lock">
+                    <div className="lock-body" />
+                    <div className="lock-handle" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="entry-floor" />
+          </div>
+
+          {/* 오프닝 문구 */}
+          <div className="intro-copy">
+            <span className="intro-kicker">
+              A PLACE TO CALL HOME
             </span>
+
             <h1>
-              CHEONAN
+              집으로 돌아오는 순간,
               <br />
-              <em>IPARK CITY</em>
+              <em>행복이 시작됩니다.</em>
             </h1>
-            <div className="entrance-line" />
+
+            <div className="intro-divider" />
+
             <p>천안 아이파크 시티 3 · 4단지</p>
           </div>
 
-          <div className="entrance-bottom">
-            <span>THE ART OF LIVING</span>
-            <span>AN EXCLUSIVE ENTRANCE</span>
+          <div className="welcome-copy">
+            <span>WELCOME HOME</span>
+            <strong>당신의 새로운 일상이 시작되는 곳</strong>
           </div>
 
           <button
-            className="skip-button"
+            className="skip-intro"
             type="button"
-            onClick={skipIntro}
+            onClick={() => setFinished(true)}
           >
-            SKIP INTRO
-            <SkipForward size={15} />
+            건너뛰기
+            <SkipForward size={16} />
           </button>
         </div>
       )}
 
-      {/* 오프닝 이후 메인 화면 */}
-      <div
-        className={`main-screen ${
-          finished ? "visible" : ""
-        }`}
-      >
+      {/* 기존 3단지·4단지 선택 메인 */}
+      <div className={`main-screen ${finished ? "show" : ""}`}>
         <header className="main-header">
           <Link href="/" className="brand">
-            <span className="brand-emblem">I</span>
-            <span>
+            <span className="brand-mark">I</span>
+            <span className="brand-text">
               <strong>IPARK CITY</strong>
               <small>CHEONAN 03 · 04</small>
             </span>
           </Link>
 
-          <a href={TEL} className="header-call">
-            <Phone size={16} />
+          <a href={TEL} className="header-phone">
+            <Phone size={17} />
             <span>{PHONE}</span>
           </a>
         </header>
 
-        <section className="selection-screen premium-selection">
+        <section className="selection-section">
           <div className="selection-heading">
-            <span className="heading-kicker">
+            <span className="eyebrow">
               THE EXCLUSIVE COLLECTION
             </span>
 
@@ -151,106 +156,86 @@ export default function Home() {
             <p>천안 아이파크 시티 3 · 4단지</p>
           </div>
 
-          <div className="premium-grid">
-            {/* 3단지 */}
-            <Link
-              href="/complex/3"
-              className="premium-panel panel-3"
-            >
-              <div className="premium-image" />
-              <div className="premium-overlay" />
+          <div className="complex-grid">
+            <Link href="/complex/3" className="complex-card complex-3">
+              <div className="complex-image" />
+              <div className="complex-shade" />
 
-              <div className="premium-panel-top">
+              <div className="card-top">
                 <span>CHEONAN IPARK CITY</span>
                 <ArrowUpRight size={23} />
               </div>
 
-              <div className="premium-panel-content">
-                <span className="premium-eyebrow">
+              <div className="card-content">
+                <span className="card-eyebrow">
                   THE THIRD COLLECTION
                 </span>
 
-                <strong className="premium-number">
-                  03
-                </strong>
+                <strong className="card-number">03</strong>
 
                 <h3>3단지</h3>
                 <p>천안 아이파크 시티 3단지</p>
 
-                <div className="premium-enter">
+                <div className="card-action">
                   <span>3단지 입장하기</span>
-                  <span className="enter-circle">
-                    <ArrowRight size={20} />
+                  <span className="action-circle">
+                    <ArrowRight size={21} />
                   </span>
                 </div>
               </div>
             </Link>
 
-            {/* 4단지 */}
-            <Link
-              href="/complex/4"
-              className="premium-panel panel-4"
-            >
-              <div className="premium-image" />
-              <div className="premium-overlay" />
+            <Link href="/complex/4" className="complex-card complex-4">
+              <div className="complex-image" />
+              <div className="complex-shade" />
 
-              <div className="premium-panel-top">
+              <div className="card-top">
                 <span>CHEONAN IPARK CITY</span>
                 <ArrowUpRight size={23} />
               </div>
 
-              <div className="premium-panel-content">
-                <span className="premium-eyebrow">
+              <div className="card-content">
+                <span className="card-eyebrow">
                   THE FOURTH COLLECTION
                 </span>
 
-                <strong className="premium-number">
-                  04
-                </strong>
+                <strong className="card-number">04</strong>
 
                 <h3>4단지</h3>
                 <p>천안 아이파크 시티 4단지</p>
 
-                <div className="premium-enter">
+                <div className="card-action">
                   <span>4단지 입장하기</span>
-                  <span className="enter-circle">
-                    <ArrowRight size={20} />
+                  <span className="action-circle">
+                    <ArrowRight size={21} />
                   </span>
                 </div>
               </div>
             </Link>
           </div>
-
-          <p className="photo-note">
-            단지별 이미지는 실제 사용 허가를 받은
-            조감도로 교체할 예정입니다.
-          </p>
         </section>
 
-        <footer className="site-footer">
-          <div className="footer-info">
+        <footer className="main-footer">
+          <div className="footer-row">
             <span>MI SO REAL ESTATE</span>
-            <a href={TEL}>
-              상담문의 {PHONE}
-            </a>
+            <a href={TEL}>상담문의 {PHONE}</a>
           </div>
 
           <p>
-            본 사이트는 미소부동산이 운영하는
-            비공식 부동산 정보·상담 안내 사이트이며,
-            시행사·시공사·공식 분양사무소가 운영하는
-            공식 홈페이지가 아닙니다.
-            단지별 공급 정보는 공식 자료를 통해
-            확인하시기 바랍니다.
+            본 홈페이지는 미소부동산이 운영하는
+            부동산 정보 및 상담 안내 사이트이며,
+            시행사·시공사·공식 분양사무소의 공식
+            홈페이지가 아닙니다. 사업 및 분양 정보는
+            공식 자료를 우선하여 확인해 주세요.
           </p>
         </footer>
       </div>
 
       <style jsx global>{`
         :root {
-          --gold: #d2b88d;
-          --gold-bright: #f2dfbd;
-          --deep: #08111c;
+          --gold: #d1b58b;
+          --cream: #f5ead8;
+          --dark: #0a1421;
         }
 
         * {
@@ -261,12 +246,12 @@ export default function Home() {
         body {
           margin: 0;
           min-height: 100%;
-          background: var(--deep);
+          background: var(--dark);
         }
 
         body {
+          color: white;
           font-family: "Noto Sans KR", sans-serif;
-          color: #fff;
         }
 
         a {
@@ -278,834 +263,879 @@ export default function Home() {
           font: inherit;
         }
 
-        .luxury-site {
-          position: relative;
+        .home-page {
           min-height: 100svh;
-          overflow: hidden;
-          isolation: isolate;
-          background: #0a1420;
+          background: var(--dark);
         }
 
-        /* 실내 배경 */
+        /* 가정집 오프닝 */
 
-        .interior {
+        .home-intro {
           position: fixed;
           inset: 0;
-          z-index: -1;
+          z-index: 1000;
+          overflow: hidden;
+          background: #d8c8b1;
+          perspective: 1300px;
+          animation: introCamera 4.9s ease-in-out both;
+        }
+
+        @keyframes introCamera {
+          0%, 40% {
+            transform: scale(1);
+          }
+
+          75% {
+            transform: scale(1.12);
+          }
+
+          100% {
+            transform: scale(1.5);
+          }
+        }
+
+        /* 거실 */
+
+        .warm-living-room {
+          position: absolute;
+          inset: 0;
           overflow: hidden;
           background:
             linear-gradient(
               180deg,
-              #343b3c 0%,
-              #686761 50%,
-              #24272a 100%
+              #e9dcc7 0%,
+              #f6e8d1 60%,
+              #bda68a 100%
             );
         }
 
-        .interior-ceiling {
+        .room-ceiling {
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
-          height: 27%;
+          height: 18%;
+          background: linear-gradient(
+            #d6c6ae,
+            #f0e4d0
+          );
+          box-shadow: 0 8px 25px #aa907144;
+        }
+
+        .room-wall {
+          position: absolute;
+          top: 15%;
+          left: 0;
+          right: 0;
+          bottom: 24%;
           background:
-            linear-gradient(#272d31, #54585a);
-          clip-path: polygon(
-            0 0,
-            100% 0,
-            78% 100%,
-            22% 100%
+            linear-gradient(
+              100deg,
+              #cbb79c,
+              #f7ecda 45%,
+              #ead9be
+            );
+        }
+
+        .room-window {
+          position: absolute;
+          top: 20%;
+          left: 35%;
+          width: 45%;
+          height: 45%;
+          overflow: hidden;
+          border: 12px solid #e9ddc8;
+          background:
+            linear-gradient(
+              #c8dce2,
+              #fff1cb 65%,
+              #d5d3bd
+            );
+          box-shadow:
+            0 10px 45px #9c805044,
+            inset 0 0 30px #fff9;
+        }
+
+        .sunlight {
+          position: absolute;
+          width: 70%;
+          height: 80%;
+          top: -15%;
+          right: -10%;
+          background: radial-gradient(
+            circle,
+            #fff7d6,
+            #ffe6a677,
+            transparent 75%
           );
         }
 
-        .interior-left-wall,
-        .interior-right-wall {
+        .curtain {
           position: absolute;
           top: 0;
           bottom: 0;
-          width: 35%;
+          width: 20%;
+          background:
+            repeating-linear-gradient(
+              90deg,
+              #f9f3e9cc 0,
+              #e4d6bf99 13px,
+              #fff9efcc 25px
+            );
+        }
+
+        .curtain-left {
+          left: 0;
+        }
+
+        .curtain-right {
+          right: 0;
+        }
+
+        .room-floor {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 30%;
           background:
             repeating-linear-gradient(
               90deg,
               transparent 0,
               transparent 85px,
-              rgba(255,255,255,.035) 86px
+              #92755444 87px
             ),
             linear-gradient(
-              90deg,
-              #1b252c,
-              #555c5c
+              #d7b992,
+              #a88764
             );
         }
 
-        .interior-left-wall {
-          left: 0;
-          clip-path: polygon(
-            0 0,
-            100% 27%,
-            100% 75%,
-            0 100%
-          );
-        }
-
-        .interior-right-wall {
-          right: 0;
-          transform: scaleX(-1);
-          clip-path: polygon(
-            0 0,
-            100% 27%,
-            100% 75%,
-            0 100%
-          );
-        }
-
-        .interior-floor {
+        .room-rug {
           position: absolute;
-          bottom: 0;
+          bottom: 3%;
+          left: 20%;
+          width: 65%;
+          height: 17%;
+          border-radius: 50%;
+          background: #f1e7d6;
+          box-shadow: 0 5px 25px #70553a44;
+        }
+
+        .sofa {
+          position: absolute;
+          bottom: 20%;
+          left: 22%;
+          width: 43%;
+          height: 26%;
+        }
+
+        .sofa-back {
+          position: absolute;
+          inset: 0 0 22% 0;
+          border-radius: 30px 30px 12px 12px;
+          background:
+            linear-gradient(
+              115deg,
+              #eee3d2,
+              #c6b49c
+            );
+          box-shadow: 0 8px 22px #6d584355;
+        }
+
+        .sofa-seat {
+          position: absolute;
+          bottom: 5%;
           width: 100%;
-          height: 35%;
-          background:
-            repeating-linear-gradient(
-              92deg,
-              transparent 0,
-              transparent 130px,
-              rgba(255,255,255,.1) 132px
-            ),
-            linear-gradient(
-              #a19a8c,
-              #3e4142
-            );
-          clip-path: polygon(
-            22% 0,
-            78% 0,
-            100% 100%,
-            0 100%
-          );
+          height: 38%;
+          border-radius: 16px;
+          background: #e7d8c3;
+          box-shadow: inset 0 -10px 18px #ad947566;
         }
 
-        .window-view {
+        .sofa-arm {
           position: absolute;
-          left: 22%;
-          right: 22%;
-          top: 20%;
-          bottom: 25%;
-          overflow: hidden;
-          background:
-            linear-gradient(
-              180deg,
-              #b7a28b,
-              #d4bb98 40%,
-              #6b7c88 75%,
-              #293847
-            );
+          bottom: 5%;
+          width: 13%;
+          height: 50%;
+          border-radius: 16px;
+          background: #d5c2a8;
+        }
+
+        .arm-left {
+          left: -5%;
+        }
+
+        .arm-right {
+          right: -5%;
+        }
+
+        .sofa-leg {
+          position: absolute;
+          bottom: -7%;
+          width: 8px;
+          height: 15%;
+          background: #806347;
+        }
+
+        .leg-left {
+          left: 12%;
+        }
+
+        .leg-right {
+          right: 12%;
+        }
+
+        .coffee-table {
+          position: absolute;
+          bottom: 13%;
+          left: 43%;
+          width: 23%;
+          height: 5%;
+          border-radius: 50%;
+          background: #9c7651;
           box-shadow:
-            0 0 90px rgba(255,218,162,.25),
-            inset 0 0 50px rgba(0,0,0,.3);
+            0 15px 0 -4px #76583d,
+            0 25px 20px #5b432b44;
         }
 
-        .sky-glow {
+        .warm-light {
           position: absolute;
-          width: 55%;
-          height: 65%;
-          left: 22%;
-          top: 0;
+          inset: 0;
           background:
             radial-gradient(
-              circle,
-              rgba(255,236,190,.85),
+              ellipse at 60% 38%,
+              #fff3d444,
               transparent 70%
             );
         }
 
-        .city {
+        /* 현관 구조 */
+
+        .entrance-surround {
           position: absolute;
+          inset: 0;
+          perspective: 1500px;
+          pointer-events: none;
+        }
+
+        .entry-wall {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 17%;
+          background:
+            linear-gradient(
+              90deg,
+              #bca78c,
+              #e4d5bd,
+              #c9b59a
+            );
+          z-index: 3;
+        }
+
+        .left-wall {
           left: 0;
+          box-shadow: 12px 0 25px #614e3644;
+        }
+
+        .right-wall {
           right: 0;
+          box-shadow: -12px 0 25px #614e3644;
+        }
+
+        .entry-frame {
+          position: absolute;
+          top: 7%;
+          left: 17%;
+          right: 17%;
           bottom: 0;
-          background: #344352;
-        }
-
-        .city-back {
-          height: 35%;
-          opacity: .5;
-          clip-path: polygon(
-            0 65%,
-            12% 65%,
-            12% 25%,
-            23% 25%,
-            23% 50%,
-            34% 50%,
-            34% 10%,
-            47% 10%,
-            47% 40%,
-            59% 40%,
-            59% 0,
-            73% 0,
-            73% 50%,
-            86% 50%,
-            86% 20%,
-            100% 20%,
-            100% 100%,
-            0 100%
-          );
-        }
-
-        .city-front {
-          height: 22%;
-          background: #1d2a39;
-          clip-path: polygon(
-            0 30%,
-            17% 30%,
-            17% 0,
-            31% 0,
-            31% 40%,
-            48% 40%,
-            48% 10%,
-            64% 10%,
-            64% 45%,
-            80% 45%,
-            80% 5%,
-            100% 5%,
-            100% 100%,
-            0 100%
-          );
-        }
-
-        .window-frame {
-          position: absolute;
-          background: #222d35;
-          box-shadow:
-            0 0 8px rgba(0,0,0,.35);
-        }
-
-        .vertical-one {
-          left: 33%;
-          width: 10px;
-          height: 100%;
-        }
-
-        .vertical-two {
-          left: 66%;
-          width: 10px;
-          height: 100%;
-        }
-
-        .horizontal {
-          top: 72%;
-          width: 100%;
-          height: 9px;
-        }
-
-        .interior-light {
-          position: absolute;
-          inset: 0;
-          background:
-            radial-gradient(
-              ellipse at center,
-              rgba(255,215,165,.14),
-              rgba(0,0,0,.5) 90%
-            );
-        }
-
-        /* 현관문 오프닝 */
-
-        .entrance {
-          position: fixed;
-          inset: 0;
-          z-index: 100;
-          perspective: 1200px;
-          overflow: hidden;
-          background: #10151b;
-          animation: entranceZoom 4.1s ease forwards;
-        }
-
-        @keyframes entranceZoom {
-          0%, 45% {
-            transform: scale(1);
-          }
-
-          90%, 100% {
-            transform: scale(1.22);
-          }
-        }
-
-        .entrance-wall {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          background:
-            repeating-linear-gradient(
-              105deg,
-              transparent 0,
-              transparent 95px,
-              rgba(255,255,255,.035) 97px
-            ),
-            linear-gradient(
-              120deg,
-              #171d24,
-              #33373a,
-              #151b23
-            );
-        }
-
-        .wall-left,
-        .wall-right {
-          width: 50%;
-          height: 100%;
-          border-right:
-            1px solid rgba(255,255,255,.06);
-        }
-
-        .door-frame {
-          position: absolute;
-          left: 15%;
-          right: 15%;
-          top: 8%;
-          bottom: 0;
-          display: flex;
-          border: 12px solid #14171a;
+          border: 15px solid #9a7451;
           border-bottom: 0;
+          background: transparent;
           box-shadow:
-            0 0 0 2px rgba(210,184,141,.35),
-            0 0 80px rgba(0,0,0,.75);
-          perspective: 1400px;
-          overflow: hidden;
-          background:
-            linear-gradient(
-              180deg,
-              #d9c4a5,
-              #3a4b55
-            );
+            0 0 0 5px #e7d7c1,
+            0 0 40px #634b3266;
+          z-index: 2;
+          perspective: 1500px;
         }
 
-        .door {
-          position: relative;
-          width: 50%;
-          height: 100%;
+        .door-opening {
+          position: absolute;
+          inset: 0;
+          perspective: 1500px;
+        }
+
+        .home-door {
+          position: absolute;
+          inset: 0;
+          transform-origin: left center;
+          transform-style: preserve-3d;
           background:
             repeating-linear-gradient(
               90deg,
-              rgba(0,0,0,.08) 0,
-              rgba(255,255,255,.025) 7px,
-              rgba(0,0,0,.08) 16px
+              #ffffff09 0,
+              #00000008 7px,
+              transparent 14px
             ),
             linear-gradient(
-              110deg,
-              #201b19,
-              #514239 50%,
-              #1b1716
+              100deg,
+              #70482f,
+              #b17e52 35%,
+              #92623e 75%,
+              #65432c
             );
           box-shadow:
-            inset 0 0 45px rgba(0,0,0,.65);
+            inset 0 0 50px #38251a66,
+            8px 8px 35px #37231677;
           transition:
-            transform 1.65s
-            cubic-bezier(.65,0,.18,1);
-          z-index: 3;
-          backface-visibility: hidden;
+            transform 2.15s
+            cubic-bezier(.55,.02,.18,1);
+          backface-visibility: visible;
         }
 
-        .door-left {
-          transform-origin: left center;
-          border-right: 2px solid #15110e;
+        .stage-2 .home-door,
+        .stage-3 .home-door {
+          transform: rotateY(-112deg);
         }
 
-        .door-right {
-          transform-origin: right center;
-          border-left: 2px solid #15110e;
-        }
-
-        .phase-2 .door-left {
-          transform: rotateY(-105deg);
-        }
-
-        .phase-2 .door-right {
-          transform: rotateY(105deg);
-        }
-
-        .door-groove {
+        .door-panel {
           position: absolute;
-          inset: 5%;
-          border:
-            1px solid rgba(210,184,141,.19);
+          left: 7%;
+          right: 7%;
+          border: 2px solid #e5ba8555;
           box-shadow:
-            inset 0 0 0 12px rgba(0,0,0,.1);
+            inset 0 0 0 9px #3b241522,
+            inset 0 0 0 11px #dfb37b33;
         }
 
-        .door-handle {
+        .panel-top {
+          top: 6%;
+          height: 38%;
+        }
+
+        .panel-bottom {
+          bottom: 6%;
+          height: 42%;
+        }
+
+        .door-woodgrain {
+          position: absolute;
+          inset: 0;
+          background:
+            repeating-linear-gradient(
+              93deg,
+              transparent 0,
+              #2d170b11 2px,
+              transparent 5px,
+              transparent 23px
+            );
+        }
+
+        .door-lock {
+          position: absolute;
+          right: 5%;
+          top: 46%;
+          width: 12%;
+          height: 11%;
+        }
+
+        .lock-body {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 25%;
+          height: 100%;
+          border-radius: 5px;
+          background:
+            linear-gradient(
+              90deg,
+              #8e7658,
+              #ead7b6,
+              #9e805b
+            );
+          box-shadow: 2px 3px 8px #34201377;
+        }
+
+        .lock-handle {
           position: absolute;
           top: 45%;
-          width: 7px;
-          height: 110px;
-          border-radius: 8px;
+          right: 10%;
+          width: 75%;
+          height: 9px;
+          border-radius: 10px;
           background:
             linear-gradient(
-              90deg,
-              #7e6745,
-              #f2dfbd,
-              #9e8053
+              #f3e4c7,
+              #95724e
             );
-          box-shadow:
-            2px 4px 10px #0008;
+          box-shadow: 0 3px 7px #34201366;
         }
 
-        .left-handle {
-          right: 18px;
-        }
-
-        .right-handle {
-          left: 18px;
-        }
-
-        .entrance-title {
+        .entry-floor {
           position: absolute;
-          z-index: 5;
-          top: 33%;
+          bottom: 0;
           left: 0;
           right: 0;
+          height: 10%;
+          z-index: 4;
+          background:
+            linear-gradient(
+              #c6b39a,
+              #a58d70
+            );
+          clip-path: polygon(
+            17% 0,
+            83% 0,
+            100% 100%,
+            0 100%
+          );
+        }
+
+        /* 오프닝 텍스트 */
+
+        .intro-copy {
+          position: absolute;
+          z-index: 10;
+          top: 32%;
+          left: 0;
+          right: 0;
+          padding: 0 20px;
           text-align: center;
-          pointer-events: none;
+          color: white;
           text-shadow:
-            0 4px 25px #000;
+            0 3px 18px #392414,
+            0 1px 5px #392414;
+          pointer-events: none;
           transition:
-            opacity .65s,
-            transform .65s;
+            opacity .7s,
+            transform .7s;
         }
 
-        .phase-2 .entrance-title {
+        .stage-2 .intro-copy,
+        .stage-3 .intro-copy {
           opacity: 0;
-          transform: scale(1.3);
+          transform: translateY(-25px);
         }
 
-        .entrance-label {
-          color: var(--gold);
+        .intro-kicker {
+          display: block;
+          color: #f4d9ac;
           font-size: 11px;
-          letter-spacing: 5px;
+          letter-spacing: 4px;
         }
 
-        .entrance-title h1 {
-          font:
-            400 clamp(45px, 7vw, 100px)/1.1
-            Georgia, serif;
-          letter-spacing: -2px;
+        .intro-copy h1 {
           margin: 25px 0;
+          font-size: clamp(29px, 4.6vw, 65px);
+          font-weight: 400;
+          line-height: 1.55;
+          letter-spacing: -2px;
         }
 
-        .entrance-title h1 em {
-          color: var(--gold-bright);
+        .intro-copy h1 em {
+          color: #ffe1b2;
           font-style: normal;
         }
 
-        .entrance-line {
+        .intro-divider {
+          width: 75px;
           height: 1px;
-          width: 90px;
-          background: var(--gold);
-          margin: 22px auto;
+          margin: 20px auto;
+          background: #f1d3a5;
         }
 
-        .entrance-title p {
+        .intro-copy p {
           font-size: 14px;
-          letter-spacing: 3px;
-        }
-
-        .entrance-bottom {
-          position: absolute;
-          bottom: 35px;
-          left: 5%;
-          right: 5%;
-          z-index: 5;
-          display: flex;
-          justify-content: space-between;
-          color: #d5c3a8;
-          font-size: 9px;
           letter-spacing: 2px;
         }
 
-        .skip-button {
+        .welcome-copy {
           position: absolute;
           z-index: 10;
-          right: 25px;
+          left: 0;
+          right: 0;
+          top: 38%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 18px;
+          color: #fff9ee;
+          text-shadow: 0 2px 14px #4e3928;
+          opacity: 0;
+          transform: translateY(25px);
+          transition:
+            opacity .8s,
+            transform .8s;
+          pointer-events: none;
+        }
+
+        .welcome-copy span {
+          font: 32px Georgia, serif;
+          letter-spacing: 5px;
+        }
+
+        .welcome-copy strong {
+          font-size: 15px;
+          font-weight: 400;
+        }
+
+        .stage-3 .welcome-copy {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .skip-intro {
+          position: absolute;
+          z-index: 30;
           top: 25px;
+          right: 25px;
           display: flex;
           align-items: center;
           gap: 9px;
           padding: 12px 16px;
-          color: white;
-          background: rgba(0,0,0,.45);
-          border:
-            1px solid rgba(255,255,255,.4);
+          border: 1px solid #ffffff88;
+          color: #fff;
+          background: #37271c99;
           cursor: pointer;
-          font-size: 10px;
-          letter-spacing: 1px;
+          font-size: 12px;
         }
 
-        /* 메인 화면 */
+        /* 3·4단지 선택 화면 */
 
         .main-screen {
-          position: relative;
-          z-index: 2;
           min-height: 100svh;
           display: flex;
           flex-direction: column;
           background:
             linear-gradient(
               180deg,
-              rgba(6,14,24,.94),
-              rgba(9,20,34,.86)
+              #0a1523,
+              #122236
             );
           opacity: 0;
           visibility: hidden;
-          transition: opacity 1.1s ease;
+          transition: opacity 1s ease;
         }
 
-        .main-screen.visible {
+        .main-screen.show {
           opacity: 1;
           visibility: visible;
         }
 
         .main-header {
-          height: 90px;
+          height: 88px;
           padding: 0 5%;
           display: flex;
-          align-items: center;
           justify-content: space-between;
-          border-bottom:
-            1px solid rgba(255,255,255,.14);
+          align-items: center;
+          border-bottom: 1px solid #ffffff22;
         }
 
         .brand {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 13px;
         }
 
-        .brand-emblem {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .brand-mark {
           width: 42px;
           height: 42px;
+          display: grid;
+          place-items: center;
           border: 1px solid var(--gold);
           color: var(--gold);
           font: italic 28px Georgia, serif;
         }
 
-        .brand > span:last-child {
+        .brand-text {
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 5px;
         }
 
-        .brand strong {
+        .brand-text strong {
           font: 18px Georgia, serif;
           letter-spacing: 2px;
         }
 
-        .brand small {
+        .brand-text small {
           color: var(--gold);
           font-size: 9px;
           letter-spacing: 2px;
         }
 
-        .header-call {
+        .header-phone {
           display: flex;
           align-items: center;
           gap: 10px;
-          color: var(--gold-bright);
+          color: #e9d2ad;
           font-size: 14px;
         }
 
-        /* 선택 화면 */
-
-        .selection-screen {
+        .selection-section {
           flex: 1;
           padding: 48px 4% 65px;
         }
 
         .selection-heading {
           text-align: center;
-          margin-bottom: 35px;
+          margin-bottom: 38px;
         }
 
-        .heading-kicker {
+        .eyebrow {
           color: var(--gold);
           font-size: 10px;
           letter-spacing: 4px;
         }
 
         .selection-heading h2 {
-          font-size: clamp(30px, 4vw, 51px);
+          margin: 20px 0;
+          font-size: clamp(30px, 4vw, 50px);
           font-weight: 300;
           line-height: 1.55;
           letter-spacing: -1.5px;
-          margin: 20px 0;
         }
 
         .selection-heading h2 em {
-          color: var(--gold-bright);
+          color: #ead4b1;
           font-style: normal;
         }
 
         .selection-heading p {
-          color: #b9c0c7;
+          color: #b7c0ca;
           font-size: 13px;
-          line-height: 1.9;
         }
 
-        /* 3·4단지 프리미엄 선택 카드 */
-
-        .premium-grid {
-          display: grid;
-          grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-          gap: 12px;
+        .complex-grid {
           max-width: 1500px;
           margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 13px;
         }
 
-        .premium-panel {
+        .complex-card {
           position: relative;
-          min-height: 620px;
-          padding: 35px;
+          isolation: isolate;
+          min-height: 610px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          padding: 35px;
           overflow: hidden;
-          isolation: isolate;
-          background: #17283a;
-          border:
-            1px solid rgba(214,187,145,.35);
+          border: 1px solid #d1b58b66;
+          background: #22374a;
           transition:
-            border-color .4s,
             transform .4s,
-            box-shadow .4s;
+            border-color .4s;
         }
 
-        .premium-panel:hover {
-          border-color: #d6bb91;
+        .complex-card:hover {
           transform: translateY(-5px);
-          box-shadow:
-            0 25px 65px rgba(0,0,0,.4);
+          border-color: var(--gold);
         }
 
-        .premium-image {
+        .complex-image {
           position: absolute;
           inset: 0;
           z-index: -2;
           background-position: center;
           background-size: cover;
-          transition:
-            transform 1s
-            cubic-bezier(.2,.7,.2,1);
+          transition: transform .8s;
         }
 
-        .panel-3 .premium-image {
-          background-image:
-            url("/complex3.jpg");
-          background-color: #233b50;
+        .complex-3 .complex-image {
+          background-color: #30465b;
+          background-image: url("/complex3.jpg");
         }
 
-        .panel-4 .premium-image {
-          background-image:
-            url("/complex4.jpg");
-          background-color: #3b4551;
+        .complex-4 .complex-image {
+          background-color: #4b4d4e;
+          background-image: url("/complex4.jpg");
         }
 
-        .premium-panel:hover .premium-image {
-          transform: scale(1.08);
+        .complex-card:hover .complex-image {
+          transform: scale(1.07);
         }
 
-        .premium-overlay {
+        .complex-shade {
           position: absolute;
           inset: 0;
           z-index: -1;
           background:
             linear-gradient(
               180deg,
-              rgba(5,12,22,.25) 0%,
-              rgba(5,12,22,.12) 30%,
-              rgba(5,12,22,.94) 100%
+              #07101c55,
+              #07101c11 25%,
+              #07101cf2
             );
         }
 
-        .premium-panel-top {
+        .card-top {
           display: flex;
-          justify-content: space-between;
           align-items: center;
+          justify-content: space-between;
           color: #e9d8b9;
           font-size: 11px;
           letter-spacing: 2px;
         }
 
-        .premium-panel-content {
-          position: relative;
-        }
-
-        .premium-eyebrow {
-          display: block;
-          color: #d6bb91;
+        .card-eyebrow {
+          color: var(--gold);
           font-size: 11px;
           letter-spacing: 3px;
         }
 
-        .premium-number {
+        .card-number {
           display: block;
-          font:
-            400 clamp(100px, 13vw, 190px)/1
-            Georgia, serif;
-          color: rgba(255,255,255,.3);
+          font: clamp(105px, 13vw, 185px)/1 Georgia, serif;
+          color: #ffffff44;
           letter-spacing: -8px;
         }
 
-        .premium-panel-content h3 {
-          margin: -10px 0 8px;
-          font-size: 48px;
+        .card-content h3 {
+          margin: -8px 0 10px;
+          font-size: 47px;
           font-weight: 400;
-          letter-spacing: -2px;
         }
 
-        .premium-panel-content p {
-          color: #e1e3e6;
+        .card-content p {
+          color: #e3e5e8;
           font-size: 14px;
         }
 
-        .premium-enter {
-          margin-top: 32px;
-          padding-top: 22px;
-          border-top:
-            1px solid rgba(255,255,255,.4);
+        .card-action {
           display: flex;
+          align-items: center;
           justify-content: space-between;
-          align-items: center;
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid #ffffff66;
           font-size: 14px;
-          transition: color .3s;
         }
 
-        .premium-panel:hover .premium-enter {
-          color: #e5c998;
-        }
-
-        .enter-circle {
-          width: 46px;
-          height: 46px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border:
-            1px solid rgba(214,187,145,.8);
+        .action-circle {
+          display: grid;
+          place-items: center;
+          width: 45px;
+          height: 45px;
+          border: 1px solid var(--gold);
           border-radius: 50%;
           color: var(--gold);
           transition: .3s;
         }
 
-        .premium-panel:hover .enter-circle {
+        .complex-card:hover .action-circle {
           background: var(--gold);
-          color: #101b29;
+          color: #0a1523;
         }
 
-        .photo-note {
-          max-width: 1500px;
-          margin: 15px auto 0;
-          color: #aeb7c0;
-          font-size: 11px;
-        }
-
-        /* 하단 */
-
-        .site-footer {
-          background: rgba(5,11,19,.9);
-          border-top:
-            1px solid rgba(255,255,255,.12);
+        .main-footer {
           padding: 25px 5%;
+          background: #07101b;
+          border-top: 1px solid #ffffff22;
         }
 
-        .footer-info {
+        .footer-row {
           display: flex;
           justify-content: space-between;
-          align-items: center;
           gap: 15px;
           color: var(--gold);
           font-size: 12px;
           letter-spacing: 1px;
         }
 
-        .site-footer p {
-          color: #a5adb6;
+        .main-footer p {
+          margin: 16px 0 0;
+          color: #9faab6;
           font-size: 11px;
-          line-height: 1.8;
-          margin: 15px 0 0;
+          line-height: 1.9;
         }
-
-        /* 태블릿 */
-
-        @media (max-width: 900px) {
-          .premium-panel {
-            min-height: 510px;
-            padding: 24px;
-          }
-
-          .premium-number {
-            font-size: 120px;
-          }
-        }
-
-        /* 모바일 */
 
         @media (max-width: 700px) {
-          .door-frame {
-            left: 5%;
-            right: 5%;
-            top: 13%;
+          .entry-wall {
+            width: 7%;
           }
 
-          .door-handle {
-            height: 80px;
+          .entry-frame {
+            left: 7%;
+            right: 7%;
+            top: 12%;
+            border-width: 9px;
+            border-bottom: 0;
           }
 
-          .entrance-title h1 {
-            font-size: 44px;
+          .entry-floor {
+            clip-path: polygon(
+              7% 0,
+              93% 0,
+              100% 100%,
+              0 100%
+            );
           }
 
-          .entrance-title p {
+          .intro-copy {
+            top: 35%;
+          }
+
+          .intro-copy h1 {
+            font-size: 29px;
+            letter-spacing: -1px;
+          }
+
+          .intro-kicker {
+            font-size: 9px;
+            letter-spacing: 2px;
+          }
+
+          .intro-copy p {
             font-size: 11px;
           }
 
-          .entrance-label {
-            font-size: 9px;
+          .welcome-copy span {
+            font-size: 24px;
           }
 
-          .entrance-bottom {
-            font-size: 8px;
+          .welcome-copy strong {
+            font-size: 12px;
           }
 
-          .entrance-bottom span:last-child {
-            display: none;
+          .room-window {
+            left: 30%;
+            width: 60%;
+          }
+
+          .sofa {
+            left: 13%;
+            width: 60%;
           }
 
           .main-header {
             height: 75px;
-            padding: 0 20px;
+            padding: 0 18px;
           }
 
-          .brand-emblem {
+          .brand-mark {
             width: 36px;
             height: 36px;
-            font-size: 23px;
+            font-size: 24px;
           }
 
-          .brand strong {
+          .brand-text strong {
             font-size: 14px;
           }
 
-          .brand small {
+          .brand-text small {
             font-size: 8px;
           }
 
-          .header-call span {
+          .header-phone span {
             display: none;
           }
 
-          .selection-screen {
-            padding: 40px 12px 50px;
+          .selection-section {
+            padding: 38px 12px 45px;
           }
 
           .selection-heading {
@@ -1113,92 +1143,88 @@ export default function Home() {
           }
 
           .selection-heading h2 {
-            font-size: 28px;
+            font-size: 27px;
           }
 
           .selection-heading p {
             font-size: 12px;
           }
 
-          .premium-grid {
+          .complex-grid {
             gap: 9px;
           }
 
-          .premium-panel {
+          .complex-card {
             min-height: 390px;
             padding: 14px;
           }
 
-          .premium-panel-top {
+          .card-top {
             font-size: 8px;
             letter-spacing: .5px;
           }
 
-          .premium-panel-top svg {
-            width: 17px;
+          .card-top svg {
+            width: 18px;
           }
 
-          .premium-eyebrow {
+          .card-eyebrow {
             font-size: 8px;
             letter-spacing: 1px;
           }
 
-          .premium-number {
-            font-size: 76px;
+          .card-number {
+            font-size: 75px;
             letter-spacing: -4px;
           }
 
-          .premium-panel-content h3 {
-            font-size: 30px;
+          .card-content h3 {
+            font-size: 29px;
           }
 
-          .premium-panel-content p {
+          .card-content p {
             font-size: 10px;
             line-height: 1.6;
           }
 
-          .premium-enter {
+          .card-action {
             font-size: 11px;
-            margin-top: 22px;
+            margin-top: 20px;
             padding-top: 15px;
           }
 
-          .enter-circle {
+          .action-circle {
             width: 32px;
             height: 32px;
           }
 
-          .enter-circle svg {
+          .action-circle svg {
             width: 17px;
           }
 
-          .site-footer {
-            padding: 23px 18px;
+          .main-footer {
+            padding: 22px 18px;
           }
 
-          .footer-info {
+          .footer-row {
             font-size: 10px;
           }
 
-          .site-footer p {
+          .main-footer p {
             font-size: 10px;
           }
         }
 
         @media (max-width: 370px) {
-          .premium-panel {
+          .complex-card {
             padding: 11px;
           }
 
-          .premium-panel-top {
-            font-size: 7px;
+          .card-number {
+            font-size: 65px;
           }
 
-          .premium-number {
-            font-size: 64px;
-          }
-
-          .premium-panel-content h3 {
+          .card-content h3 {
             font-size: 25px;
           }
         }
@@ -1207,10 +1233,8 @@ export default function Home() {
           *,
           *::before,
           *::after {
-            animation-duration:
-              .01ms !important;
-            transition-duration:
-              .01ms !important;
+            animation-duration: .01ms !important;
+            transition-duration: .01ms !important;
           }
         }
       `}</style>
