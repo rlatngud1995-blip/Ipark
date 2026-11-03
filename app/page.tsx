@@ -2,67 +2,38 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   ArrowDown,
   ArrowRight,
-  CalendarDays,
-  ChevronRight,
-  MapPin,
+  ArrowUpRight,
   Menu,
-  Phone,
   X,
+  Phone,
+  ChevronRight,
 } from "lucide-react";
 
 const PHONE = "041-556-0303";
 const TEL = "tel:0415560303";
 
-const menus = [
-  { name: "사업안내", href: "#project" },
-  { name: "입지환경", href: "#location" },
-  { name: "프리미엄", href: "#premium" },
-  { name: "단지안내", href: "#complex" },
-  { name: "분양안내", href: "#sales" },
-  { name: "모델하우스", href: "#modelhouse" },
-];
-
 const complexes = [
   {
     number: "03",
-    title: "천안 아이파크 시티 3단지",
-    subtitle: "CHEONAN IPARK CITY 3",
-    description:
-      "천안 아이파크 시티 3단지의 사업정보와 단지 안내, 모델하우스 방문 상담 정보를 확인하세요.",
+    title: "3단지",
+    english: "THE THIRD COLLECTION",
+    subtitle: "천안 아이파크 시티 3단지",
+    href: "/complex/3",
+    image: "/complex3.jpg",
+    className: "complex-three",
   },
   {
     number: "04",
-    title: "천안 아이파크 시티 4단지",
-    subtitle: "CHEONAN IPARK CITY 4",
-    description:
-      "천안 아이파크 시티 4단지의 사업정보와 단지 안내, 모델하우스 방문 상담 정보를 확인하세요.",
-  },
-];
-
-const features = [
-  {
-    number: "01",
-    english: "LOCATION",
-    title: "입지환경",
-    description:
-      "교통, 교육, 생활 편의시설 등 단지 주변의 입지 정보를 안내합니다.",
-  },
-  {
-    number: "02",
-    english: "LIFESTYLE",
-    title: "프리미엄",
-    description:
-      "단지별 조경, 커뮤니티 및 주거 특화 정보를 확인하세요.",
-  },
-  {
-    number: "03",
-    english: "RESIDENCE",
-    title: "단지안내",
-    description:
-      "3단지와 4단지의 배치도 및 평면도 정보를 구분해 안내합니다.",
+    title: "4단지",
+    english: "THE FOURTH COLLECTION",
+    subtitle: "천안 아이파크 시티 4단지",
+    href: "/complex/4",
+    image: "/complex4.jpg",
+    className: "complex-four",
   },
 ];
 
@@ -70,366 +41,477 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <main>
+    <main className="landing">
+      <header className="site-header">
+        <Link href="/" className="brand">
+          <span className="brand-mark">I</span>
+          <span className="brand-copy">
+            <strong>IPARK CITY</strong>
+            <small>CHEONAN · 3 &amp; 4</small>
+          </span>
+        </Link>
+
+        <nav className="desktop-nav">
+          <a href="#collection">단지 선택</a>
+          <a href="#introduction">사업 안내</a>
+          <a href="#contact">분양 상담</a>
+        </nav>
+
+        <div className="header-actions">
+          <a className="header-phone" href={TEL}>
+            <Phone size={15} />
+            <span>{PHONE}</span>
+          </a>
+          <button
+            type="button"
+            className="menu-button"
+            aria-label="메뉴 열기"
+            onClick={() => setMenuOpen(true)}
+          >
+            <Menu size={24} />
+          </button>
+        </div>
+      </header>
+
+      {menuOpen && (
+        <div className="mobile-menu">
+          <button
+            type="button"
+            className="close-menu"
+            aria-label="메뉴 닫기"
+            onClick={() => setMenuOpen(false)}
+          >
+            <X size={26} />
+          </button>
+          <span className="menu-caption">CHEONAN IPARK CITY</span>
+          <a href="#collection" onClick={() => setMenuOpen(false)}>
+            단지 선택
+          </a>
+          <a href="#introduction" onClick={() => setMenuOpen(false)}>
+            사업 안내
+          </a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>
+            분양 상담
+          </a>
+          <a href={TEL} className="menu-call">
+            <Phone size={17} /> {PHONE}
+          </a>
+        </div>
+      )}
+
+      <section className="intro-hero">
+        <div className="intro-decoration intro-decoration-one" />
+        <div className="intro-decoration intro-decoration-two" />
+
+        <div className="intro-content">
+          <div className="intro-eyebrow">
+            <span className="eyebrow-line" />
+            <span>AN EXCLUSIVE COLLECTION</span>
+            <span className="eyebrow-line" />
+          </div>
+
+          <p className="intro-small">천안의 새로운 주거 이야기</p>
+
+          <h1>
+            CHEONAN
+            <br />
+            <em>IPARK CITY</em>
+          </h1>
+
+          <div className="hero-number">
+            <span>03</span>
+            <i />
+            <span>04</span>
+          </div>
+
+          <p className="intro-description">
+            두 개의 단지, 하나의 특별한 선택.
+            <br />
+            천안 아이파크 시티 3·4단지를 만나보세요.
+          </p>
+
+          <a href="#collection" className="explore-button">
+            <span>EXPLORE THE COLLECTION</span>
+            <ArrowDown size={17} />
+          </a>
+        </div>
+
+        <div className="hero-bottom">
+          <span>MI SO REAL ESTATE</span>
+          <span>SCROLL TO DISCOVER</span>
+          <span>CHEONAN, KOREA</span>
+        </div>
+      </section>
+
+      <section id="collection" className="collection">
+        <div className="collection-heading">
+          <p className="gold-label">THE COLLECTION</p>
+          <h2>
+            당신의 선택,
+            <br />
+            <em>새로운 라이프스타일</em>
+          </h2>
+          <p>
+            관심 있는 단지를 선택하시면
+            <br />
+            해당 단지의 상세 안내 페이지로 이동합니다.
+          </p>
+        </div>
+
+        <div className="complex-grid">
+          {complexes.map((complex) => (
+            <Link
+              href={complex.href}
+              key={complex.number}
+              className={`complex-card ${complex.className}`}
+            >
+              <div
+                className="complex-photo"
+                style={{
+                  backgroundImage: `linear-gradient(180deg,rgba(9,20,33,.12),rgba(9,20,33,.78)),url('${complex.image}')`,
+                }}
+              />
+              <div className="complex-pattern" />
+
+              <div className="complex-top">
+                <span>CHEONAN IPARK CITY</span>
+                <ArrowUpRight size={23} />
+              </div>
+
+              <div className="complex-content">
+                <p className="complex-english">{complex.english}</p>
+                <span className="complex-number">
+                  {complex.number}
+                </span>
+                <h3>{complex.title}</h3>
+                <p className="complex-subtitle">
+                  {complex.subtitle}
+                </p>
+
+                <div className="complex-divider" />
+
+                <div className="complex-link">
+                  <span>단지 자세히 보기</span>
+                  <span className="complex-arrow">
+                    <ArrowRight size={20} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <p className="image-notice">
+          ※ 단지 이미지 파일은 추후 실제 사용 허가를 받은
+          조감도로 교체할 예정입니다.
+        </p>
+      </section>
+
+      <section id="introduction" className="statement">
+        <div className="statement-inner">
+          <span className="gold-label">A NEW PERSPECTIVE</span>
+          <div className="statement-line" />
+          <h2>
+            공간을 넘어,
+            <br />
+            <em>삶의 가치를 생각하다.</em>
+          </h2>
+          <p>
+            천안 아이파크 시티 3단지와 4단지에 대한
+            <br className="desktop-only" />
+            정보를 한곳에서 편리하게 살펴보세요.
+          </p>
+          <a href="#collection">
+            단지 선택하기 <ChevronRight size={17} />
+          </a>
+        </div>
+      </section>
+
+      <section id="contact" className="contact-section">
+        <div className="contact-inner">
+          <div>
+            <p className="gold-label">PRIVATE CONSULTATION</p>
+            <h2>
+              당신의 새로운 시작,
+              <br />
+              <em>미소부동산이 함께합니다.</em>
+            </h2>
+            <p className="contact-description">
+              천안 아이파크 시티 3·4단지 관련 문의는
+              <br />
+              미소부동산으로 연락해 주세요.
+            </p>
+          </div>
+
+          <a href={TEL} className="contact-button">
+            <div>
+              <span>분양 관련 상담 문의</span>
+              <strong>{PHONE}</strong>
+            </div>
+            <ArrowUpRight size={26} />
+          </a>
+        </div>
+      </section>
+
+      <footer className="footer">
+        <div className="footer-main">
+          <div>
+            <strong className="footer-brand">
+              CHEONAN IPARK CITY
+            </strong>
+            <p>천안 아이파크 시티 3·4단지 안내</p>
+          </div>
+
+          <div className="footer-contact">
+            <strong>미소부동산</strong>
+            <a href={TEL}>{PHONE}</a>
+          </div>
+        </div>
+
+        <div className="footer-notice">
+          본 홈페이지는 미소부동산에서 운영하는
+          부동산 정보 및 상담 안내 사이트이며,
+          시행사·시공사·공식 분양사무소가 운영하는
+          공식 홈페이지가 아닙니다.
+          <br />
+          단지별 공급 정보, 일정, 가격 등은
+          반드시 공식 자료를 통해 확인하시기 바랍니다.
+        </div>
+
+        <div className="footer-bottom">
+          <span>© 2026 MISO REAL ESTATE.</span>
+          <span>INFORMATION &amp; CONSULTATION</span>
+        </div>
+      </footer>
+
+      <a href={TEL} className="floating-call">
+        <Phone size={19} />
+        <span>상담 문의</span>
+      </a>
+
       <style jsx global>{`
-        .ip-header {
+        :root {
+          --navy: #101b29;
+          --navy-deep: #09121e;
+          --gold: #c9ac7b;
+          --ivory: #f7f5f0;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          margin: 0;
+          background: var(--navy-deep);
+          color: #fff;
+          font-family:
+            "Noto Sans KR", sans-serif;
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        button {
+          font: inherit;
+        }
+
+        .landing {
+          overflow: hidden;
+        }
+
+        .site-header {
+          height: 88px;
           position: absolute;
+          z-index: 30;
           top: 0;
           left: 0;
           right: 0;
-          z-index: 50;
-          color: white;
-          border-bottom: 1px solid rgba(255,255,255,.22);
-        }
-
-        .ip-header-inner {
-          width: min(1440px, calc(100% - 64px));
-          height: 92px;
-          margin: auto;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 30px;
+          padding: 0 5%;
+          border-bottom: 1px solid rgba(255,255,255,.13);
         }
 
-        .ip-logo {
-          font-size: 23px;
-          font-weight: 700;
-          letter-spacing: 2px;
-        }
-
-        .ip-logo small {
-          display: block;
-          font-size: 10px;
-          font-weight: 400;
-          letter-spacing: 3px;
-          margin-top: 4px;
-        }
-
-        .ip-nav {
+        .brand {
           display: flex;
           align-items: center;
+          gap: 12px;
+        }
+
+        .brand-mark {
+          width: 40px;
+          height: 40px;
+          border: 1px solid var(--gold);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--gold);
+          font-family: Georgia, serif;
+          font-size: 27px;
+          font-style: italic;
+        }
+
+        .brand-copy {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        }
+
+        .brand-copy strong {
+          font-family: Georgia, serif;
+          font-size: 17px;
+          letter-spacing: 2.5px;
+        }
+
+        .brand-copy small {
+          color: var(--gold);
+          font-size: 9px;
+          letter-spacing: 2.6px;
+        }
+
+        .desktop-nav {
+          display: flex;
+          gap: 40px;
+          font-size: 13px;
+          letter-spacing: 1px;
+        }
+
+        .desktop-nav a {
+          transition: color .3s;
+        }
+
+        .desktop-nav a:hover {
+          color: var(--gold);
+        }
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+          gap: 22px;
+        }
+
+        .header-phone {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          color: var(--gold);
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .menu-button {
+          display: none;
+          border: 0;
+          background: none;
+          color: white;
+          cursor: pointer;
+        }
+
+        .mobile-menu {
+          position: fixed;
+          inset: 0;
+          background: #0b1623;
+          z-index: 100;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 40px;
           gap: 27px;
         }
 
-        .ip-nav a {
-          font-size: 13px;
-          white-space: nowrap;
+        .mobile-menu > a {
+          font-size: 25px;
+          font-weight: 300;
         }
 
-        .ip-nav a:hover {
-          color: #d6b989;
+        .mobile-menu .menu-call {
+          font-size: 17px;
+          color: var(--gold);
+          display: flex;
+          gap: 10px;
+          align-items: center;
         }
 
-        .ip-phone {
-          border: 1px solid rgba(255,255,255,.6);
-          padding: 12px 18px;
-          font-size: 13px;
-          white-space: nowrap;
+        .menu-caption {
+          font-size: 11px;
+          color: var(--gold);
+          letter-spacing: 3px;
+          margin-bottom: 12px;
         }
 
-        .ip-menu-button {
-          display: none;
-          background: transparent;
+        .close-menu {
+          position: absolute;
+          top: 28px;
+          right: 28px;
+          border: none;
+          background: none;
           color: white;
-          border: 0;
+          cursor: pointer;
         }
 
-        .ip-hero {
-          min-height: 780px;
-          height: 100svh;
+        .intro-hero {
           position: relative;
+          min-height: 100svh;
+          background:
+            radial-gradient(
+              ellipse at 50% 40%,
+              #26364b 0%,
+              #101b29 48%,
+              #070e18 100%
+            );
           display: flex;
           align-items: center;
           justify-content: center;
-          color: white;
           text-align: center;
-          background:
-            linear-gradient(
-              180deg,
-              rgba(8,17,30,.55),
-              rgba(8,17,30,.35) 45%,
-              rgba(8,17,30,.85)
-            ),
-            linear-gradient(135deg,#263b50,#101c2a);
-          overflow: hidden;
+          padding: 130px 20px 100px;
         }
 
-        .ip-hero::before {
+        .intro-hero::before {
           content: "";
           position: absolute;
-          inset: 0;
-          background-image: url("/hero.jpg");
-          background-position: center;
-          background-size: cover;
-          opacity: .78;
+          inset: 22px;
+          border: 1px solid rgba(201,172,123,.12);
+          pointer-events: none;
         }
 
-        .ip-hero-content {
+        .intro-decoration {
+          position: absolute;
+          width: 480px;
+          height: 480px;
+          border: 1px solid rgba(201,172,123,.09);
+          border-radius: 50%;
+          pointer-events: none;
+        }
+
+        .intro-decoration-one {
+          width: 650px;
+          height: 650px;
+        }
+
+        .intro-decoration-two {
+          width: 900px;
+          height: 900px;
+          opacity: .55;
+        }
+
+        .intro-content {
           position: relative;
           z-index: 2;
-          padding: 100px 20px 70px;
-          animation: ipFade 1.2s ease both;
+          animation: fadeRise 1.2s ease both;
         }
 
-        .ip-eyebrow {
-          color: #dfc79f;
-          letter-spacing: 6px;
-          font-size: 12px;
-          margin-bottom: 30px;
-        }
-
-        .ip-hero h1 {
-          font-size: clamp(37px, 5.8vw, 83px);
-          font-weight: 400;
-          letter-spacing: -3px;
-          line-height: 1.35;
-          margin: 0;
-          word-break: keep-all;
-        }
-
-        .ip-hero-subtitle {
-          font-size: 16px;
-          font-weight: 300;
-          letter-spacing: 2px;
-          margin-top: 25px;
-          color: #eee;
-        }
-
-        .ip-hero-actions {
-          display: flex;
-          justify-content: center;
-          gap: 12px;
-          margin-top: 45px;
-        }
-
-        .ip-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-          min-height: 52px;
-          padding: 14px 25px;
-          font-size: 13px;
-          transition: .25s;
-        }
-
-        .ip-btn-gold {
-          background: #c9ab78;
-          color: #101c2a;
-        }
-
-        .ip-btn-outline {
-          border: 1px solid rgba(255,255,255,.7);
-          color: white;
-        }
-
-        .ip-btn:hover {
-          transform: translateY(-3px);
-        }
-
-        .ip-hero-bottom {
-          position: absolute;
-          bottom: 40px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 2;
-          display: flex;
-          align-items: center;
-          flex-direction: column;
-          gap: 12px;
-          font-size: 10px;
-          letter-spacing: 3px;
-        }
-
-        .ip-notice {
-          background: #eee9df;
-          padding: 13px 20px;
-          text-align: center;
-          font-size: 12px;
-          line-height: 1.8;
-          color: #4d4d4d;
-        }
-
-        .ip-center {
-          text-align: center;
-        }
-
-        .ip-section-heading {
-          max-width: 800px;
-          margin: 0 auto 55px;
-        }
-
-        .ip-grid-two {
-          display: grid;
-          grid-template-columns: repeat(2,minmax(0,1fr));
-          gap: 24px;
-        }
-
-        .ip-complex-card {
-          position: relative;
-          min-height: 450px;
-          padding: 45px;
-          background: linear-gradient(145deg,#273b50,#101b28);
-          color: white;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          overflow: hidden;
-        }
-
-        .ip-complex-card:nth-child(2) {
-          background: linear-gradient(145deg,#41454a,#172331);
-        }
-
-        .ip-complex-number {
-          position: absolute;
-          top: 30px;
-          right: 35px;
-          font-family: Georgia,serif;
-          font-size: 95px;
-          color: rgba(255,255,255,.1);
-        }
-
-        .ip-complex-card h3 {
-          font-size: clamp(24px,3vw,35px);
-          font-weight: 500;
-          margin: 10px 0 15px;
-        }
-
-        .ip-complex-card p {
-          font-size: 14px;
-          line-height: 1.9;
-          color: #ddd;
-          max-width: 420px;
-        }
-
-        .ip-card-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          margin-top: 24px;
-          color: #e2c697;
-          font-size: 13px;
-        }
-
-        .ip-features {
-          display: grid;
-          grid-template-columns: repeat(3,minmax(0,1fr));
-          gap: 30px;
-          margin-top: 50px;
-        }
-
-        .ip-feature {
-          border-top: 1px solid #bca276;
-          padding-top: 25px;
-        }
-
-        .ip-feature-number {
-          font-family: Georgia,serif;
-          font-size: 42px;
-          color: #c9ab78;
-        }
-
-        .ip-feature h3 {
-          font-size: 25px;
-          font-weight: 500;
-          margin: 15px 0;
-        }
-
-        .ip-feature p {
-          color: #858585;
-          font-size: 14px;
-          line-height: 2;
-        }
-
-        .ip-banner {
-          padding: 110px 20px;
-          text-align: center;
-          background: #101c2a;
-          color: white;
-        }
-
-        .ip-banner h2 {
-          font-size: clamp(29px,4vw,52px);
-          font-weight: 400;
-          margin: 18px 0;
-        }
-
-        .ip-banner p {
-          color: #bbb;
-          font-size: 14px;
-          line-height: 2;
-        }
-
-        .ip-info-box {
-          padding: 35px;
-          background: white;
-          border: 1px solid #e8e4dc;
-          min-height: 190px;
-        }
-
-        .ip-info-box h3 {
-          font-size: 23px;
-          font-weight: 500;
-          margin: 0 0 15px;
-        }
-
-        .ip-info-box p {
-          color: #777;
-          line-height: 1.9;
-          font-size: 14px;
-        }
-
-        .ip-footer {
-          background: #0c1520;
-          color: #aaa;
-          padding: 65px 20px 105px;
-          font-size: 12px;
-          line-height: 2;
-        }
-
-        .ip-footer strong {
-          display: block;
-          font-size: 22px;
-          color: white;
-          margin-bottom: 18px;
-        }
-
-        .ip-mobile-bottom {
-          display: none;
-        }
-
-        .ip-mobile-menu {
-          position: fixed;
-          inset: 0;
-          background: #101c2a;
-          z-index: 100;
-          padding: 35px;
-          color: white;
-        }
-
-        .ip-mobile-menu-top {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .ip-mobile-menu-links {
-          display: flex;
-          flex-direction: column;
-          gap: 25px;
-          margin-top: 65px;
-        }
-
-        .ip-mobile-menu-links a {
-          font-size: 23px;
-        }
-
-        @keyframes ipFade {
+        @keyframes fadeRise {
           from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(28px);
           }
           to {
             opacity: 1;
@@ -437,399 +519,683 @@ export default function Home() {
           }
         }
 
-        @media(max-width:1100px) {
-          .ip-nav {
+        .intro-eyebrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 17px;
+          color: var(--gold);
+          font-size: 10px;
+          letter-spacing: 4px;
+          margin-bottom: 45px;
+        }
+
+        .eyebrow-line {
+          width: 35px;
+          height: 1px;
+          background: var(--gold);
+          opacity: .6;
+        }
+
+        .intro-small {
+          font-size: 14px;
+          letter-spacing: 5px;
+          font-weight: 300;
+          margin-bottom: 22px;
+          color: #ddd8cd;
+        }
+
+        .intro-content h1 {
+          font-family: Georgia, "Times New Roman", serif;
+          font-size: clamp(53px, 8.5vw, 126px);
+          font-weight: 400;
+          letter-spacing: -.045em;
+          line-height: 1.05;
+          margin: 0;
+        }
+
+        .intro-content h1 em {
+          font-weight: 400;
+          color: var(--gold);
+          font-style: normal;
+          letter-spacing: -.04em;
+        }
+
+        .hero-number {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 28px;
+          margin: 30px 0;
+          color: var(--gold);
+          font-family: Georgia, serif;
+          font-size: 25px;
+          letter-spacing: 3px;
+        }
+
+        .hero-number i {
+          width: 75px;
+          height: 1px;
+          background: var(--gold);
+          opacity: .6;
+        }
+
+        .intro-description {
+          color: #c5cbd0;
+          font-size: 15px;
+          font-weight: 300;
+          line-height: 2.2;
+        }
+
+        .explore-button {
+          margin: 45px auto 0;
+          width: fit-content;
+          display: flex;
+          align-items: center;
+          gap: 25px;
+          border: 1px solid rgba(201,172,123,.5);
+          padding: 17px 24px;
+          color: var(--gold);
+          font-size: 10px;
+          letter-spacing: 2px;
+          transition: .3s;
+        }
+
+        .explore-button:hover {
+          background: var(--gold);
+          color: #111;
+        }
+
+        .hero-bottom {
+          position: absolute;
+          bottom: 44px;
+          left: 6%;
+          right: 6%;
+          display: flex;
+          justify-content: space-between;
+          color: #8b929b;
+          font-size: 9px;
+          letter-spacing: 2px;
+        }
+
+        .collection {
+          background: var(--ivory);
+          color: var(--navy);
+          padding: 115px 5% 100px;
+        }
+
+        .collection-heading {
+          text-align: center;
+          margin-bottom: 60px;
+        }
+
+        .gold-label {
+          font-size: 11px;
+          color: #aa8956;
+          letter-spacing: 4px;
+          font-weight: 600;
+        }
+
+        .collection-heading h2 {
+          font-size: clamp(32px, 4vw, 56px);
+          font-weight: 400;
+          line-height: 1.5;
+          margin: 24px 0;
+          letter-spacing: -2px;
+        }
+
+        .collection-heading h2 em {
+          font-family: Georgia, "Noto Sans KR", serif;
+          font-style: normal;
+          color: #a88c64;
+        }
+
+        .collection-heading > p:last-child {
+          font-size: 14px;
+          line-height: 2;
+          color: #737b83;
+        }
+
+        .complex-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 18px;
+          max-width: 1440px;
+          margin: 0 auto;
+        }
+
+        .complex-card {
+          position: relative;
+          min-height: 680px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 35px;
+          overflow: hidden;
+          background: #24354a;
+          color: white;
+          isolation: isolate;
+        }
+
+        .complex-four {
+          background: #34414a;
+        }
+
+        .complex-photo {
+          position: absolute;
+          inset: 0;
+          z-index: -2;
+          background-size: cover;
+          background-position: center;
+          transition: transform .8s ease;
+        }
+
+        .complex-card:hover .complex-photo {
+          transform: scale(1.07);
+        }
+
+        .complex-pattern {
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background:
+            linear-gradient(
+              135deg,
+              rgba(201,172,123,.1),
+              transparent 40%
+            ),
+            repeating-linear-gradient(
+              90deg,
+              transparent 0,
+              transparent 95px,
+              rgba(255,255,255,.035) 96px
+            );
+          pointer-events: none;
+        }
+
+        .complex-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: #e8d9bd;
+          font-family: Georgia, serif;
+          font-size: 12px;
+          letter-spacing: 2px;
+        }
+
+        .complex-content {
+          position: relative;
+          z-index: 2;
+        }
+
+        .complex-english {
+          color: #dfc69d;
+          font-size: 11px;
+          letter-spacing: 3px;
+          margin-bottom: 10px;
+        }
+
+        .complex-number {
+          display: block;
+          font-family: Georgia, serif;
+          font-size: clamp(100px, 12vw, 180px);
+          line-height: 1;
+          color: rgba(255,255,255,.17);
+          letter-spacing: -10px;
+        }
+
+        .complex-content h3 {
+          font-size: 44px;
+          font-weight: 400;
+          margin: -15px 0 10px;
+          letter-spacing: -2px;
+        }
+
+        .complex-subtitle {
+          color: #d6d8db;
+          font-size: 14px;
+          font-weight: 300;
+        }
+
+        .complex-divider {
+          height: 1px;
+          background: rgba(255,255,255,.3);
+          margin: 35px 0 22px;
+        }
+
+        .complex-link {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 14px;
+        }
+
+        .complex-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          border: 1px solid rgba(255,255,255,.5);
+          border-radius: 50%;
+          transition: .3s;
+        }
+
+        .complex-card:hover .complex-arrow {
+          background: var(--gold);
+          color: var(--navy);
+          border-color: var(--gold);
+        }
+
+        .image-notice {
+          max-width: 1440px;
+          margin: 20px auto 0;
+          color: #7a7e84;
+          font-size: 11px;
+        }
+
+        .statement {
+          background: #111d2b;
+          text-align: center;
+          padding: 140px 20px;
+        }
+
+        .statement-inner {
+          max-width: 850px;
+          margin: auto;
+        }
+
+        .statement-line {
+          height: 65px;
+          width: 1px;
+          background: var(--gold);
+          margin: 30px auto;
+        }
+
+        .statement h2 {
+          font-size: clamp(33px, 4.5vw, 59px);
+          line-height: 1.6;
+          font-weight: 300;
+          letter-spacing: -2px;
+        }
+
+        .statement h2 em {
+          font-style: normal;
+          color: var(--gold);
+        }
+
+        .statement-inner > p {
+          color: #aab3bd;
+          line-height: 2.1;
+          font-size: 14px;
+          margin: 28px 0;
+        }
+
+        .statement-inner > a {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          color: var(--gold);
+          font-size: 13px;
+          border-bottom: 1px solid var(--gold);
+          padding-bottom: 12px;
+          margin-top: 15px;
+        }
+
+        .contact-section {
+          background: #edeae3;
+          color: var(--navy);
+          padding: 105px 6%;
+        }
+
+        .contact-inner {
+          max-width: 1300px;
+          margin: auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 40px;
+        }
+
+        .contact-inner h2 {
+          font-size: clamp(29px, 3.7vw, 48px);
+          font-weight: 400;
+          line-height: 1.55;
+          letter-spacing: -1.5px;
+        }
+
+        .contact-inner h2 em {
+          color: #a88c64;
+          font-style: normal;
+        }
+
+        .contact-description {
+          color: #777e85;
+          font-size: 14px;
+          line-height: 2;
+        }
+
+        .contact-button {
+          min-width: 300px;
+          background: #142338;
+          color: white;
+          padding: 30px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .contact-button div {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .contact-button span {
+          color: #cbb58f;
+          font-size: 12px;
+        }
+
+        .contact-button strong {
+          font-size: 27px;
+          font-family: Georgia, sans-serif;
+          letter-spacing: 1px;
+        }
+
+        .footer {
+          background: #08111d;
+          padding: 65px 6% 30px;
+        }
+
+        .footer-main {
+          display: flex;
+          justify-content: space-between;
+          gap: 30px;
+          padding-bottom: 35px;
+          border-bottom: 1px solid rgba(255,255,255,.13);
+        }
+
+        .footer-brand {
+          font-family: Georgia, serif;
+          letter-spacing: 2px;
+          font-size: 20px;
+          font-weight: 400;
+        }
+
+        .footer-main p {
+          font-size: 12px;
+          color: #9ca6b0;
+        }
+
+        .footer-contact {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .footer-contact strong {
+          font-size: 13px;
+          color: var(--gold);
+        }
+
+        .footer-contact a {
+          font-size: 20px;
+        }
+
+        .footer-notice {
+          padding: 25px 0;
+          color: #a0a7b0;
+          font-size: 12px;
+          line-height: 2;
+        }
+
+        .footer-bottom {
+          display: flex;
+          justify-content: space-between;
+          color: #7d8791;
+          font-size: 10px;
+          letter-spacing: 1px;
+          padding-top: 25px;
+          border-top: 1px solid rgba(255,255,255,.1);
+        }
+
+        .floating-call {
+          position: fixed;
+          bottom: 25px;
+          right: 25px;
+          z-index: 40;
+          background: var(--gold);
+          color: #101b29;
+          padding: 16px 23px;
+          border-radius: 50px;
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          font-size: 13px;
+          font-weight: 700;
+          box-shadow: 0 10px 35px rgba(0,0,0,.25);
+        }
+
+        @media (max-width: 900px) {
+          .desktop-nav {
             display: none;
           }
 
-          .ip-menu-button {
+          .menu-button {
             display: block;
+          }
+
+          .site-header {
+            height: 75px;
+          }
+
+          .intro-content h1 {
+            font-size: clamp(46px, 10vw, 85px);
+          }
+
+          .complex-card {
+            min-height: 570px;
+            padding: 25px;
+          }
+
+          .contact-inner {
+            flex-direction: column;
+            align-items: stretch;
           }
         }
 
-        @media(max-width:768px) {
-          .ip-header-inner {
-            width: calc(100% - 36px);
-            height: 72px;
+        @media (max-width: 600px) {
+          .site-header {
+            padding: 0 20px;
           }
 
-          .ip-logo {
-            font-size: 18px;
+          .brand-mark {
+            width: 35px;
+            height: 35px;
+            font-size: 24px;
           }
 
-          .ip-phone {
+          .brand-copy strong {
+            font-size: 13px;
+            letter-spacing: 1.6px;
+          }
+
+          .brand-copy small {
+            font-size: 8px;
+            letter-spacing: 1.4px;
+          }
+
+          .header-phone span {
             display: none;
           }
 
-          .ip-hero {
-            min-height: 680px;
+          .intro-hero {
+            min-height: 100svh;
+            padding: 115px 18px 90px;
           }
 
-          .ip-hero h1 {
-            letter-spacing: -1.5px;
+          .intro-hero::before {
+            inset: 12px;
           }
 
-          .ip-eyebrow {
-            font-size: 10px;
+          .intro-decoration-one {
+            width: 420px;
+            height: 420px;
+          }
+
+          .intro-decoration-two {
+            width: 610px;
+            height: 610px;
+          }
+
+          .intro-eyebrow {
+            font-size: 8px;
+            letter-spacing: 2px;
+            gap: 10px;
+            margin-bottom: 35px;
+          }
+
+          .eyebrow-line {
+            width: 20px;
+          }
+
+          .intro-small {
+            font-size: 11px;
             letter-spacing: 3px;
           }
 
-          .ip-hero-subtitle {
-            font-size: 13px;
-            line-height: 1.9;
+          .intro-content h1 {
+            font-size: clamp(40px, 10vw, 58px);
           }
 
-          .ip-hero-actions {
-            flex-direction: column;
-            align-items: center;
+          .hero-number {
+            margin: 25px 0;
+            font-size: 22px;
           }
 
-          .ip-hero-actions .ip-btn {
-            width: 220px;
+          .hero-number i {
+            width: 50px;
           }
 
-          .ip-grid-two,
-          .ip-features {
+          .intro-description {
+            font-size: 12px;
+          }
+
+          .explore-button {
+            margin-top: 35px;
+            font-size: 9px;
+            padding: 15px 17px;
+            gap: 15px;
+          }
+
+          .hero-bottom {
+            bottom: 32px;
+            left: 25px;
+            right: 25px;
+            font-size: 8px;
+          }
+
+          .hero-bottom span:nth-child(3) {
+            display: none;
+          }
+
+          .collection {
+            padding: 85px 17px 70px;
+          }
+
+          .collection-heading {
+            margin-bottom: 35px;
+          }
+
+          .collection-heading h2 {
+            font-size: 30px;
+          }
+
+          .collection-heading > p:last-child {
+            font-size: 12px;
+          }
+
+          .complex-grid {
             grid-template-columns: 1fr;
+            gap: 14px;
           }
 
-          .ip-complex-card {
-            min-height: 370px;
-            padding: 30px;
+          .complex-card {
+            min-height: 520px;
+            padding: 25px;
           }
 
-          .ip-banner {
-            padding: 75px 20px;
+          .complex-number {
+            font-size: 115px;
           }
 
-          .ip-mobile-bottom {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 60;
-            box-shadow: 0 -4px 20px rgba(0,0,0,.15);
+          .complex-content h3 {
+            font-size: 39px;
           }
 
-          .ip-mobile-bottom a {
-            min-height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 600;
+          .complex-english {
+            font-size: 10px;
           }
 
-          .ip-mobile-bottom a:first-child {
-            background: #c9ab78;
-            color: #101c2a;
+          .statement {
+            padding: 100px 20px;
           }
 
-          .ip-mobile-bottom a:last-child {
-            background: #101c2a;
-            color: white;
+          .statement h2 {
+            font-size: 31px;
+          }
+
+          .statement-inner > p {
+            font-size: 12px;
+          }
+
+          .desktop-only {
+            display: none;
+          }
+
+          .contact-section {
+            padding: 80px 20px;
+          }
+
+          .contact-inner h2 {
+            font-size: 30px;
+          }
+
+          .contact-button {
+            min-width: 0;
+          }
+
+          .footer {
+            padding: 50px 20px 100px;
+          }
+
+          .footer-main {
+            flex-direction: column;
+          }
+
+          .footer-bottom {
+            flex-direction: column;
+            gap: 10px;
+          }
+
+          .floating-call {
+            bottom: 15px;
+            right: 15px;
+            padding: 14px 19px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            scroll-behavior: auto !important;
+            animation-duration: .01ms !important;
+            transition-duration: .01ms !important;
           }
         }
       `}</style>
-
-      <header className="ip-header">
-        <div className="ip-header-inner">
-          <a href="#" className="ip-logo">
-            IPARK CITY
-            <small>CHEONAN 3 · 4</small>
-          </a>
-
-          <nav className="ip-nav">
-            {menus.map((menu) => (
-              <a key={menu.name} href={menu.href}>
-                {menu.name}
-              </a>
-            ))}
-          </nav>
-
-          <a className="ip-phone" href={TEL}>
-            분양 상담 {PHONE}
-          </a>
-
-          <button
-            className="ip-menu-button"
-            onClick={() => setMenuOpen(true)}
-            aria-label="메뉴 열기"
-          >
-            <Menu size={27} />
-          </button>
-        </div>
-      </header>
-
-      {menuOpen && (
-        <div className="ip-mobile-menu">
-          <div className="ip-mobile-menu-top">
-            <strong>IPARK CITY</strong>
-            <button
-              className="ip-menu-button"
-              style={{ display: "block" }}
-              onClick={() => setMenuOpen(false)}
-              aria-label="메뉴 닫기"
-            >
-              <X size={28} />
-            </button>
-          </div>
-
-          <nav className="ip-mobile-menu-links">
-            {menus.map((menu) => (
-              <a
-                key={menu.name}
-                href={menu.href}
-                onClick={() => setMenuOpen(false)}
-              >
-                {menu.name}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
-
-      <section className="ip-hero">
-        <div className="ip-hero-content">
-          <p className="ip-eyebrow">
-            THE NEW RESIDENTIAL VISION
-          </p>
-
-          <h1>
-            천안 아이파크 시티
-            <br />
-            3 · 4단지
-          </h1>
-
-          <p className="ip-hero-subtitle">
-            새로운 주거의 가치를 만나는 공간
-          </p>
-
-          <div className="ip-hero-actions">
-            <a href="#project" className="ip-btn ip-btn-gold">
-              분양정보 확인 <ArrowRight size={16} />
-            </a>
-
-            <a href="#modelhouse" className="ip-btn ip-btn-outline">
-              모델하우스 상담 <ChevronRight size={16} />
-            </a>
-          </div>
-        </div>
-
-        <a href="#project" className="ip-hero-bottom">
-          SCROLL DOWN
-          <ArrowDown size={20} />
-        </a>
-      </section>
-
-      <div className="ip-notice">
-        본 홈페이지는 미소부동산에서 운영하는
-        비공식 분양 안내 사이트이며,
-        시행사·시공사의 공식 홈페이지가 아닙니다.
-      </div>
-
-      <section id="project" className="section">
-        <div className="container">
-          <div className="ip-center ip-section-heading">
-            <p className="section-label">PROJECT OVERVIEW</p>
-            <h2 className="section-title">
-              천안 아이파크 시티
-              <br />
-              3·4단지 분양안내
-            </h2>
-            <p className="section-description">
-              천안 아이파크 시티 3단지와 4단지의
-              분양 및 견본주택 상담 정보를 안내합니다.
-            </p>
-          </div>
-
-          <div className="ip-grid-two">
-            {complexes.map((item) => (
-              <article
-                className="ip-complex-card"
-                key={item.number}
-              >
-                <span className="ip-complex-number">
-                  {item.number}
-                </span>
-
-                <p className="section-label">
-                  {item.subtitle}
-                </p>
-
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-
-                <a href="#modelhouse" className="ip-card-link">
-                  방문 상담 안내 <ArrowRight size={17} />
-                </a>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="location" className="section dark-section">
-        <div className="container">
-          <div className="ip-center ip-section-heading">
-            <p className="section-label">LOCATION</p>
-            <h2 className="section-title">
-              천안 성성권역의
-              <br />
-              주거환경을 살펴보다
-            </h2>
-            <p className="section-description">
-              교통, 교육, 생활 인프라 등
-              실제 확인된 입지 정보를 중심으로 안내합니다.
-            </p>
-          </div>
-
-          <div className="ip-features">
-            {features.map((item) => (
-              <div className="ip-feature" key={item.number}>
-                <span className="ip-feature-number">
-                  {item.number}
-                </span>
-                <p className="section-label">{item.english}</p>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="premium" className="section">
-        <div className="container ip-center">
-          <p className="section-label">PREMIUM LIFESTYLE</p>
-          <h2 className="section-title">
-            삶의 기준을 높이는
-            <br />
-            새로운 주거 경험
-          </h2>
-          <p className="section-description">
-            단지별 프리미엄과 커뮤니티 시설은
-            공식 분양 자료 확인 후 상세하게 안내합니다.
-          </p>
-          <div className="gold-line" />
-        </div>
-      </section>
-
-      <section id="complex" className="section dark-section">
-        <div className="container">
-          <div className="ip-center ip-section-heading">
-            <p className="section-label">COMPLEX GUIDE</p>
-            <h2 className="section-title">
-              단지별 상세 안내
-            </h2>
-            <p className="section-description">
-              3단지와 4단지의 배치도,
-              평면도 및 공급 정보를 구분해 안내할 예정입니다.
-            </p>
-          </div>
-
-          <div className="ip-grid-two">
-            <div className="ip-info-box">
-              <h3>3단지 단지안내</h3>
-              <p>
-                단지배치도, 타입별 평면도 및
-                상세 공급 정보를 준비 중입니다.
-              </p>
-            </div>
-
-            <div className="ip-info-box">
-              <h3>4단지 단지안내</h3>
-              <p>
-                단지배치도, 타입별 평면도 및
-                상세 공급 정보를 준비 중입니다.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="sales" className="section">
-        <div className="container ip-center">
-          <p className="section-label">SALES INFORMATION</p>
-          <h2 className="section-title">
-            분양 정보 안내
-          </h2>
-          <p className="section-description">
-            분양 일정, 공급 조건 및 모집공고 등은
-            확인된 자료를 기준으로 업데이트합니다.
-            <br />
-            자세한 사항은 미소부동산으로 문의해 주세요.
-          </p>
-          <div className="gold-line" />
-        </div>
-      </section>
-
-      <section id="modelhouse" className="ip-banner">
-        <p className="section-label">MODEL HOUSE</p>
-
-        <h2>
-          모델하우스 · 견본주택
-          <br />
-          방문 상담 안내
-        </h2>
-
-        <p>
-          천안 아이파크 시티 3·4단지
-          <br />
-          방문 상담 및 분양 문의
-        </p>
-
-        <div
-          className="ip-hero-actions"
-          style={{ marginTop: 30 }}
-        >
-          <a href={TEL} className="ip-btn ip-btn-gold">
-            <Phone size={17} />
-            {PHONE}
-          </a>
-        </div>
-
-        <p style={{ marginTop: 24, fontSize: 12 }}>
-          미소부동산 상담 연결 · 실제 방문 가능 일정은
-          전화로 확인해 주세요.
-        </p>
-      </section>
-
-      <footer className="ip-footer">
-        <div className="container">
-          <strong>천안 아이파크 시티 3·4단지</strong>
-
-          <p>운영 및 분양 상담 안내: 미소부동산</p>
-          <p>상담전화: {PHONE}</p>
-          <p>
-            본 사이트는 미소부동산이 운영하는
-            비공식 분양 안내 홈페이지입니다.
-          </p>
-          <p>
-            시행사·시공사의 공식 홈페이지가 아니며,
-            실제 분양 조건과 일정은 공식 자료를
-            통해 확인하시기 바랍니다.
-          </p>
-          <p>
-            © {new Date().getFullYear()} MISO REAL ESTATE.
-          </p>
-        </div>
-      </footer>
-
-      <div className="ip-mobile-bottom">
-        <a href={TEL}>
-          <Phone size={18} />
-          전화 상담
-        </a>
-
-        <a href="#modelhouse">
-          <CalendarDays size={18} />
-          방문 상담
-        </a>
-      </div>
     </main>
   );
 }
