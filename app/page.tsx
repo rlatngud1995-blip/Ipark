@@ -47,8 +47,8 @@ export default function Home() {
 
   return (
     <main className="luxury-site">
-      {/* 실내 공간 */}
-      <div className="interior">
+      {/* 실내 공간 배경 */}
+      <div className="interior" aria-hidden="true">
         <div className="interior-ceiling" />
         <div className="interior-left-wall" />
         <div className="interior-right-wall" />
@@ -66,12 +66,9 @@ export default function Home() {
         <div className="interior-light" />
       </div>
 
-      {/* 현관문 오프닝 */}
+      {/* 고급 현관문 오프닝 */}
       {!finished && (
-        <div
-          className={`entrance phase-${phase}`}
-          aria-label="고급 주거 공간 입장 애니메이션"
-        >
+        <div className={`entrance phase-${phase}`}>
           <div className="entrance-wall">
             <div className="wall-left" />
             <div className="wall-right" />
@@ -118,8 +115,12 @@ export default function Home() {
         </div>
       )}
 
-      {/* 메인 */}
-      <div className={`main-screen ${finished ? "visible" : ""}`}>
+      {/* 오프닝 이후 메인 화면 */}
+      <div
+        className={`main-screen ${
+          finished ? "visible" : ""
+        }`}
+      >
         <header className="main-header">
           <Link href="/" className="brand">
             <span className="brand-emblem">I</span>
@@ -135,84 +136,95 @@ export default function Home() {
           </a>
         </header>
 
-        <section className="selection-screen">
+        <section className="selection-screen premium-selection">
           <div className="selection-heading">
             <span className="heading-kicker">
               THE EXCLUSIVE COLLECTION
             </span>
+
             <h2>
-              당신의 새로운 공간,
+              당신의 새로운 삶,
               <br />
-              <em>어디에서 시작할까요?</em>
+              <em>그 시작을 선택하세요.</em>
             </h2>
-            <p>
-              천안 아이파크 시티
-              <br className="mobile-break" />
-              {" "}3단지와 4단지 중 선택해 주세요.
-            </p>
+
+            <p>천안 아이파크 시티 3 · 4단지</p>
           </div>
 
-          <div className="choice-grid">
+          <div className="premium-grid">
+            {/* 3단지 */}
             <Link
               href="/complex/3"
-              className="choice-card choice-three"
+              className="premium-panel panel-3"
             >
-              <div className="card-glow" />
-              <div className="card-building building-three">
-                <div className="tower tower-a" />
-                <div className="tower tower-b" />
-                <div className="tower tower-c" />
-              </div>
+              <div className="premium-image" />
+              <div className="premium-overlay" />
 
-              <div className="choice-top">
-                <span>THE THIRD COLLECTION</span>
+              <div className="premium-panel-top">
+                <span>CHEONAN IPARK CITY</span>
                 <ArrowUpRight size={23} />
               </div>
 
-              <div className="choice-content">
-                <span className="choice-number">03</span>
+              <div className="premium-panel-content">
+                <span className="premium-eyebrow">
+                  THE THIRD COLLECTION
+                </span>
+
+                <strong className="premium-number">
+                  03
+                </strong>
+
                 <h3>3단지</h3>
                 <p>천안 아이파크 시티 3단지</p>
-                <div className="choice-line" />
-                <div className="choice-enter">
+
+                <div className="premium-enter">
                   <span>3단지 입장하기</span>
-                  <span className="circle-arrow">
-                    <ArrowRight size={22} />
+                  <span className="enter-circle">
+                    <ArrowRight size={20} />
                   </span>
                 </div>
               </div>
             </Link>
 
+            {/* 4단지 */}
             <Link
               href="/complex/4"
-              className="choice-card choice-four"
+              className="premium-panel panel-4"
             >
-              <div className="card-glow" />
-              <div className="card-building building-four">
-                <div className="tower tower-a" />
-                <div className="tower tower-b" />
-                <div className="tower tower-c" />
-              </div>
+              <div className="premium-image" />
+              <div className="premium-overlay" />
 
-              <div className="choice-top">
-                <span>THE FOURTH COLLECTION</span>
+              <div className="premium-panel-top">
+                <span>CHEONAN IPARK CITY</span>
                 <ArrowUpRight size={23} />
               </div>
 
-              <div className="choice-content">
-                <span className="choice-number">04</span>
+              <div className="premium-panel-content">
+                <span className="premium-eyebrow">
+                  THE FOURTH COLLECTION
+                </span>
+
+                <strong className="premium-number">
+                  04
+                </strong>
+
                 <h3>4단지</h3>
                 <p>천안 아이파크 시티 4단지</p>
-                <div className="choice-line" />
-                <div className="choice-enter">
+
+                <div className="premium-enter">
                   <span>4단지 입장하기</span>
-                  <span className="circle-arrow">
-                    <ArrowRight size={22} />
+                  <span className="enter-circle">
+                    <ArrowRight size={20} />
                   </span>
                 </div>
               </div>
             </Link>
           </div>
+
+          <p className="photo-note">
+            단지별 이미지는 실제 사용 허가를 받은
+            조감도로 교체할 예정입니다.
+          </p>
         </section>
 
         <footer className="site-footer">
@@ -224,9 +236,12 @@ export default function Home() {
           </div>
 
           <p>
-            본 사이트는 미소부동산 운영의 비공식
-            부동산 정보·상담 안내 사이트이며,
-            시행사·시공사 공식 홈페이지가 아닙니다.
+            본 사이트는 미소부동산이 운영하는
+            비공식 부동산 정보·상담 안내 사이트이며,
+            시행사·시공사·공식 분양사무소가 운영하는
+            공식 홈페이지가 아닙니다.
+            단지별 공급 정보는 공식 자료를 통해
+            확인하시기 바랍니다.
           </p>
         </footer>
       </div>
@@ -242,7 +257,8 @@ export default function Home() {
           box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
           margin: 0;
           min-height: 100%;
           background: var(--deep);
@@ -292,12 +308,13 @@ export default function Home() {
           left: 0;
           right: 0;
           height: 27%;
-          background: linear-gradient(
-            #272d31,
-            #54585a
-          );
+          background:
+            linear-gradient(#272d31, #54585a);
           clip-path: polygon(
-            0 0, 100% 0, 78% 100%, 22% 100%
+            0 0,
+            100% 0,
+            78% 100%,
+            22% 100%
           );
         }
 
@@ -324,7 +341,10 @@ export default function Home() {
         .interior-left-wall {
           left: 0;
           clip-path: polygon(
-            0 0, 100% 27%, 100% 75%, 0 100%
+            0 0,
+            100% 27%,
+            100% 75%,
+            0 100%
           );
         }
 
@@ -332,7 +352,10 @@ export default function Home() {
           right: 0;
           transform: scaleX(-1);
           clip-path: polygon(
-            0 0, 100% 27%, 100% 75%, 0 100%
+            0 0,
+            100% 27%,
+            100% 75%,
+            0 100%
           );
         }
 
@@ -353,7 +376,10 @@ export default function Home() {
               #3e4142
             );
           clip-path: polygon(
-            22% 0, 78% 0, 100% 100%, 0 100%
+            22% 0,
+            78% 0,
+            100% 100%,
+            0 100%
           );
         }
 
@@ -383,11 +409,12 @@ export default function Home() {
           height: 65%;
           left: 22%;
           top: 0;
-          background: radial-gradient(
-            circle,
-            rgba(255,236,190,.85),
-            transparent 70%
-          );
+          background:
+            radial-gradient(
+              circle,
+              rgba(255,236,190,.85),
+              transparent 70%
+            );
         }
 
         .city {
@@ -402,14 +429,23 @@ export default function Home() {
           height: 35%;
           opacity: .5;
           clip-path: polygon(
-            0 65%, 12% 65%, 12% 25%,
-            23% 25%, 23% 50%,
-            34% 50%, 34% 10%,
-            47% 10%, 47% 40%,
-            59% 40%, 59% 0,
-            73% 0, 73% 50%,
-            86% 50%, 86% 20%,
-            100% 20%, 100% 100%,
+            0 65%,
+            12% 65%,
+            12% 25%,
+            23% 25%,
+            23% 50%,
+            34% 50%,
+            34% 10%,
+            47% 10%,
+            47% 40%,
+            59% 40%,
+            59% 0,
+            73% 0,
+            73% 50%,
+            86% 50%,
+            86% 20%,
+            100% 20%,
+            100% 100%,
             0 100%
           );
         }
@@ -418,12 +454,19 @@ export default function Home() {
           height: 22%;
           background: #1d2a39;
           clip-path: polygon(
-            0 30%, 17% 30%, 17% 0,
-            31% 0, 31% 40%,
-            48% 40%, 48% 10%,
-            64% 10%, 64% 45%,
-            80% 45%, 80% 5%,
-            100% 5%, 100% 100%,
+            0 30%,
+            17% 30%,
+            17% 0,
+            31% 0,
+            31% 40%,
+            48% 40%,
+            48% 10%,
+            64% 10%,
+            64% 45%,
+            80% 45%,
+            80% 5%,
+            100% 5%,
+            100% 100%,
             0 100%
           );
         }
@@ -431,7 +474,8 @@ export default function Home() {
         .window-frame {
           position: absolute;
           background: #222d35;
-          box-shadow: 0 0 8px rgba(0,0,0,.35);
+          box-shadow:
+            0 0 8px rgba(0,0,0,.35);
         }
 
         .vertical-one {
@@ -455,14 +499,15 @@ export default function Home() {
         .interior-light {
           position: absolute;
           inset: 0;
-          background: radial-gradient(
-            ellipse at center,
-            rgba(255,215,165,.14),
-            rgba(0,0,0,.5) 90%
-          );
+          background:
+            radial-gradient(
+              ellipse at center,
+              rgba(255,215,165,.14),
+              rgba(0,0,0,.5) 90%
+            );
         }
 
-        /* 현관 오프닝 */
+        /* 현관문 오프닝 */
 
         .entrance {
           position: fixed;
@@ -478,6 +523,7 @@ export default function Home() {
           0%, 45% {
             transform: scale(1);
           }
+
           90%, 100% {
             transform: scale(1.22);
           }
@@ -506,7 +552,8 @@ export default function Home() {
         .wall-right {
           width: 50%;
           height: 100%;
-          border-right: 1px solid rgba(255,255,255,.06);
+          border-right:
+            1px solid rgba(255,255,255,.06);
         }
 
         .door-frame {
@@ -550,7 +597,8 @@ export default function Home() {
             );
           box-shadow:
             inset 0 0 45px rgba(0,0,0,.65);
-          transition: transform 1.65s
+          transition:
+            transform 1.65s
             cubic-bezier(.65,0,.18,1);
           z-index: 3;
           backface-visibility: hidden;
@@ -577,7 +625,8 @@ export default function Home() {
         .door-groove {
           position: absolute;
           inset: 5%;
-          border: 1px solid rgba(210,184,141,.19);
+          border:
+            1px solid rgba(210,184,141,.19);
           box-shadow:
             inset 0 0 0 12px rgba(0,0,0,.1);
         }
@@ -588,13 +637,15 @@ export default function Home() {
           width: 7px;
           height: 110px;
           border-radius: 8px;
-          background: linear-gradient(
-            90deg,
-            #7e6745,
-            #f2dfbd,
-            #9e8053
-          );
-          box-shadow: 2px 4px 10px #0008;
+          background:
+            linear-gradient(
+              90deg,
+              #7e6745,
+              #f2dfbd,
+              #9e8053
+            );
+          box-shadow:
+            2px 4px 10px #0008;
         }
 
         .left-handle {
@@ -613,7 +664,8 @@ export default function Home() {
           right: 0;
           text-align: center;
           pointer-events: none;
-          text-shadow: 0 4px 25px #000;
+          text-shadow:
+            0 4px 25px #000;
           transition:
             opacity .65s,
             transform .65s;
@@ -631,7 +683,8 @@ export default function Home() {
         }
 
         .entrance-title h1 {
-          font: 400 clamp(45px, 7vw, 100px)/1.1
+          font:
+            400 clamp(45px, 7vw, 100px)/1.1
             Georgia, serif;
           letter-spacing: -2px;
           margin: 25px 0;
@@ -678,7 +731,8 @@ export default function Home() {
           padding: 12px 16px;
           color: white;
           background: rgba(0,0,0,.45);
-          border: 1px solid rgba(255,255,255,.4);
+          border:
+            1px solid rgba(255,255,255,.4);
           cursor: pointer;
           font-size: 10px;
           letter-spacing: 1px;
@@ -695,8 +749,8 @@ export default function Home() {
           background:
             linear-gradient(
               180deg,
-              rgba(6,14,24,.92),
-              rgba(9,20,34,.84)
+              rgba(6,14,24,.94),
+              rgba(9,20,34,.86)
             );
           opacity: 0;
           visibility: hidden;
@@ -714,7 +768,8 @@ export default function Home() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid rgba(255,255,255,.14);
+          border-bottom:
+            1px solid rgba(255,255,255,.14);
         }
 
         .brand {
@@ -759,14 +814,16 @@ export default function Home() {
           font-size: 14px;
         }
 
+        /* 선택 화면 */
+
         .selection-screen {
           flex: 1;
-          padding: 65px 5% 75px;
+          padding: 48px 4% 65px;
         }
 
         .selection-heading {
           text-align: center;
-          margin-bottom: 45px;
+          margin-bottom: 35px;
         }
 
         .heading-kicker {
@@ -794,189 +851,170 @@ export default function Home() {
           line-height: 1.9;
         }
 
-        .mobile-break {
-          display: none;
-        }
+        /* 3·4단지 프리미엄 선택 카드 */
 
-        .choice-grid {
-          max-width: 1250px;
-          margin: 0 auto;
+        .premium-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 20px;
+          grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+          gap: 12px;
+          max-width: 1500px;
+          margin: 0 auto;
         }
 
-        .choice-card {
+        .premium-panel {
           position: relative;
-          min-height: 470px;
-          padding: 30px;
+          min-height: 620px;
+          padding: 35px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           overflow: hidden;
           isolation: isolate;
-          border: 1px solid rgba(210,184,141,.35);
-          background:
-            linear-gradient(
-              155deg,
-              #30465a,
-              #0d1928
-            );
+          background: #17283a;
+          border:
+            1px solid rgba(214,187,145,.35);
           transition:
-            transform .45s,
-            border-color .45s,
-            box-shadow .45s;
+            border-color .4s,
+            transform .4s,
+            box-shadow .4s;
         }
 
-        .choice-four {
-          background:
-            linear-gradient(
-              155deg,
-              #4a4b4a,
-              #172230
-            );
-        }
-
-        .choice-card:hover {
-          transform: translateY(-8px);
-          border-color: var(--gold);
+        .premium-panel:hover {
+          border-color: #d6bb91;
+          transform: translateY(-5px);
           box-shadow:
             0 25px 65px rgba(0,0,0,.4);
         }
 
-        .card-glow {
+        .premium-image {
+          position: absolute;
+          inset: 0;
+          z-index: -2;
+          background-position: center;
+          background-size: cover;
+          transition:
+            transform 1s
+            cubic-bezier(.2,.7,.2,1);
+        }
+
+        .panel-3 .premium-image {
+          background-image:
+            url("/complex3.jpg");
+          background-color: #233b50;
+        }
+
+        .panel-4 .premium-image {
+          background-image:
+            url("/complex4.jpg");
+          background-color: #3b4551;
+        }
+
+        .premium-panel:hover .premium-image {
+          transform: scale(1.08);
+        }
+
+        .premium-overlay {
           position: absolute;
           inset: 0;
           z-index: -1;
-          background: radial-gradient(
-            ellipse at 50% 15%,
-            rgba(233,206,165,.2),
-            transparent 65%
-          );
-        }
-
-        .card-building {
-          position: absolute;
-          inset: 0;
-          z-index: -1;
-          opacity: .45;
-        }
-
-        .tower {
-          position: absolute;
-          bottom: 0;
-          width: 23%;
           background:
-            repeating-linear-gradient(
+            linear-gradient(
               180deg,
-              rgba(230,207,169,.35) 0,
-              rgba(230,207,169,.35) 2px,
-              transparent 3px,
-              transparent 17px
-            ),
-            repeating-linear-gradient(
-              90deg,
-              #172534 0,
-              #172534 13px,
-              #42556a 15px,
-              #172534 18px
+              rgba(5,12,22,.25) 0%,
+              rgba(5,12,22,.12) 30%,
+              rgba(5,12,22,.94) 100%
             );
-          border: 1px solid rgba(255,255,255,.1);
-          box-shadow: -12px 0 25px rgba(0,0,0,.2);
         }
 
-        .tower-a {
-          left: 13%;
-          height: 53%;
-        }
-
-        .tower-b {
-          left: 39%;
-          height: 78%;
-        }
-
-        .tower-c {
-          right: 11%;
-          height: 64%;
-        }
-
-        .building-four .tower-a {
-          height: 65%;
-        }
-
-        .building-four .tower-b {
-          height: 56%;
-        }
-
-        .building-four .tower-c {
-          height: 83%;
-        }
-
-        .choice-top {
+        .premium-panel-top {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #e8d7b7;
-          font-size: 10px;
-          letter-spacing: 2.5px;
+          color: #e9d8b9;
+          font-size: 11px;
+          letter-spacing: 2px;
         }
 
-        .choice-content {
+        .premium-panel-content {
           position: relative;
         }
 
-        .choice-number {
+        .premium-eyebrow {
           display: block;
-          font: 110px/.9 Georgia, serif;
-          color: rgba(255,255,255,.23);
+          color: #d6bb91;
+          font-size: 11px;
+          letter-spacing: 3px;
+        }
+
+        .premium-number {
+          display: block;
+          font:
+            400 clamp(100px, 13vw, 190px)/1
+            Georgia, serif;
+          color: rgba(255,255,255,.3);
           letter-spacing: -8px;
         }
 
-        .choice-content h3 {
-          font-size: 45px;
+        .premium-panel-content h3 {
+          margin: -10px 0 8px;
+          font-size: 48px;
           font-weight: 400;
-          margin: 0 0 10px;
+          letter-spacing: -2px;
         }
 
-        .choice-content p {
-          color: #e2e4e6;
+        .premium-panel-content p {
+          color: #e1e3e6;
           font-size: 14px;
-          margin-bottom: 25px;
         }
 
-        .choice-line {
-          height: 1px;
-          background: rgba(255,255,255,.35);
-          margin-bottom: 18px;
-        }
-
-        .choice-enter {
+        .premium-enter {
+          margin-top: 32px;
+          padding-top: 22px;
+          border-top:
+            1px solid rgba(255,255,255,.4);
           display: flex;
-          align-items: center;
           justify-content: space-between;
+          align-items: center;
           font-size: 14px;
+          transition: color .3s;
         }
 
-        .circle-arrow {
+        .premium-panel:hover .premium-enter {
+          color: #e5c998;
+        }
+
+        .enter-circle {
           width: 46px;
           height: 46px;
-          border: 1px solid var(--gold);
-          color: var(--gold);
-          border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
+          border:
+            1px solid rgba(214,187,145,.8);
+          border-radius: 50%;
+          color: var(--gold);
           transition: .3s;
         }
 
-        .choice-card:hover .circle-arrow {
+        .premium-panel:hover .enter-circle {
           background: var(--gold);
           color: #101b29;
         }
 
+        .photo-note {
+          max-width: 1500px;
+          margin: 15px auto 0;
+          color: #aeb7c0;
+          font-size: 11px;
+        }
+
+        /* 하단 */
+
         .site-footer {
           background: rgba(5,11,19,.9);
-          border-top: 1px solid rgba(255,255,255,.12);
+          border-top:
+            1px solid rgba(255,255,255,.12);
           padding: 25px 5%;
         }
 
@@ -996,6 +1034,21 @@ export default function Home() {
           line-height: 1.8;
           margin: 15px 0 0;
         }
+
+        /* 태블릿 */
+
+        @media (max-width: 900px) {
+          .premium-panel {
+            min-height: 510px;
+            padding: 24px;
+          }
+
+          .premium-number {
+            font-size: 120px;
+          }
+        }
+
+        /* 모바일 */
 
         @media (max-width: 700px) {
           .door-frame {
@@ -1052,7 +1105,7 @@ export default function Home() {
           }
 
           .selection-screen {
-            padding: 42px 17px 50px;
+            padding: 40px 12px 50px;
           }
 
           .selection-heading {
@@ -1067,53 +1120,55 @@ export default function Home() {
             font-size: 12px;
           }
 
-          .mobile-break {
-            display: initial;
+          .premium-grid {
+            gap: 9px;
           }
 
-          .choice-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+          .premium-panel {
+            min-height: 390px;
+            padding: 14px;
           }
 
-          .choice-card {
-            min-height: 365px;
-            padding: 15px;
+          .premium-panel-top {
+            font-size: 8px;
+            letter-spacing: .5px;
           }
 
-          .choice-top {
+          .premium-panel-top svg {
+            width: 17px;
+          }
+
+          .premium-eyebrow {
             font-size: 8px;
             letter-spacing: 1px;
           }
 
-          .choice-top svg {
-            width: 18px;
-          }
-
-          .choice-number {
+          .premium-number {
             font-size: 76px;
+            letter-spacing: -4px;
           }
 
-          .choice-content h3 {
-            font-size: 29px;
+          .premium-panel-content h3 {
+            font-size: 30px;
           }
 
-          .choice-content p {
+          .premium-panel-content p {
             font-size: 10px;
             line-height: 1.6;
-            min-height: 32px;
           }
 
-          .choice-enter {
+          .premium-enter {
             font-size: 11px;
+            margin-top: 22px;
+            padding-top: 15px;
           }
 
-          .circle-arrow {
+          .enter-circle {
             width: 32px;
             height: 32px;
           }
 
-          .circle-arrow svg {
+          .enter-circle svg {
             width: 17px;
           }
 
@@ -1131,19 +1186,19 @@ export default function Home() {
         }
 
         @media (max-width: 370px) {
-          .choice-card {
+          .premium-panel {
             padding: 11px;
           }
 
-          .choice-top {
+          .premium-panel-top {
             font-size: 7px;
           }
 
-          .choice-number {
+          .premium-number {
             font-size: 64px;
           }
 
-          .choice-content h3 {
+          .premium-panel-content h3 {
             font-size: 25px;
           }
         }
@@ -1152,8 +1207,10 @@ export default function Home() {
           *,
           *::before,
           *::after {
-            animation-duration: .01ms !important;
-            transition-duration: .01ms !important;
+            animation-duration:
+              .01ms !important;
+            transition-duration:
+              .01ms !important;
           }
         }
       `}</style>
