@@ -8,12 +8,74 @@ import {
   Phone,
 } from "lucide-react";
 
+const SITE = "https://cheonaniparkcity34.com";
 const PHONE = "041-556-0303";
 const TEL = "tel:0415560303";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE}/#website`,
+      name: "천안 아이파크 시티 3·4단지 분양정보",
+      url: SITE,
+      inLanguage: "ko-KR",
+      description:
+        "미소부동산이 운영하는 천안 아이파크 시티 3단지·4단지 부동산 정보 및 상담 안내 홈페이지",
+      publisher: {
+        "@id": `${SITE}/#organization`,
+      },
+    },
+    {
+      "@type": "RealEstateAgent",
+      "@id": `${SITE}/#organization`,
+      name: "미소부동산",
+      telephone: PHONE,
+      url: SITE,
+      description:
+        "천안 아이파크 시티 3단지·4단지 부동산 정보 및 상담 안내",
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${SITE}/#webpage`,
+      url: `${SITE}/`,
+      name: "천안아이파크시티 3·4단지 분양정보",
+      description:
+        "천안아이파크시티3단지·4단지, 성성아이파크시티3단지·4단지 관련 사업개요와 분양정보 및 모델하우스·견본주택 상담 안내",
+      isPartOf: {
+        "@id": `${SITE}/#website`,
+      },
+      about: [
+        {
+          "@type": "Thing",
+          name: "천안 아이파크 시티 3단지",
+          url: `${SITE}/complex/3`,
+        },
+        {
+          "@type": "Thing",
+          name: "천안 아이파크 시티 4단지",
+          url: `${SITE}/complex/4`,
+        },
+      ],
+      inLanguage: "ko-KR",
+    },
+  ],
+};
 
 export default function Home() {
   return (
     <main className="ipark-home">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(
+            /</g,
+            "\\u003c"
+          ),
+        }}
+      />
+
       {/* 메인 조감도 */}
       <section className="hero">
         <div className="hero-photo" />
@@ -43,15 +105,16 @@ export default function Home() {
           </h1>
 
           <p>
-            새로운 일상의 시작,
+            천안아이파크시티 3단지·4단지
             <br />
-            당신의 선택을 기다립니다.
+            분양정보 및 상담 안내
           </p>
 
           <div className="complex-actions">
             <Link
               href="/complex/3"
               className="complex-button"
+              aria-label="천안 아이파크 시티 3단지 상세페이지"
             >
               <div>
                 <small>CHEONAN IPARK CITY 03</small>
@@ -63,6 +126,7 @@ export default function Home() {
             <Link
               href="/complex/4"
               className="complex-button"
+              aria-label="천안 아이파크 시티 4단지 상세페이지"
             >
               <div>
                 <small>CHEONAN IPARK CITY 04</small>
@@ -83,10 +147,10 @@ export default function Home() {
       <section className="selection">
         <div className="selection-heading">
           <span>EXPLORE THE COMPLEX</span>
-          <h2>원하시는 단지를 선택하세요.</h2>
+          <h2>천안 아이파크 시티 3·4단지</h2>
           <p>
-            천안 아이파크 시티 3단지 · 4단지
-            상세 안내
+            단지별 사업개요, 입지환경, 평면도 및
+            분양정보를 확인하세요.
           </p>
         </div>
 
@@ -102,6 +166,13 @@ export default function Home() {
             <div className="selection-card-content">
               <span>CHEONAN IPARK CITY</span>
               <h3>3단지</h3>
+              <p className="selection-description">
+                천안아이파크시티3단지
+                <br />
+                성성아이파크시티3단지
+                <br />
+                모델하우스·견본주택·분양정보 안내
+              </p>
               <div className="selection-link">
                 자세히 보기
                 <ArrowRight size={18} />
@@ -120,12 +191,38 @@ export default function Home() {
             <div className="selection-card-content">
               <span>CHEONAN IPARK CITY</span>
               <h3>4단지</h3>
+              <p className="selection-description">
+                천안아이파크시티4단지
+                <br />
+                성성아이파크시티4단지
+                <br />
+                모델하우스·견본주택·분양정보 안내
+              </p>
               <div className="selection-link">
                 자세히 보기
                 <ArrowRight size={18} />
               </div>
             </div>
           </Link>
+        </div>
+
+        <div className="information-note">
+          <h2>천안 아이파크 시티 분양정보 안내</h2>
+          <p>
+            천안 아이파크 시티 3단지는
+            충청남도 천안시 서북구 부대동 394-2
+            일원에 위치하며 896세대로 안내됩니다.
+            4단지는 부대동 384-20 일원에
+            위치하며 818세대로 안내됩니다.
+          </p>
+          <p>
+            미소부동산은 천안 아이파크 시티
+            3·4단지의 단지별 정보와
+            모델하우스·견본주택 관련 상담을
+            안내합니다. 방문 가능 여부와
+            구체적인 분양 조건은 최신 공식 자료를
+            확인해 주세요.
+          </p>
         </div>
       </section>
 
@@ -174,9 +271,7 @@ export default function Home() {
           min-height: 100vh;
         }
 
-        /* 메인 조감도 */
-
-        .hero {
+        .ipark-home .hero {
           position: relative;
           display: flex;
           flex-direction: column;
@@ -185,11 +280,10 @@ export default function Home() {
           background: #242a30;
         }
 
-        .hero-photo {
+        .ipark-home .hero-photo {
           position: absolute;
           inset: 0;
-          background-image:
-            url("/IMG_2125.jpeg");
+          background-image: url("/IMG_2125.jpeg");
           background-position: center;
           background-size: cover;
           animation: photoReveal 2s ease-out both;
@@ -200,27 +294,25 @@ export default function Home() {
             opacity: .65;
             transform: scale(1.05);
           }
-
           to {
             opacity: 1;
             transform: scale(1);
           }
         }
 
-        .hero-overlay {
+        .ipark-home .hero-overlay {
           position: absolute;
           inset: 0;
-          background:
-            linear-gradient(
-              180deg,
-              rgba(0,0,0,.5) 0%,
-              rgba(0,0,0,.08) 30%,
-              rgba(0,0,0,.2) 52%,
-              rgba(0,0,0,.85) 100%
-            );
+          background: linear-gradient(
+            180deg,
+            rgba(0,0,0,.5) 0%,
+            rgba(0,0,0,.08) 30%,
+            rgba(0,0,0,.2) 52%,
+            rgba(0,0,0,.85) 100%
+          );
         }
 
-        .header {
+        .ipark-home .header {
           position: relative;
           z-index: 2;
           width: 100%;
@@ -228,28 +320,27 @@ export default function Home() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom:
-            1px solid rgba(255,255,255,.25);
+          border-bottom: 1px solid rgba(255,255,255,.25);
         }
 
-        .brand {
+        .ipark-home .brand {
           display: flex;
           flex-direction: column;
           gap: 5px;
         }
 
-        .brand strong {
+        .ipark-home .brand strong {
           font-family: Georgia, serif;
           font-size: 25px;
           letter-spacing: 2px;
         }
 
-        .brand span {
+        .ipark-home .brand span {
           font-size: 10px;
           letter-spacing: 3px;
         }
 
-        .header-contact {
+        .ipark-home .header-contact {
           display: flex;
           align-items: center;
           gap: 10px;
@@ -257,7 +348,7 @@ export default function Home() {
           font-weight: 600;
         }
 
-        .hero-content {
+        .ipark-home .hero-content {
           position: relative;
           z-index: 2;
           width: min(1200px, 90%);
@@ -270,48 +361,46 @@ export default function Home() {
             opacity: 0;
             transform: translateY(25px);
           }
-
           to {
             opacity: 1;
             transform: translateY(0);
           }
         }
 
-        .hero-eyebrow {
+        .ipark-home .hero-eyebrow {
           display: block;
           margin-bottom: 20px;
           font-size: 12px;
           letter-spacing: 4px;
         }
 
-        .hero-content h1 {
+        .ipark-home .hero-content h1 {
           margin: 0;
           font-size: clamp(42px, 6vw, 88px);
           font-weight: 500;
           line-height: 1.25;
           letter-spacing: -3px;
-          text-shadow:
-            0 3px 20px rgba(0,0,0,.3);
+          text-shadow: 0 3px 20px rgba(0,0,0,.3);
         }
 
-        .hero-content h1 span {
+        .ipark-home .hero-content h1 span {
           font-weight: 300;
         }
 
-        .hero-content p {
+        .ipark-home .hero-content p {
           margin: 25px 0 35px;
           font-size: 17px;
           line-height: 1.9;
           color: rgba(255,255,255,.93);
         }
 
-        .complex-actions {
+        .ipark-home .complex-actions {
           display: flex;
           gap: 12px;
           max-width: 680px;
         }
 
-        .complex-button {
+        .ipark-home .complex-button {
           flex: 1;
           min-width: 0;
           padding: 22px 24px;
@@ -321,87 +410,82 @@ export default function Home() {
           gap: 12px;
           background: rgba(255,255,255,.96);
           color: #171717;
-          transition:
-            transform .3s ease,
-            background .3s ease;
+          transition: transform .3s ease, background .3s ease;
         }
 
-        .complex-button:hover {
+        .ipark-home .complex-button:hover {
           background: #fff;
           transform: translateY(-4px);
         }
 
-        .complex-button div {
+        .ipark-home .complex-button div {
           display: flex;
           flex-direction: column;
           gap: 8px;
         }
 
-        .complex-button small {
+        .ipark-home .complex-button small {
           color: #777;
           font-size: 9px;
           letter-spacing: 1.3px;
         }
 
-        .complex-button strong {
+        .ipark-home .complex-button strong {
           font-size: 17px;
           font-weight: 600;
         }
 
-        .hero-bottom {
+        .ipark-home .hero-bottom {
           position: relative;
           z-index: 2;
           padding: 22px 5%;
           display: flex;
           justify-content: space-between;
           gap: 12px;
-          border-top:
-            1px solid rgba(255,255,255,.25);
+          border-top: 1px solid rgba(255,255,255,.25);
           font-size: 10px;
           letter-spacing: 2px;
         }
 
-        /* 단지 선택 */
-
-        .selection {
+        .ipark-home .selection {
           padding: 100px 5%;
           background: #f7f7f5;
           color: #191919;
         }
 
-        .selection-heading {
+        .ipark-home .selection-heading {
           margin-bottom: 45px;
           text-align: center;
         }
 
-        .selection-heading > span {
+        .ipark-home .selection-heading > span {
           color: #777;
           font-size: 11px;
           letter-spacing: 3px;
         }
 
-        .selection-heading h2 {
+        .ipark-home .selection-heading h2 {
           margin: 20px 0 12px;
           font-size: clamp(28px, 4vw, 45px);
           font-weight: 500;
           letter-spacing: -1.5px;
         }
 
-        .selection-heading p {
+        .ipark-home .selection-heading p {
           color: #777;
           font-size: 14px;
+          line-height: 1.8;
         }
 
-        .selection-grid {
+        .ipark-home .selection-grid {
           display: grid;
-          grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 15px;
           max-width: 1250px;
           margin: 0 auto;
         }
 
-        .selection-card {
+        .ipark-home .selection-card {
           position: relative;
           display: flex;
           flex-direction: column;
@@ -411,21 +495,19 @@ export default function Home() {
           overflow: hidden;
           background: #1b2835;
           color: white;
-          transition:
-            transform .3s ease,
-            background .3s ease;
+          transition: transform .3s ease, background .3s ease;
         }
 
-        .selection-card:nth-child(2) {
+        .ipark-home .selection-card:nth-child(2) {
           background: #343c45;
         }
 
-        .selection-card:hover {
+        .ipark-home .selection-card:hover {
           transform: translateY(-5px);
           background: #253c50;
         }
 
-        .selection-number {
+        .ipark-home .selection-number {
           align-self: flex-end;
           color: rgba(255,255,255,.15);
           font-family: Georgia, serif;
@@ -434,49 +516,76 @@ export default function Home() {
           letter-spacing: -7px;
         }
 
-        .selection-card-content {
+        .ipark-home .selection-card-content {
           position: relative;
           z-index: 1;
         }
 
-        .selection-card-content > span {
+        .ipark-home .selection-card-content > span {
           font-size: 10px;
           letter-spacing: 2px;
           color: #c4cbd2;
         }
 
-        .selection-card-content h3 {
-          margin: 13px 0 22px;
+        .ipark-home .selection-card-content h3 {
+          margin: 13px 0 12px;
           font-size: 42px;
           font-weight: 400;
         }
 
-        .selection-link {
+        .ipark-home .selection-description {
+          margin: 0 0 24px;
+          color: #d3dbe2;
+          font-size: 12px;
+          line-height: 1.9;
+          word-break: keep-all;
+        }
+
+        .ipark-home .selection-link {
           display: flex;
           align-items: center;
           gap: 12px;
           font-size: 14px;
         }
 
-        /* 하단 */
+        .ipark-home .information-note {
+          max-width: 950px;
+          margin: 65px auto 0;
+          padding: 35px 0 0;
+          border-top: 1px solid #d6d8da;
+        }
 
-        .footer {
+        .ipark-home .information-note h2 {
+          margin: 0 0 20px;
+          font-size: 24px;
+          font-weight: 600;
+          letter-spacing: -.5px;
+        }
+
+        .ipark-home .information-note p {
+          color: #60666a;
+          font-size: 14px;
+          line-height: 2;
+          word-break: keep-all;
+        }
+
+        .ipark-home .footer {
           padding: 35px 5%;
           background: #10151b;
         }
 
-        .footer-top {
+        .ipark-home .footer-top {
           display: flex;
           justify-content: space-between;
           gap: 15px;
           font-size: 14px;
         }
 
-        .footer-top a {
+        .ipark-home .footer-top a {
           font-weight: 600;
         }
 
-        .footer p {
+        .ipark-home .footer p {
           max-width: 1100px;
           margin: 20px 0 0;
           color: #9ca5ae;
@@ -484,150 +593,165 @@ export default function Home() {
           line-height: 1.9;
         }
 
-        /* 모바일 */
-
         @media (max-width: 700px) {
-          .hero {
+          .ipark-home .hero {
             min-height: 100svh;
           }
 
-          .hero-photo {
+          .ipark-home .hero-photo {
             background-position: center;
           }
 
-          .header {
+          .ipark-home .header {
             padding: 22px 20px;
           }
 
-          .brand strong {
+          .ipark-home .brand strong {
             font-size: 19px;
           }
 
-          .brand span {
+          .ipark-home .brand span {
             font-size: 8px;
           }
 
-          .header-contact {
+          .ipark-home .header-contact {
             font-size: 12px;
           }
 
-          .header-contact span {
+          .ipark-home .header-contact span {
             display: none;
           }
 
-          .hero-content {
+          .ipark-home .hero-content {
             width: calc(100% - 36px);
             margin-bottom: 8vh;
           }
 
-          .hero-eyebrow {
+          .ipark-home .hero-eyebrow {
             font-size: 10px;
             letter-spacing: 2.5px;
           }
 
-          .hero-content h1 {
+          .ipark-home .hero-content h1 {
             font-size: clamp(35px, 9vw, 52px);
             letter-spacing: -2px;
           }
 
-          .hero-content p {
+          .ipark-home .hero-content p {
             margin: 20px 0 30px;
             font-size: 14px;
           }
 
-          .complex-actions {
+          .ipark-home .complex-actions {
             gap: 9px;
           }
 
-          .complex-button {
+          .ipark-home .complex-button {
             padding: 17px 13px;
           }
 
-          .complex-button small {
+          .ipark-home .complex-button small {
             font-size: 8px;
             letter-spacing: 0;
           }
 
-          .complex-button strong {
+          .ipark-home .complex-button strong {
             font-size: 13px;
           }
 
-          .complex-button svg {
+          .ipark-home .complex-button svg {
             width: 17px;
             flex-shrink: 0;
           }
 
-          .hero-bottom {
+          .ipark-home .hero-bottom {
             padding: 17px 20px;
             font-size: 8px;
             letter-spacing: 1px;
           }
 
-          .selection {
+          .ipark-home .selection {
             padding: 75px 16px;
           }
 
-          .selection-heading h2 {
+          .ipark-home .selection-heading h2 {
             font-size: 28px;
           }
 
-          .selection-heading p {
+          .ipark-home .selection-heading p {
             font-size: 12px;
           }
 
-          .selection-grid {
+          .ipark-home .selection-grid {
             gap: 10px;
           }
 
-          .selection-card {
-            min-height: 280px;
+          .ipark-home .selection-card {
+            min-height: 310px;
             padding: 18px;
           }
 
-          .selection-number {
+          .ipark-home .selection-number {
             font-size: 90px;
           }
 
-          .selection-card-content > span {
+          .ipark-home .selection-card-content > span {
             font-size: 8px;
             letter-spacing: 1px;
           }
 
-          .selection-card-content h3 {
+          .ipark-home .selection-card-content h3 {
             font-size: 30px;
           }
 
-          .selection-link {
+          .ipark-home .selection-description {
+            font-size: 10px;
+            line-height: 1.8;
+          }
+
+          .ipark-home .selection-link {
             font-size: 12px;
           }
 
-          .footer {
+          .ipark-home .information-note {
+            margin-top: 45px;
+          }
+
+          .ipark-home .information-note h2 {
+            font-size: 21px;
+          }
+
+          .ipark-home .information-note p {
+            font-size: 12px;
+          }
+
+          .ipark-home .footer {
             padding: 28px 20px;
           }
 
-          .footer-top {
+          .ipark-home .footer-top {
             font-size: 12px;
           }
 
-          .footer p {
+          .ipark-home .footer p {
             font-size: 10px;
           }
         }
 
         @media (max-width: 370px) {
-          .complex-button {
+          .ipark-home .complex-button {
             padding: 15px 10px;
           }
 
-          .complex-button strong {
+          .ipark-home .complex-button strong {
             font-size: 12px;
           }
 
-          .selection-card {
+          .ipark-home .selection-card {
             padding: 13px;
           }
 
-          .selection-number {
+          .ipark-home .selection-number {
             font-size: 75px;
           }
         }
