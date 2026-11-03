@@ -1,316 +1,256 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  ArrowDown,
-  ArrowRight,
   ArrowUpRight,
-  Menu,
-  X,
+  ArrowRight,
   Phone,
-  ChevronRight,
+  SkipForward,
 } from "lucide-react";
 
 const PHONE = "041-556-0303";
 const TEL = "tel:0415560303";
 
-const complexes = [
-  {
-    number: "03",
-    title: "3단지",
-    english: "THE THIRD COLLECTION",
-    subtitle: "천안 아이파크 시티 3단지",
-    href: "/complex/3",
-    image: "/complex3.jpg",
-    className: "complex-three",
-  },
-  {
-    number: "04",
-    title: "4단지",
-    english: "THE FOURTH COLLECTION",
-    subtitle: "천안 아이파크 시티 4단지",
-    href: "/complex/4",
-    image: "/complex4.jpg",
-    className: "complex-four",
-  },
-];
-
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [phase, setPhase] = useState(0);
+  const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reduced) {
+      setPhase(3);
+      setFinished(true);
+      return;
+    }
+
+    const timers = [
+      window.setTimeout(() => setPhase(1), 900),
+      window.setTimeout(() => setPhase(2), 2200),
+      window.setTimeout(() => {
+        setPhase(3);
+        setFinished(true);
+      }, 4100),
+    ];
+
+    return () => timers.forEach(window.clearTimeout);
+  }, []);
+
+  function skipIntro() {
+    setPhase(3);
+    setFinished(true);
+  }
 
   return (
-    <main className="landing">
-      <header className="site-header">
-        <Link href="/" className="brand">
-          <span className="brand-mark">I</span>
-          <span className="brand-copy">
-            <strong>IPARK CITY</strong>
-            <small>CHEONAN · 3 &amp; 4</small>
-          </span>
-        </Link>
+    <main className="luxury-site">
+      {/* 실내 공간 */}
+      <div className="interior">
+        <div className="interior-ceiling" />
+        <div className="interior-left-wall" />
+        <div className="interior-right-wall" />
+        <div className="interior-floor" />
 
-        <nav className="desktop-nav">
-          <a href="#collection">단지 선택</a>
-          <a href="#introduction">사업 안내</a>
-          <a href="#contact">분양 상담</a>
-        </nav>
-
-        <div className="header-actions">
-          <a className="header-phone" href={TEL}>
-            <Phone size={15} />
-            <span>{PHONE}</span>
-          </a>
-          <button
-            type="button"
-            className="menu-button"
-            aria-label="메뉴 열기"
-            onClick={() => setMenuOpen(true)}
-          >
-            <Menu size={24} />
-          </button>
+        <div className="window-view">
+          <div className="sky-glow" />
+          <div className="city city-back" />
+          <div className="city city-front" />
+          <div className="window-frame vertical-one" />
+          <div className="window-frame vertical-two" />
+          <div className="window-frame horizontal" />
         </div>
-      </header>
 
-      {menuOpen && (
-        <div className="mobile-menu">
+        <div className="interior-light" />
+      </div>
+
+      {/* 현관문 오프닝 */}
+      {!finished && (
+        <div
+          className={`entrance phase-${phase}`}
+          aria-label="고급 주거 공간 입장 애니메이션"
+        >
+          <div className="entrance-wall">
+            <div className="wall-left" />
+            <div className="wall-right" />
+          </div>
+
+          <div className="door-frame">
+            <div className="door door-left">
+              <div className="door-groove" />
+              <div className="door-handle left-handle" />
+            </div>
+
+            <div className="door door-right">
+              <div className="door-groove" />
+              <div className="door-handle right-handle" />
+            </div>
+          </div>
+
+          <div className="entrance-title">
+            <span className="entrance-label">
+              WELCOME TO
+            </span>
+            <h1>
+              CHEONAN
+              <br />
+              <em>IPARK CITY</em>
+            </h1>
+            <div className="entrance-line" />
+            <p>천안 아이파크 시티 3 · 4단지</p>
+          </div>
+
+          <div className="entrance-bottom">
+            <span>THE ART OF LIVING</span>
+            <span>AN EXCLUSIVE ENTRANCE</span>
+          </div>
+
           <button
+            className="skip-button"
             type="button"
-            className="close-menu"
-            aria-label="메뉴 닫기"
-            onClick={() => setMenuOpen(false)}
+            onClick={skipIntro}
           >
-            <X size={26} />
+            SKIP INTRO
+            <SkipForward size={15} />
           </button>
-          <span className="menu-caption">CHEONAN IPARK CITY</span>
-          <a href="#collection" onClick={() => setMenuOpen(false)}>
-            단지 선택
-          </a>
-          <a href="#introduction" onClick={() => setMenuOpen(false)}>
-            사업 안내
-          </a>
-          <a href="#contact" onClick={() => setMenuOpen(false)}>
-            분양 상담
-          </a>
-          <a href={TEL} className="menu-call">
-            <Phone size={17} /> {PHONE}
-          </a>
         </div>
       )}
 
-      <section className="intro-hero">
-        <div className="intro-decoration intro-decoration-one" />
-        <div className="intro-decoration intro-decoration-two" />
+      {/* 메인 */}
+      <div className={`main-screen ${finished ? "visible" : ""}`}>
+        <header className="main-header">
+          <Link href="/" className="brand">
+            <span className="brand-emblem">I</span>
+            <span>
+              <strong>IPARK CITY</strong>
+              <small>CHEONAN 03 · 04</small>
+            </span>
+          </Link>
 
-        <div className="intro-content">
-          <div className="intro-eyebrow">
-            <span className="eyebrow-line" />
-            <span>AN EXCLUSIVE COLLECTION</span>
-            <span className="eyebrow-line" />
-          </div>
-
-          <p className="intro-small">천안의 새로운 주거 이야기</p>
-
-          <h1>
-            CHEONAN
-            <br />
-            <em>IPARK CITY</em>
-          </h1>
-
-          <div className="hero-number">
-            <span>03</span>
-            <i />
-            <span>04</span>
-          </div>
-
-          <p className="intro-description">
-            두 개의 단지, 하나의 특별한 선택.
-            <br />
-            천안 아이파크 시티 3·4단지를 만나보세요.
-          </p>
-
-          <a href="#collection" className="explore-button">
-            <span>EXPLORE THE COLLECTION</span>
-            <ArrowDown size={17} />
+          <a href={TEL} className="header-call">
+            <Phone size={16} />
+            <span>{PHONE}</span>
           </a>
-        </div>
+        </header>
 
-        <div className="hero-bottom">
-          <span>MI SO REAL ESTATE</span>
-          <span>SCROLL TO DISCOVER</span>
-          <span>CHEONAN, KOREA</span>
-        </div>
-      </section>
+        <section className="selection-screen">
+          <div className="selection-heading">
+            <span className="heading-kicker">
+              THE EXCLUSIVE COLLECTION
+            </span>
+            <h2>
+              당신의 새로운 공간,
+              <br />
+              <em>어디에서 시작할까요?</em>
+            </h2>
+            <p>
+              천안 아이파크 시티
+              <br className="mobile-break" />
+              {" "}3단지와 4단지 중 선택해 주세요.
+            </p>
+          </div>
 
-      <section id="collection" className="collection">
-        <div className="collection-heading">
-          <p className="gold-label">THE COLLECTION</p>
-          <h2>
-            당신의 선택,
-            <br />
-            <em>새로운 라이프스타일</em>
-          </h2>
-          <p>
-            관심 있는 단지를 선택하시면
-            <br />
-            해당 단지의 상세 안내 페이지로 이동합니다.
-          </p>
-        </div>
-
-        <div className="complex-grid">
-          {complexes.map((complex) => (
+          <div className="choice-grid">
             <Link
-              href={complex.href}
-              key={complex.number}
-              className={`complex-card ${complex.className}`}
+              href="/complex/3"
+              className="choice-card choice-three"
             >
-              <div
-                className="complex-photo"
-                style={{
-                  backgroundImage: `linear-gradient(180deg,rgba(9,20,33,.12),rgba(9,20,33,.78)),url('${complex.image}')`,
-                }}
-              />
-              <div className="complex-pattern" />
+              <div className="card-glow" />
+              <div className="card-building building-three">
+                <div className="tower tower-a" />
+                <div className="tower tower-b" />
+                <div className="tower tower-c" />
+              </div>
 
-              <div className="complex-top">
-                <span>CHEONAN IPARK CITY</span>
+              <div className="choice-top">
+                <span>THE THIRD COLLECTION</span>
                 <ArrowUpRight size={23} />
               </div>
 
-              <div className="complex-content">
-                <p className="complex-english">{complex.english}</p>
-                <span className="complex-number">
-                  {complex.number}
-                </span>
-                <h3>{complex.title}</h3>
-                <p className="complex-subtitle">
-                  {complex.subtitle}
-                </p>
-
-                <div className="complex-divider" />
-
-                <div className="complex-link">
-                  <span>단지 자세히 보기</span>
-                  <span className="complex-arrow">
-                    <ArrowRight size={20} />
+              <div className="choice-content">
+                <span className="choice-number">03</span>
+                <h3>3단지</h3>
+                <p>천안 아이파크 시티 3단지</p>
+                <div className="choice-line" />
+                <div className="choice-enter">
+                  <span>3단지 입장하기</span>
+                  <span className="circle-arrow">
+                    <ArrowRight size={22} />
                   </span>
                 </div>
               </div>
             </Link>
-          ))}
-        </div>
 
-        <p className="image-notice">
-          ※ 단지 이미지 파일은 추후 실제 사용 허가를 받은
-          조감도로 교체할 예정입니다.
-        </p>
-      </section>
+            <Link
+              href="/complex/4"
+              className="choice-card choice-four"
+            >
+              <div className="card-glow" />
+              <div className="card-building building-four">
+                <div className="tower tower-a" />
+                <div className="tower tower-b" />
+                <div className="tower tower-c" />
+              </div>
 
-      <section id="introduction" className="statement">
-        <div className="statement-inner">
-          <span className="gold-label">A NEW PERSPECTIVE</span>
-          <div className="statement-line" />
-          <h2>
-            공간을 넘어,
-            <br />
-            <em>삶의 가치를 생각하다.</em>
-          </h2>
+              <div className="choice-top">
+                <span>THE FOURTH COLLECTION</span>
+                <ArrowUpRight size={23} />
+              </div>
+
+              <div className="choice-content">
+                <span className="choice-number">04</span>
+                <h3>4단지</h3>
+                <p>천안 아이파크 시티 4단지</p>
+                <div className="choice-line" />
+                <div className="choice-enter">
+                  <span>4단지 입장하기</span>
+                  <span className="circle-arrow">
+                    <ArrowRight size={22} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </section>
+
+        <footer className="site-footer">
+          <div className="footer-info">
+            <span>MI SO REAL ESTATE</span>
+            <a href={TEL}>
+              상담문의 {PHONE}
+            </a>
+          </div>
+
           <p>
-            천안 아이파크 시티 3단지와 4단지에 대한
-            <br className="desktop-only" />
-            정보를 한곳에서 편리하게 살펴보세요.
+            본 사이트는 미소부동산 운영의 비공식
+            부동산 정보·상담 안내 사이트이며,
+            시행사·시공사 공식 홈페이지가 아닙니다.
           </p>
-          <a href="#collection">
-            단지 선택하기 <ChevronRight size={17} />
-          </a>
-        </div>
-      </section>
-
-      <section id="contact" className="contact-section">
-        <div className="contact-inner">
-          <div>
-            <p className="gold-label">PRIVATE CONSULTATION</p>
-            <h2>
-              당신의 새로운 시작,
-              <br />
-              <em>미소부동산이 함께합니다.</em>
-            </h2>
-            <p className="contact-description">
-              천안 아이파크 시티 3·4단지 관련 문의는
-              <br />
-              미소부동산으로 연락해 주세요.
-            </p>
-          </div>
-
-          <a href={TEL} className="contact-button">
-            <div>
-              <span>분양 관련 상담 문의</span>
-              <strong>{PHONE}</strong>
-            </div>
-            <ArrowUpRight size={26} />
-          </a>
-        </div>
-      </section>
-
-      <footer className="footer">
-        <div className="footer-main">
-          <div>
-            <strong className="footer-brand">
-              CHEONAN IPARK CITY
-            </strong>
-            <p>천안 아이파크 시티 3·4단지 안내</p>
-          </div>
-
-          <div className="footer-contact">
-            <strong>미소부동산</strong>
-            <a href={TEL}>{PHONE}</a>
-          </div>
-        </div>
-
-        <div className="footer-notice">
-          본 홈페이지는 미소부동산에서 운영하는
-          부동산 정보 및 상담 안내 사이트이며,
-          시행사·시공사·공식 분양사무소가 운영하는
-          공식 홈페이지가 아닙니다.
-          <br />
-          단지별 공급 정보, 일정, 가격 등은
-          반드시 공식 자료를 통해 확인하시기 바랍니다.
-        </div>
-
-        <div className="footer-bottom">
-          <span>© 2026 MISO REAL ESTATE.</span>
-          <span>INFORMATION &amp; CONSULTATION</span>
-        </div>
-      </footer>
-
-      <a href={TEL} className="floating-call">
-        <Phone size={19} />
-        <span>상담 문의</span>
-      </a>
+        </footer>
+      </div>
 
       <style jsx global>{`
         :root {
-          --navy: #101b29;
-          --navy-deep: #09121e;
-          --gold: #c9ac7b;
-          --ivory: #f7f5f0;
+          --gold: #d2b88d;
+          --gold-bright: #f2dfbd;
+          --deep: #08111c;
         }
 
         * {
           box-sizing: border-box;
         }
 
-        html {
-          scroll-behavior: smooth;
+        html, body {
+          margin: 0;
+          min-height: 100%;
+          background: var(--deep);
         }
 
         body {
-          margin: 0;
-          background: var(--navy-deep);
+          font-family: "Noto Sans KR", sans-serif;
           color: #fff;
-          font-family:
-            "Noto Sans KR", sans-serif;
         }
 
         a {
@@ -322,22 +262,459 @@ export default function Home() {
           font: inherit;
         }
 
-        .landing {
+        .luxury-site {
+          position: relative;
+          min-height: 100svh;
           overflow: hidden;
+          isolation: isolate;
+          background: #0a1420;
         }
 
-        .site-header {
-          height: 88px;
+        /* 실내 배경 */
+
+        .interior {
+          position: fixed;
+          inset: 0;
+          z-index: -1;
+          overflow: hidden;
+          background:
+            linear-gradient(
+              180deg,
+              #343b3c 0%,
+              #686761 50%,
+              #24272a 100%
+            );
+        }
+
+        .interior-ceiling {
           position: absolute;
-          z-index: 30;
           top: 0;
           left: 0;
           right: 0;
+          height: 27%;
+          background: linear-gradient(
+            #272d31,
+            #54585a
+          );
+          clip-path: polygon(
+            0 0, 100% 0, 78% 100%, 22% 100%
+          );
+        }
+
+        .interior-left-wall,
+        .interior-right-wall {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 35%;
+          background:
+            repeating-linear-gradient(
+              90deg,
+              transparent 0,
+              transparent 85px,
+              rgba(255,255,255,.035) 86px
+            ),
+            linear-gradient(
+              90deg,
+              #1b252c,
+              #555c5c
+            );
+        }
+
+        .interior-left-wall {
+          left: 0;
+          clip-path: polygon(
+            0 0, 100% 27%, 100% 75%, 0 100%
+          );
+        }
+
+        .interior-right-wall {
+          right: 0;
+          transform: scaleX(-1);
+          clip-path: polygon(
+            0 0, 100% 27%, 100% 75%, 0 100%
+          );
+        }
+
+        .interior-floor {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 35%;
+          background:
+            repeating-linear-gradient(
+              92deg,
+              transparent 0,
+              transparent 130px,
+              rgba(255,255,255,.1) 132px
+            ),
+            linear-gradient(
+              #a19a8c,
+              #3e4142
+            );
+          clip-path: polygon(
+            22% 0, 78% 0, 100% 100%, 0 100%
+          );
+        }
+
+        .window-view {
+          position: absolute;
+          left: 22%;
+          right: 22%;
+          top: 20%;
+          bottom: 25%;
+          overflow: hidden;
+          background:
+            linear-gradient(
+              180deg,
+              #b7a28b,
+              #d4bb98 40%,
+              #6b7c88 75%,
+              #293847
+            );
+          box-shadow:
+            0 0 90px rgba(255,218,162,.25),
+            inset 0 0 50px rgba(0,0,0,.3);
+        }
+
+        .sky-glow {
+          position: absolute;
+          width: 55%;
+          height: 65%;
+          left: 22%;
+          top: 0;
+          background: radial-gradient(
+            circle,
+            rgba(255,236,190,.85),
+            transparent 70%
+          );
+        }
+
+        .city {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: #344352;
+        }
+
+        .city-back {
+          height: 35%;
+          opacity: .5;
+          clip-path: polygon(
+            0 65%, 12% 65%, 12% 25%,
+            23% 25%, 23% 50%,
+            34% 50%, 34% 10%,
+            47% 10%, 47% 40%,
+            59% 40%, 59% 0,
+            73% 0, 73% 50%,
+            86% 50%, 86% 20%,
+            100% 20%, 100% 100%,
+            0 100%
+          );
+        }
+
+        .city-front {
+          height: 22%;
+          background: #1d2a39;
+          clip-path: polygon(
+            0 30%, 17% 30%, 17% 0,
+            31% 0, 31% 40%,
+            48% 40%, 48% 10%,
+            64% 10%, 64% 45%,
+            80% 45%, 80% 5%,
+            100% 5%, 100% 100%,
+            0 100%
+          );
+        }
+
+        .window-frame {
+          position: absolute;
+          background: #222d35;
+          box-shadow: 0 0 8px rgba(0,0,0,.35);
+        }
+
+        .vertical-one {
+          left: 33%;
+          width: 10px;
+          height: 100%;
+        }
+
+        .vertical-two {
+          left: 66%;
+          width: 10px;
+          height: 100%;
+        }
+
+        .horizontal {
+          top: 72%;
+          width: 100%;
+          height: 9px;
+        }
+
+        .interior-light {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(
+            ellipse at center,
+            rgba(255,215,165,.14),
+            rgba(0,0,0,.5) 90%
+          );
+        }
+
+        /* 현관 오프닝 */
+
+        .entrance {
+          position: fixed;
+          inset: 0;
+          z-index: 100;
+          perspective: 1200px;
+          overflow: hidden;
+          background: #10151b;
+          animation: entranceZoom 4.1s ease forwards;
+        }
+
+        @keyframes entranceZoom {
+          0%, 45% {
+            transform: scale(1);
+          }
+          90%, 100% {
+            transform: scale(1.22);
+          }
+        }
+
+        .entrance-wall {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          background:
+            repeating-linear-gradient(
+              105deg,
+              transparent 0,
+              transparent 95px,
+              rgba(255,255,255,.035) 97px
+            ),
+            linear-gradient(
+              120deg,
+              #171d24,
+              #33373a,
+              #151b23
+            );
+        }
+
+        .wall-left,
+        .wall-right {
+          width: 50%;
+          height: 100%;
+          border-right: 1px solid rgba(255,255,255,.06);
+        }
+
+        .door-frame {
+          position: absolute;
+          left: 15%;
+          right: 15%;
+          top: 8%;
+          bottom: 0;
+          display: flex;
+          border: 12px solid #14171a;
+          border-bottom: 0;
+          box-shadow:
+            0 0 0 2px rgba(210,184,141,.35),
+            0 0 80px rgba(0,0,0,.75);
+          perspective: 1400px;
+          overflow: hidden;
+          background:
+            linear-gradient(
+              180deg,
+              #d9c4a5,
+              #3a4b55
+            );
+        }
+
+        .door {
+          position: relative;
+          width: 50%;
+          height: 100%;
+          background:
+            repeating-linear-gradient(
+              90deg,
+              rgba(0,0,0,.08) 0,
+              rgba(255,255,255,.025) 7px,
+              rgba(0,0,0,.08) 16px
+            ),
+            linear-gradient(
+              110deg,
+              #201b19,
+              #514239 50%,
+              #1b1716
+            );
+          box-shadow:
+            inset 0 0 45px rgba(0,0,0,.65);
+          transition: transform 1.65s
+            cubic-bezier(.65,0,.18,1);
+          z-index: 3;
+          backface-visibility: hidden;
+        }
+
+        .door-left {
+          transform-origin: left center;
+          border-right: 2px solid #15110e;
+        }
+
+        .door-right {
+          transform-origin: right center;
+          border-left: 2px solid #15110e;
+        }
+
+        .phase-2 .door-left {
+          transform: rotateY(-105deg);
+        }
+
+        .phase-2 .door-right {
+          transform: rotateY(105deg);
+        }
+
+        .door-groove {
+          position: absolute;
+          inset: 5%;
+          border: 1px solid rgba(210,184,141,.19);
+          box-shadow:
+            inset 0 0 0 12px rgba(0,0,0,.1);
+        }
+
+        .door-handle {
+          position: absolute;
+          top: 45%;
+          width: 7px;
+          height: 110px;
+          border-radius: 8px;
+          background: linear-gradient(
+            90deg,
+            #7e6745,
+            #f2dfbd,
+            #9e8053
+          );
+          box-shadow: 2px 4px 10px #0008;
+        }
+
+        .left-handle {
+          right: 18px;
+        }
+
+        .right-handle {
+          left: 18px;
+        }
+
+        .entrance-title {
+          position: absolute;
+          z-index: 5;
+          top: 33%;
+          left: 0;
+          right: 0;
+          text-align: center;
+          pointer-events: none;
+          text-shadow: 0 4px 25px #000;
+          transition:
+            opacity .65s,
+            transform .65s;
+        }
+
+        .phase-2 .entrance-title {
+          opacity: 0;
+          transform: scale(1.3);
+        }
+
+        .entrance-label {
+          color: var(--gold);
+          font-size: 11px;
+          letter-spacing: 5px;
+        }
+
+        .entrance-title h1 {
+          font: 400 clamp(45px, 7vw, 100px)/1.1
+            Georgia, serif;
+          letter-spacing: -2px;
+          margin: 25px 0;
+        }
+
+        .entrance-title h1 em {
+          color: var(--gold-bright);
+          font-style: normal;
+        }
+
+        .entrance-line {
+          height: 1px;
+          width: 90px;
+          background: var(--gold);
+          margin: 22px auto;
+        }
+
+        .entrance-title p {
+          font-size: 14px;
+          letter-spacing: 3px;
+        }
+
+        .entrance-bottom {
+          position: absolute;
+          bottom: 35px;
+          left: 5%;
+          right: 5%;
+          z-index: 5;
+          display: flex;
+          justify-content: space-between;
+          color: #d5c3a8;
+          font-size: 9px;
+          letter-spacing: 2px;
+        }
+
+        .skip-button {
+          position: absolute;
+          z-index: 10;
+          right: 25px;
+          top: 25px;
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          padding: 12px 16px;
+          color: white;
+          background: rgba(0,0,0,.45);
+          border: 1px solid rgba(255,255,255,.4);
+          cursor: pointer;
+          font-size: 10px;
+          letter-spacing: 1px;
+        }
+
+        /* 메인 화면 */
+
+        .main-screen {
+          position: relative;
+          z-index: 2;
+          min-height: 100svh;
+          display: flex;
+          flex-direction: column;
+          background:
+            linear-gradient(
+              180deg,
+              rgba(6,14,24,.92),
+              rgba(9,20,34,.84)
+            );
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 1.1s ease;
+        }
+
+        .main-screen.visible {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .main-header {
+          height: 90px;
+          padding: 0 5%;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0 5%;
-          border-bottom: 1px solid rgba(255,255,255,.13);
+          border-bottom: 1px solid rgba(255,255,255,.14);
         }
 
         .brand {
@@ -346,843 +723,428 @@ export default function Home() {
           gap: 12px;
         }
 
-        .brand-mark {
-          width: 40px;
-          height: 40px;
-          border: 1px solid var(--gold);
+        .brand-emblem {
           display: flex;
           align-items: center;
           justify-content: center;
+          width: 42px;
+          height: 42px;
+          border: 1px solid var(--gold);
           color: var(--gold);
-          font-family: Georgia, serif;
-          font-size: 27px;
-          font-style: italic;
+          font: italic 28px Georgia, serif;
         }
 
-        .brand-copy {
+        .brand > span:last-child {
           display: flex;
           flex-direction: column;
-          gap: 3px;
+          gap: 4px;
         }
 
-        .brand-copy strong {
-          font-family: Georgia, serif;
-          font-size: 17px;
-          letter-spacing: 2.5px;
+        .brand strong {
+          font: 18px Georgia, serif;
+          letter-spacing: 2px;
         }
 
-        .brand-copy small {
+        .brand small {
           color: var(--gold);
           font-size: 9px;
-          letter-spacing: 2.6px;
+          letter-spacing: 2px;
         }
 
-        .desktop-nav {
-          display: flex;
-          gap: 40px;
-          font-size: 13px;
-          letter-spacing: 1px;
-        }
-
-        .desktop-nav a {
-          transition: color .3s;
-        }
-
-        .desktop-nav a:hover {
-          color: var(--gold);
-        }
-
-        .header-actions {
-          display: flex;
-          align-items: center;
-          gap: 22px;
-        }
-
-        .header-phone {
+        .header-call {
           display: flex;
           align-items: center;
           gap: 10px;
-          color: var(--gold);
+          color: var(--gold-bright);
           font-size: 14px;
-          font-weight: 600;
         }
 
-        .menu-button {
-          display: none;
-          border: 0;
-          background: none;
-          color: white;
-          cursor: pointer;
+        .selection-screen {
+          flex: 1;
+          padding: 65px 5% 75px;
         }
 
-        .mobile-menu {
-          position: fixed;
-          inset: 0;
-          background: #0b1623;
-          z-index: 100;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 40px;
-          gap: 27px;
-        }
-
-        .mobile-menu > a {
-          font-size: 25px;
-          font-weight: 300;
-        }
-
-        .mobile-menu .menu-call {
-          font-size: 17px;
-          color: var(--gold);
-          display: flex;
-          gap: 10px;
-          align-items: center;
-        }
-
-        .menu-caption {
-          font-size: 11px;
-          color: var(--gold);
-          letter-spacing: 3px;
-          margin-bottom: 12px;
-        }
-
-        .close-menu {
-          position: absolute;
-          top: 28px;
-          right: 28px;
-          border: none;
-          background: none;
-          color: white;
-          cursor: pointer;
-        }
-
-        .intro-hero {
-          position: relative;
-          min-height: 100svh;
-          background:
-            radial-gradient(
-              ellipse at 50% 40%,
-              #26364b 0%,
-              #101b29 48%,
-              #070e18 100%
-            );
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .selection-heading {
           text-align: center;
-          padding: 130px 20px 100px;
-        }
-
-        .intro-hero::before {
-          content: "";
-          position: absolute;
-          inset: 22px;
-          border: 1px solid rgba(201,172,123,.12);
-          pointer-events: none;
-        }
-
-        .intro-decoration {
-          position: absolute;
-          width: 480px;
-          height: 480px;
-          border: 1px solid rgba(201,172,123,.09);
-          border-radius: 50%;
-          pointer-events: none;
-        }
-
-        .intro-decoration-one {
-          width: 650px;
-          height: 650px;
-        }
-
-        .intro-decoration-two {
-          width: 900px;
-          height: 900px;
-          opacity: .55;
-        }
-
-        .intro-content {
-          position: relative;
-          z-index: 2;
-          animation: fadeRise 1.2s ease both;
-        }
-
-        @keyframes fadeRise {
-          from {
-            opacity: 0;
-            transform: translateY(28px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .intro-eyebrow {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 17px;
-          color: var(--gold);
-          font-size: 10px;
-          letter-spacing: 4px;
           margin-bottom: 45px;
         }
 
-        .eyebrow-line {
-          width: 35px;
-          height: 1px;
-          background: var(--gold);
-          opacity: .6;
-        }
-
-        .intro-small {
-          font-size: 14px;
-          letter-spacing: 5px;
-          font-weight: 300;
-          margin-bottom: 22px;
-          color: #ddd8cd;
-        }
-
-        .intro-content h1 {
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: clamp(53px, 8.5vw, 126px);
-          font-weight: 400;
-          letter-spacing: -.045em;
-          line-height: 1.05;
-          margin: 0;
-        }
-
-        .intro-content h1 em {
-          font-weight: 400;
-          color: var(--gold);
-          font-style: normal;
-          letter-spacing: -.04em;
-        }
-
-        .hero-number {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 28px;
-          margin: 30px 0;
-          color: var(--gold);
-          font-family: Georgia, serif;
-          font-size: 25px;
-          letter-spacing: 3px;
-        }
-
-        .hero-number i {
-          width: 75px;
-          height: 1px;
-          background: var(--gold);
-          opacity: .6;
-        }
-
-        .intro-description {
-          color: #c5cbd0;
-          font-size: 15px;
-          font-weight: 300;
-          line-height: 2.2;
-        }
-
-        .explore-button {
-          margin: 45px auto 0;
-          width: fit-content;
-          display: flex;
-          align-items: center;
-          gap: 25px;
-          border: 1px solid rgba(201,172,123,.5);
-          padding: 17px 24px;
+        .heading-kicker {
           color: var(--gold);
           font-size: 10px;
-          letter-spacing: 2px;
-          transition: .3s;
-        }
-
-        .explore-button:hover {
-          background: var(--gold);
-          color: #111;
-        }
-
-        .hero-bottom {
-          position: absolute;
-          bottom: 44px;
-          left: 6%;
-          right: 6%;
-          display: flex;
-          justify-content: space-between;
-          color: #8b929b;
-          font-size: 9px;
-          letter-spacing: 2px;
-        }
-
-        .collection {
-          background: var(--ivory);
-          color: var(--navy);
-          padding: 115px 5% 100px;
-        }
-
-        .collection-heading {
-          text-align: center;
-          margin-bottom: 60px;
-        }
-
-        .gold-label {
-          font-size: 11px;
-          color: #aa8956;
           letter-spacing: 4px;
-          font-weight: 600;
         }
 
-        .collection-heading h2 {
-          font-size: clamp(32px, 4vw, 56px);
-          font-weight: 400;
-          line-height: 1.5;
-          margin: 24px 0;
-          letter-spacing: -2px;
-        }
-
-        .collection-heading h2 em {
-          font-family: Georgia, "Noto Sans KR", serif;
-          font-style: normal;
-          color: #a88c64;
-        }
-
-        .collection-heading > p:last-child {
-          font-size: 14px;
-          line-height: 2;
-          color: #737b83;
-        }
-
-        .complex-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 18px;
-          max-width: 1440px;
-          margin: 0 auto;
-        }
-
-        .complex-card {
-          position: relative;
-          min-height: 680px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          padding: 35px;
-          overflow: hidden;
-          background: #24354a;
-          color: white;
-          isolation: isolate;
-        }
-
-        .complex-four {
-          background: #34414a;
-        }
-
-        .complex-photo {
-          position: absolute;
-          inset: 0;
-          z-index: -2;
-          background-size: cover;
-          background-position: center;
-          transition: transform .8s ease;
-        }
-
-        .complex-card:hover .complex-photo {
-          transform: scale(1.07);
-        }
-
-        .complex-pattern {
-          position: absolute;
-          inset: 0;
-          z-index: -1;
-          background:
-            linear-gradient(
-              135deg,
-              rgba(201,172,123,.1),
-              transparent 40%
-            ),
-            repeating-linear-gradient(
-              90deg,
-              transparent 0,
-              transparent 95px,
-              rgba(255,255,255,.035) 96px
-            );
-          pointer-events: none;
-        }
-
-        .complex-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          color: #e8d9bd;
-          font-family: Georgia, serif;
-          font-size: 12px;
-          letter-spacing: 2px;
-        }
-
-        .complex-content {
-          position: relative;
-          z-index: 2;
-        }
-
-        .complex-english {
-          color: #dfc69d;
-          font-size: 11px;
-          letter-spacing: 3px;
-          margin-bottom: 10px;
-        }
-
-        .complex-number {
-          display: block;
-          font-family: Georgia, serif;
-          font-size: clamp(100px, 12vw, 180px);
-          line-height: 1;
-          color: rgba(255,255,255,.17);
-          letter-spacing: -10px;
-        }
-
-        .complex-content h3 {
-          font-size: 44px;
-          font-weight: 400;
-          margin: -15px 0 10px;
-          letter-spacing: -2px;
-        }
-
-        .complex-subtitle {
-          color: #d6d8db;
-          font-size: 14px;
+        .selection-heading h2 {
+          font-size: clamp(30px, 4vw, 51px);
           font-weight: 300;
-        }
-
-        .complex-divider {
-          height: 1px;
-          background: rgba(255,255,255,.3);
-          margin: 35px 0 22px;
-        }
-
-        .complex-link {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: 14px;
-        }
-
-        .complex-arrow {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 48px;
-          height: 48px;
-          border: 1px solid rgba(255,255,255,.5);
-          border-radius: 50%;
-          transition: .3s;
-        }
-
-        .complex-card:hover .complex-arrow {
-          background: var(--gold);
-          color: var(--navy);
-          border-color: var(--gold);
-        }
-
-        .image-notice {
-          max-width: 1440px;
-          margin: 20px auto 0;
-          color: #7a7e84;
-          font-size: 11px;
-        }
-
-        .statement {
-          background: #111d2b;
-          text-align: center;
-          padding: 140px 20px;
-        }
-
-        .statement-inner {
-          max-width: 850px;
-          margin: auto;
-        }
-
-        .statement-line {
-          height: 65px;
-          width: 1px;
-          background: var(--gold);
-          margin: 30px auto;
-        }
-
-        .statement h2 {
-          font-size: clamp(33px, 4.5vw, 59px);
-          line-height: 1.6;
-          font-weight: 300;
-          letter-spacing: -2px;
-        }
-
-        .statement h2 em {
-          font-style: normal;
-          color: var(--gold);
-        }
-
-        .statement-inner > p {
-          color: #aab3bd;
-          line-height: 2.1;
-          font-size: 14px;
-          margin: 28px 0;
-        }
-
-        .statement-inner > a {
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
-          color: var(--gold);
-          font-size: 13px;
-          border-bottom: 1px solid var(--gold);
-          padding-bottom: 12px;
-          margin-top: 15px;
-        }
-
-        .contact-section {
-          background: #edeae3;
-          color: var(--navy);
-          padding: 105px 6%;
-        }
-
-        .contact-inner {
-          max-width: 1300px;
-          margin: auto;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 40px;
-        }
-
-        .contact-inner h2 {
-          font-size: clamp(29px, 3.7vw, 48px);
-          font-weight: 400;
           line-height: 1.55;
           letter-spacing: -1.5px;
+          margin: 20px 0;
         }
 
-        .contact-inner h2 em {
-          color: #a88c64;
+        .selection-heading h2 em {
+          color: var(--gold-bright);
           font-style: normal;
         }
 
-        .contact-description {
-          color: #777e85;
-          font-size: 14px;
-          line-height: 2;
+        .selection-heading p {
+          color: #b9c0c7;
+          font-size: 13px;
+          line-height: 1.9;
         }
 
-        .contact-button {
-          min-width: 300px;
-          background: #142338;
-          color: white;
-          padding: 30px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+        .mobile-break {
+          display: none;
+        }
+
+        .choice-grid {
+          max-width: 1250px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
           gap: 20px;
         }
 
-        .contact-button div {
+        .choice-card {
+          position: relative;
+          min-height: 470px;
+          padding: 30px;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          justify-content: space-between;
+          overflow: hidden;
+          isolation: isolate;
+          border: 1px solid rgba(210,184,141,.35);
+          background:
+            linear-gradient(
+              155deg,
+              #30465a,
+              #0d1928
+            );
+          transition:
+            transform .45s,
+            border-color .45s,
+            box-shadow .45s;
         }
 
-        .contact-button span {
-          color: #cbb58f;
-          font-size: 12px;
+        .choice-four {
+          background:
+            linear-gradient(
+              155deg,
+              #4a4b4a,
+              #172230
+            );
         }
 
-        .contact-button strong {
-          font-size: 27px;
-          font-family: Georgia, sans-serif;
-          letter-spacing: 1px;
+        .choice-card:hover {
+          transform: translateY(-8px);
+          border-color: var(--gold);
+          box-shadow:
+            0 25px 65px rgba(0,0,0,.4);
         }
 
-        .footer {
-          background: #08111d;
-          padding: 65px 6% 30px;
+        .card-glow {
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background: radial-gradient(
+            ellipse at 50% 15%,
+            rgba(233,206,165,.2),
+            transparent 65%
+          );
         }
 
-        .footer-main {
+        .card-building {
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          opacity: .45;
+        }
+
+        .tower {
+          position: absolute;
+          bottom: 0;
+          width: 23%;
+          background:
+            repeating-linear-gradient(
+              180deg,
+              rgba(230,207,169,.35) 0,
+              rgba(230,207,169,.35) 2px,
+              transparent 3px,
+              transparent 17px
+            ),
+            repeating-linear-gradient(
+              90deg,
+              #172534 0,
+              #172534 13px,
+              #42556a 15px,
+              #172534 18px
+            );
+          border: 1px solid rgba(255,255,255,.1);
+          box-shadow: -12px 0 25px rgba(0,0,0,.2);
+        }
+
+        .tower-a {
+          left: 13%;
+          height: 53%;
+        }
+
+        .tower-b {
+          left: 39%;
+          height: 78%;
+        }
+
+        .tower-c {
+          right: 11%;
+          height: 64%;
+        }
+
+        .building-four .tower-a {
+          height: 65%;
+        }
+
+        .building-four .tower-b {
+          height: 56%;
+        }
+
+        .building-four .tower-c {
+          height: 83%;
+        }
+
+        .choice-top {
           display: flex;
           justify-content: space-between;
-          gap: 30px;
-          padding-bottom: 35px;
-          border-bottom: 1px solid rgba(255,255,255,.13);
-        }
-
-        .footer-brand {
-          font-family: Georgia, serif;
-          letter-spacing: 2px;
-          font-size: 20px;
-          font-weight: 400;
-        }
-
-        .footer-main p {
-          font-size: 12px;
-          color: #9ca6b0;
-        }
-
-        .footer-contact {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .footer-contact strong {
-          font-size: 13px;
-          color: var(--gold);
-        }
-
-        .footer-contact a {
-          font-size: 20px;
-        }
-
-        .footer-notice {
-          padding: 25px 0;
-          color: #a0a7b0;
-          font-size: 12px;
-          line-height: 2;
-        }
-
-        .footer-bottom {
-          display: flex;
-          justify-content: space-between;
-          color: #7d8791;
+          align-items: center;
+          color: #e8d7b7;
           font-size: 10px;
-          letter-spacing: 1px;
-          padding-top: 25px;
-          border-top: 1px solid rgba(255,255,255,.1);
+          letter-spacing: 2.5px;
         }
 
-        .floating-call {
-          position: fixed;
-          bottom: 25px;
-          right: 25px;
-          z-index: 40;
-          background: var(--gold);
-          color: #101b29;
-          padding: 16px 23px;
-          border-radius: 50px;
+        .choice-content {
+          position: relative;
+        }
+
+        .choice-number {
+          display: block;
+          font: 110px/.9 Georgia, serif;
+          color: rgba(255,255,255,.23);
+          letter-spacing: -8px;
+        }
+
+        .choice-content h3 {
+          font-size: 45px;
+          font-weight: 400;
+          margin: 0 0 10px;
+        }
+
+        .choice-content p {
+          color: #e2e4e6;
+          font-size: 14px;
+          margin-bottom: 25px;
+        }
+
+        .choice-line {
+          height: 1px;
+          background: rgba(255,255,255,.35);
+          margin-bottom: 18px;
+        }
+
+        .choice-enter {
           display: flex;
           align-items: center;
-          gap: 9px;
-          font-size: 13px;
-          font-weight: 700;
-          box-shadow: 0 10px 35px rgba(0,0,0,.25);
+          justify-content: space-between;
+          font-size: 14px;
         }
 
-        @media (max-width: 900px) {
-          .desktop-nav {
+        .circle-arrow {
+          width: 46px;
+          height: 46px;
+          border: 1px solid var(--gold);
+          color: var(--gold);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: .3s;
+        }
+
+        .choice-card:hover .circle-arrow {
+          background: var(--gold);
+          color: #101b29;
+        }
+
+        .site-footer {
+          background: rgba(5,11,19,.9);
+          border-top: 1px solid rgba(255,255,255,.12);
+          padding: 25px 5%;
+        }
+
+        .footer-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 15px;
+          color: var(--gold);
+          font-size: 12px;
+          letter-spacing: 1px;
+        }
+
+        .site-footer p {
+          color: #a5adb6;
+          font-size: 11px;
+          line-height: 1.8;
+          margin: 15px 0 0;
+        }
+
+        @media (max-width: 700px) {
+          .door-frame {
+            left: 5%;
+            right: 5%;
+            top: 13%;
+          }
+
+          .door-handle {
+            height: 80px;
+          }
+
+          .entrance-title h1 {
+            font-size: 44px;
+          }
+
+          .entrance-title p {
+            font-size: 11px;
+          }
+
+          .entrance-label {
+            font-size: 9px;
+          }
+
+          .entrance-bottom {
+            font-size: 8px;
+          }
+
+          .entrance-bottom span:last-child {
             display: none;
           }
 
-          .menu-button {
-            display: block;
-          }
-
-          .site-header {
+          .main-header {
             height: 75px;
-          }
-
-          .intro-content h1 {
-            font-size: clamp(46px, 10vw, 85px);
-          }
-
-          .complex-card {
-            min-height: 570px;
-            padding: 25px;
-          }
-
-          .contact-inner {
-            flex-direction: column;
-            align-items: stretch;
-          }
-        }
-
-        @media (max-width: 600px) {
-          .site-header {
             padding: 0 20px;
           }
 
-          .brand-mark {
-            width: 35px;
-            height: 35px;
-            font-size: 24px;
+          .brand-emblem {
+            width: 36px;
+            height: 36px;
+            font-size: 23px;
           }
 
-          .brand-copy strong {
-            font-size: 13px;
-            letter-spacing: 1.6px;
+          .brand strong {
+            font-size: 14px;
           }
 
-          .brand-copy small {
+          .brand small {
             font-size: 8px;
-            letter-spacing: 1.4px;
           }
 
-          .header-phone span {
+          .header-call span {
             display: none;
           }
 
-          .intro-hero {
-            min-height: 100svh;
-            padding: 115px 18px 90px;
+          .selection-screen {
+            padding: 42px 17px 50px;
           }
 
-          .intro-hero::before {
-            inset: 12px;
+          .selection-heading {
+            margin-bottom: 30px;
           }
 
-          .intro-decoration-one {
-            width: 420px;
-            height: 420px;
+          .selection-heading h2 {
+            font-size: 28px;
           }
 
-          .intro-decoration-two {
-            width: 610px;
-            height: 610px;
+          .selection-heading p {
+            font-size: 12px;
           }
 
-          .intro-eyebrow {
-            font-size: 8px;
-            letter-spacing: 2px;
+          .mobile-break {
+            display: initial;
+          }
+
+          .choice-grid {
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 35px;
           }
 
-          .eyebrow-line {
-            width: 20px;
+          .choice-card {
+            min-height: 365px;
+            padding: 15px;
           }
 
-          .intro-small {
-            font-size: 11px;
-            letter-spacing: 3px;
-          }
-
-          .intro-content h1 {
-            font-size: clamp(40px, 10vw, 58px);
-          }
-
-          .hero-number {
-            margin: 25px 0;
-            font-size: 22px;
-          }
-
-          .hero-number i {
-            width: 50px;
-          }
-
-          .intro-description {
-            font-size: 12px;
-          }
-
-          .explore-button {
-            margin-top: 35px;
-            font-size: 9px;
-            padding: 15px 17px;
-            gap: 15px;
-          }
-
-          .hero-bottom {
-            bottom: 32px;
-            left: 25px;
-            right: 25px;
+          .choice-top {
             font-size: 8px;
+            letter-spacing: 1px;
           }
 
-          .hero-bottom span:nth-child(3) {
-            display: none;
+          .choice-top svg {
+            width: 18px;
           }
 
-          .collection {
-            padding: 85px 17px 70px;
+          .choice-number {
+            font-size: 76px;
           }
 
-          .collection-heading {
-            margin-bottom: 35px;
+          .choice-content h3 {
+            font-size: 29px;
           }
 
-          .collection-heading h2 {
-            font-size: 30px;
+          .choice-content p {
+            font-size: 10px;
+            line-height: 1.6;
+            min-height: 32px;
           }
 
-          .collection-heading > p:last-child {
-            font-size: 12px;
+          .choice-enter {
+            font-size: 11px;
           }
 
-          .complex-grid {
-            grid-template-columns: 1fr;
-            gap: 14px;
+          .circle-arrow {
+            width: 32px;
+            height: 32px;
           }
 
-          .complex-card {
-            min-height: 520px;
-            padding: 25px;
+          .circle-arrow svg {
+            width: 17px;
           }
 
-          .complex-number {
-            font-size: 115px;
+          .site-footer {
+            padding: 23px 18px;
           }
 
-          .complex-content h3 {
-            font-size: 39px;
-          }
-
-          .complex-english {
+          .footer-info {
             font-size: 10px;
           }
 
-          .statement {
-            padding: 100px 20px;
+          .site-footer p {
+            font-size: 10px;
+          }
+        }
+
+        @media (max-width: 370px) {
+          .choice-card {
+            padding: 11px;
           }
 
-          .statement h2 {
-            font-size: 31px;
+          .choice-top {
+            font-size: 7px;
           }
 
-          .statement-inner > p {
-            font-size: 12px;
+          .choice-number {
+            font-size: 64px;
           }
 
-          .desktop-only {
-            display: none;
-          }
-
-          .contact-section {
-            padding: 80px 20px;
-          }
-
-          .contact-inner h2 {
-            font-size: 30px;
-          }
-
-          .contact-button {
-            min-width: 0;
-          }
-
-          .footer {
-            padding: 50px 20px 100px;
-          }
-
-          .footer-main {
-            flex-direction: column;
-          }
-
-          .footer-bottom {
-            flex-direction: column;
-            gap: 10px;
-          }
-
-          .floating-call {
-            bottom: 15px;
-            right: 15px;
-            padding: 14px 19px;
+          .choice-content h3 {
+            font-size: 25px;
           }
         }
 
@@ -1190,7 +1152,6 @@ export default function Home() {
           *,
           *::before,
           *::after {
-            scroll-behavior: auto !important;
             animation-duration: .01ms !important;
             transition-duration: .01ms !important;
           }
