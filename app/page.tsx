@@ -1,636 +1,1317 @@
 
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const SITE = "https://cheonaniparkcity34.com";
 const PHONE = "041-556-0303";
 const TEL = "tel:0415560303";
 
-export const metadata: Metadata = {
-  title: "천안 아이파크 시티 3·4단지 | 분양·모델하우스 방문 안내",
-  description:
-    "천안 아이파크 시티 3단지·4단지 분양 정보, 단지 조감도, 조경, 커뮤니티 및 모델하우스 방문 상담 안내. 미소부동산 041-556-0303. 비공식 분양 안내 사이트입니다.",
-  alternates: {
-    canonical: SITE,
+const SLIDES = [
+  {
+    image: "/IMG_2192.jpeg",
+    label: "CHEONAN IPARK CITY",
+    title: "천안 아이파크 시티",
+    subtitle: "3·4단지",
   },
-  openGraph: {
-    title: "천안 아이파크 시티 3·4단지 분양 안내",
-    description:
-      "천안 아이파크 시티 3·4단지 단지 정보와 방문 상담 안내",
-    url: SITE,
-    type: "website",
-    images: [
-      {
-        url: "/IMG_2192.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "천안 아이파크 시티 3·4단지",
-      },
-    ],
+  {
+    image: "/IMG_2191.jpeg",
+    label: "PREMIUM RESIDENCE",
+    title: "새로운 주거 공간",
+    subtitle: "천안 아이파크 시티",
   },
+  {
+    image: "/IMG_2161.jpeg",
+    label: "THE NEW LIFESTYLE",
+    title: "일상의 새로운 가치",
+    subtitle: "IPARK CITY",
+  },
+];
+
+type Reservation = {
+  name: string;
+  phone: string;
+  complex: string;
+  date: string;
+  time: string;
 };
 
-const photos = {
-  hero: "/IMG_2192.jpeg",
-  mainExterior: "/IMG_2191.jpeg",
-  exteriorDay: "/IMG_2189.jpeg",
-  exteriorNight: "/IMG_2190.jpeg",
-  exteriorEvening: "/IMG_2161.jpeg",
-  aerialThree: "/IMG_2162.jpeg",
-  aerialFour: "/IMG_2166.jpeg",
-  gardenOne: "/IMG_2163.jpeg",
-  gardenTwo: "/IMG_2193.jpeg",
-  gardenThree: "/IMG_2194.jpeg",
-  entranceThree: "/IMG_2182.jpeg",
-  entranceFour: "/IMG_2183.jpeg",
-  communityOne: "/IMG_2184.jpeg",
-  communityTwo: "/IMG_2185.jpeg",
-  streetOne: "/IMG_2186.jpeg",
-  streetTwo: "/IMG_2187.jpeg",
-  streetThree: "/IMG_2188.jpeg",
-  rooftopOne: "/IMG_2180.jpeg",
-  rooftopTwo: "/IMG_2181.jpeg",
-  exteriorExtra: "/IMG_2164.jpeg",
+const INITIAL_FORM: Reservation = {
+  name: "",
+  phone: "",
+  complex: "3단지",
+  date: "",
+  time: "시간 협의",
 };
-
-const highlights = [
-  {
-    number: "01",
-    label: "ARCHITECTURE",
-    title: "도시의 새로운 주거 풍경",
-    description:
-      "다양한 각도에서 살펴보는 천안 아이파크 시티의 외관과 단지 이미지",
-    image: photos.exteriorDay,
-  },
-  {
-    number: "02",
-    label: "LANDSCAPE",
-    title: "일상에 여유를 더하는 조경",
-    description:
-      "녹지와 산책 동선, 휴게 공간을 중심으로 살펴보는 단지 조경 계획 이미지",
-    image: photos.gardenOne,
-  },
-  {
-    number: "03",
-    label: "COMMUNITY",
-    title: "생활과 연결되는 공간",
-    description:
-      "단지 내 커뮤니티 및 공용 공간의 디자인과 분위기를 확인해 보세요",
-    image: photos.communityOne,
-  },
-];
-
-const complexes = [
-  {
-    number: "03",
-    name: "천안 아이파크 시티 3단지",
-    entrance: photos.entranceThree,
-    aerial: photos.aerialThree,
-    description: "3단지 정문과 단지 배치 조감도",
-    href: "/complex/3",
-  },
-  {
-    number: "04",
-    name: "천안 아이파크 시티 4단지",
-    entrance: photos.entranceFour,
-    aerial: photos.aerialFour,
-    description: "4단지 정문과 단지 배치 조감도",
-    href: "/complex/4",
-  },
-];
-
-const galleries = [
-  {
-    category: "단지 외관",
-    title: "아이파크 시티의 건축 이미지",
-    description: "주간과 야간의 단지 외관을 살펴보세요.",
-    images: [
-      {
-        src: photos.mainExterior,
-        alt: "천안 아이파크 시티 아파트 외관",
-      },
-      {
-        src: photos.exteriorNight,
-        alt: "천안 아이파크 시티 야경",
-      },
-      {
-        src: photos.exteriorEvening,
-        alt: "천안 아이파크 시티 저녁 외관",
-      },
-      {
-        src: photos.exteriorExtra,
-        alt: "천안 아이파크 시티 주간 외관",
-      },
-    ],
-  },
-  {
-    category: "조경 공간",
-    title: "단지 안에서 만나는 자연",
-    description:
-      "중앙정원과 녹지, 산책 공간의 계획 이미지를 소개합니다.",
-    images: [
-      {
-        src: photos.gardenOne,
-        alt: "천안 아이파크 시티 중앙정원",
-      },
-      {
-        src: photos.gardenTwo,
-        alt: "천안 아이파크 시티 조경과 산책로",
-      },
-      {
-        src: photos.gardenThree,
-        alt: "천안 아이파크 시티 잔디광장",
-      },
-    ],
-  },
-  {
-    category: "커뮤니티와 생활시설",
-    title: "생활의 편리함을 생각한 공간",
-    description:
-      "커뮤니티 건물과 단지 내 보행·생활 공간을 이미지로 살펴보세요.",
-    images: [
-      {
-        src: photos.communityOne,
-        alt: "천안 아이파크 시티 커뮤니티 건물",
-      },
-      {
-        src: photos.communityTwo,
-        alt: "천안 아이파크 시티 생활시설",
-      },
-      {
-        src: photos.streetOne,
-        alt: "천안 아이파크 시티 상업시설 거리",
-      },
-      {
-        src: photos.streetTwo,
-        alt: "천안 아이파크 시티 단지 내 보행 공간",
-      },
-      {
-        src: photos.streetThree,
-        alt: "천안 아이파크 시티 생활시설 전경",
-      },
-    ],
-  },
-  {
-    category: "특화 공간",
-    title: "새로운 시선으로 바라보는 일상",
-    description:
-      "옥상 공간과 주변 경관을 담은 특화설계 이미지입니다.",
-    images: [
-      {
-        src: photos.rooftopOne,
-        alt: "천안 아이파크 시티 옥상 공간과 호수 조망",
-      },
-      {
-        src: photos.rooftopTwo,
-        alt: "천안 아이파크 시티 옥상 테라스 야경",
-      },
-    ],
-  },
-];
-
-function Photo({
-  src,
-  alt,
-  priority = false,
-  sizes = "(max-width: 768px) 100vw, 50vw",
-}: {
-  src: string;
-  alt: string;
-  priority?: boolean;
-  sizes?: string;
-}) {
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      fill
-      priority={priority}
-      sizes={sizes}
-      className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-    />
-  );
-}
-
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description?: string;
-}) {
-  return (
-    <div className="mb-9 md:mb-12">
-      <p className="mb-3 text-xs font-semibold tracking-[0.25em] text-[#a38a67]">
-        {eyebrow}
-      </p>
-
-      <h2 className="text-3xl font-semibold leading-tight tracking-[-0.05em] text-[#202020] md:text-5xl">
-        {title}
-      </h2>
-
-      {description && (
-        <p className="mt-5 max-w-2xl text-sm leading-7 text-neutral-500 md:text-base">
-          {description}
-        </p>
-      )}
-    </div>
-  );
-}
 
 export default function HomePage() {
+  const [slide, setSlide] = useState(0);
+  const [form, setForm] = useState<Reservation>(INITIAL_FORM);
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setSlide((current) => (current + 1) % SLIDES.length);
+    }, 5000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const updateForm = (
+    field: keyof Reservation,
+    value: string
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+    setSubmitted(false);
+  };
+
+  const handleReservation = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    if (!form.name.trim() || !form.phone.trim() || !form.date) {
+      return;
+    }
+
+    setSubmitted(true);
+  };
+
+  const today = new Date();
+  const todayString = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
+
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white text-[#202020]">
-
+    <main className="ipark-home">
       {/* HEADER */}
-      <header className="absolute left-0 right-0 top-0 z-30 border-b border-white/20">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-8">
-          <Link href="/" className="text-white">
-            <div className="text-lg font-bold tracking-[0.12em] md:text-xl">
-              IPARK CITY
-            </div>
-            <div className="mt-1 text-[9px] tracking-[0.16em] text-white/80">
-              CHEONAN 3 · 4
-            </div>
-          </Link>
+      <header className="ipark-header">
+        <Link href="/" className="ipark-logo">
+          <strong>IPARK CITY</strong>
+          <small>CHEONAN 3 · 4</small>
+        </Link>
 
-          <nav className="hidden items-center gap-8 text-sm text-white md:flex">
-            <a href="#overview">사업 안내</a>
-            <a href="#complex">3·4단지</a>
-            <a href="#gallery">단지 갤러리</a>
-            <a href="#reservation">방문 상담</a>
-          </nav>
+        <nav className="ipark-nav">
+          <a href="#complex-select">단지안내</a>
+          <a href="#reservation">방문예약</a>
+          <a href={TEL}>전화상담</a>
+        </nav>
 
-          <a
-            href={TEL}
-            className="rounded-sm border border-white/70 px-4 py-3 text-xs font-semibold text-white transition hover:bg-white hover:text-black md:px-6"
-          >
-            <span className="md:hidden">전화 상담</span>
-            <span className="hidden md:inline">{PHONE}</span>
-          </a>
-        </div>
+        <a href={TEL} className="header-phone">
+          <span>상담문의</span>
+          <strong>{PHONE}</strong>
+        </a>
       </header>
 
-      {/* HERO */}
-      <section className="relative flex min-h-[720px] items-end overflow-hidden bg-[#1b222b] md:min-h-[850px]">
-        <Image
-          src={photos.hero}
-          alt="천안 아이파크 시티 3·4단지 전체 조감도"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+      {/* HERO AUTO SLIDER */}
+      <section className="ipark-hero">
+        {SLIDES.map((item, index) => (
+          <div
+            key={item.image}
+            className={`hero-slide ${
+              slide === index ? "active" : ""
+            }`}
+            aria-hidden={slide !== index}
+          >
+            <Image
+              src={item.image}
+              alt={item.title}
+              fill
+              priority={index === 0}
+              sizes="100vw"
+              className="hero-image"
+            />
+          </div>
+        ))}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/35" />
+        <div className="hero-overlay" />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-24 pt-40 md:px-8 md:pb-36">
-          <p className="mb-6 text-xs font-medium tracking-[0.35em] text-[#e5cfad] md:text-sm">
-            CHEONAN IPARK CITY
-          </p>
+        <div className="hero-inner">
+          <span className="hero-eyebrow">
+            PREMIUM RESIDENTIAL LIFESTYLE
+          </span>
 
-          <h1 className="max-w-5xl text-[42px] font-semibold leading-[1.17] tracking-[-0.055em] text-white md:text-[78px]">
+          <div className="hero-line" />
+
+          <h1>
             천안 아이파크 시티
             <br />
-            <span className="text-white/90">3·4단지</span>
+            <em>3 · 4단지</em>
           </h1>
 
-          <p className="mt-7 max-w-xl text-sm leading-8 text-white/85 md:text-lg">
-            단지 조감도부터 조경, 커뮤니티 공간까지
-            <br className="hidden md:block" />
-            천안 아이파크 시티의 다양한 모습을 확인해 보세요.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a
-              href="#complex"
-              className="flex min-h-[52px] items-center justify-center bg-[#b59b77] px-7 py-4 text-sm font-semibold text-white"
-            >
-              3·4단지 살펴보기
-            </a>
-
-            <a
-              href={TEL}
-              className="flex min-h-[52px] items-center justify-center border border-white/70 px-7 py-4 text-sm font-semibold text-white"
-            >
-              방문 상담 전화
-            </a>
-          </div>
-
-          <p className="mt-9 text-xs leading-6 text-white/65">
-            본 홈페이지는 미소부동산에서 운영하는 비공식 분양 안내 사이트입니다.
+          <p>
+            새로운 주거의 시작
             <br />
-            게재된 이미지는 이해를 돕기 위한 조감도 및 연출 이미지입니다.
+            천안 아이파크 시티를 만나보세요.
           </p>
+
+          <a href="#complex-select" className="hero-action">
+            단지별 정보 확인
+            <span>↗</span>
+          </a>
+        </div>
+
+        <div className="slider-controls">
+          <button
+            type="button"
+            onClick={() =>
+              setSlide(
+                (current) =>
+                  (current - 1 + SLIDES.length) %
+                  SLIDES.length
+              )
+            }
+            aria-label="이전 사진"
+          >
+            ‹
+          </button>
+
+          <span>
+            0{slide + 1}
+            <i />
+            0{SLIDES.length}
+          </span>
+
+          <button
+            type="button"
+            onClick={() =>
+              setSlide(
+                (current) => (current + 1) % SLIDES.length
+              )
+            }
+            aria-label="다음 사진"
+          >
+            ›
+          </button>
+        </div>
+
+        <div className="hero-bottom">
+          <span>SCROLL TO EXPLORE</span>
+          <span>CHEONAN IPARK CITY</span>
         </div>
       </section>
 
-      {/* PROJECT OVERVIEW */}
-      <section id="overview" className="py-24 md:py-32">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 md:grid-cols-2 md:items-center md:gap-20 md:px-8">
-          <div>
-            <SectionHeading
-              eyebrow="PROJECT OVERVIEW"
-              title="천안의 새로운 주거 공간을 만나다"
-              description="천안 아이파크 시티 3단지와 4단지의 건축 이미지, 단지 배치, 조경 및 공용공간을 한곳에서 살펴볼 수 있도록 구성했습니다."
-            />
-
-            <p className="text-sm leading-8 text-neutral-600">
-              단지별 이미지와 주요 공간을 확인하고,
-              분양 관련 세부 정보와 방문 상담은 안내 전화로 문의해 주세요.
-              실제 공급 조건과 시설 계획은 공식 분양 자료를 통해 확인해야 합니다.
+      {/* COMPLEX SELECT */}
+      <section id="complex-select" className="complex-section">
+        <div className="home-container">
+          <div className="section-heading">
+            <span>SELECT YOUR COMPLEX</span>
+            <div className="heading-line" />
+            <h2>
+              천안 아이파크 시티
+              <br />
+              <strong>3 · 4단지</strong>
+            </h2>
+            <p>
+              관심 있는 단지를 선택하여
+              <br />
+              상세 정보를 확인해 보세요.
             </p>
-
-            <a
-              href="#complex"
-              className="mt-8 inline-flex border-b border-[#202020] pb-2 text-sm font-semibold"
-            >
-              단지별 정보 보기 →
-            </a>
           </div>
 
-          <div className="group relative aspect-[4/3] overflow-hidden bg-neutral-100">
-            <Photo
-              src={photos.mainExterior}
-              alt="천안 아이파크 시티 아파트 단지 외관"
-            />
-          </div>
-        </div>
-      </section>
+          <div className="complex-buttons">
+            <Link href="/complex/3" className="complex-button">
+              <span className="complex-number">03</span>
+              <div>
+                <small>CHEONAN IPARK CITY</small>
+                <h3>3단지</h3>
+                <p>3단지 상세정보 확인</p>
+              </div>
+              <span className="complex-arrow">↗</span>
+            </Link>
 
-      {/* COMPLEX 3 & 4 */}
-      <section
-        id="complex"
-        className="bg-[#f6f5f2] py-24 md:py-32"
-      >
-        <div className="mx-auto max-w-7xl px-6 md:px-8">
-          <SectionHeading
-            eyebrow="THE COMPLEX"
-            title="3단지와 4단지"
-            description="각 단지의 출입구와 조감도를 중심으로 살펴보세요."
-          />
-
-          <div className="grid gap-8 md:grid-cols-2">
-            {complexes.map((item) => (
-              <article
-                key={item.number}
-                className="min-w-0 overflow-hidden bg-white"
-              >
-                <div className="group relative aspect-[16/10] overflow-hidden bg-neutral-200">
-                  <Photo
-                    src={item.entrance}
-                    alt={`${item.name} 정문 조감도`}
-                  />
-                </div>
-
-                <div className="p-6 md:p-8">
-                  <p className="text-xs font-semibold tracking-[0.2em] text-[#a38a67]">
-                    COMPLEX {item.number}
-                  </p>
-
-                  <h3 className="mt-3 text-2xl font-semibold tracking-tight">
-                    {item.name}
-                  </h3>
-
-                  <p className="mt-3 text-sm text-neutral-500">
-                    {item.description}
-                  </p>
-
-                  <div className="group relative mt-7 aspect-[16/10] overflow-hidden bg-neutral-100">
-                    <Photo
-                      src={item.aerial}
-                      alt={`${item.name} 단지 배치 조감도`}
-                    />
-                  </div>
-
-                  <Link
-                    href={item.href}
-                    className="mt-7 flex items-center justify-between border-t border-neutral-200 pt-5 text-sm font-semibold"
-                  >
-                    <span>{item.number === "03" ? "3단지" : "4단지"} 상세정보 보기</span>
-                    <span aria-hidden="true">↗</span>
-                  </Link>
-
-                  <a
-                    href={TEL}
-                    className="mt-4 flex items-center justify-between border-t border-neutral-100 pt-4 text-sm text-neutral-600"
-                  >
-                    <span>분양 및 방문 전화상담</span>
-                    <span aria-hidden="true">☎</span>
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* HIGHLIGHTS */}
-      <section className="py-24 md:py-32">
-        <div className="mx-auto max-w-7xl px-6 md:px-8">
-          <SectionHeading
-            eyebrow="LIFESTYLE"
-            title="공간으로 만나는 아이파크 시티"
-            description="건축, 조경, 커뮤니티를 중심으로 단지의 주요 이미지를 소개합니다."
-          />
-
-          <div className="grid gap-10 md:grid-cols-3">
-            {highlights.map((item) => (
-              <article key={item.number}>
-                <div className="group relative aspect-[4/5] overflow-hidden bg-neutral-100">
-                  <Photo
-                    src={item.image}
-                    alt={item.title}
-                  />
-                </div>
-
-                <div className="mt-6 flex gap-4">
-                  <span className="text-xs font-semibold text-[#b59b77]">
-                    {item.number}
-                  </span>
-
-                  <div>
-                    <p className="text-[10px] font-semibold tracking-[0.2em] text-neutral-400">
-                      {item.label}
-                    </p>
-
-                    <h3 className="mt-2 text-xl font-semibold">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-3 text-sm leading-7 text-neutral-500">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* IMAGE GALLERY */}
-      <section
-        id="gallery"
-        className="bg-[#f6f5f2] py-24 md:py-32"
-      >
-        <div className="mx-auto max-w-7xl px-6 md:px-8">
-          <SectionHeading
-            eyebrow="IMAGE GALLERY"
-            title="아이파크 시티 갤러리"
-            description="제공된 조감도와 연출 이미지를 공간별로 분류했습니다."
-          />
-
-          <div className="space-y-20">
-            {galleries.map((group) => (
-              <section key={group.category}>
-                <div className="mb-7 flex flex-col justify-between gap-3 border-b border-neutral-300 pb-6 md:flex-row md:items-end">
-                  <div>
-                    <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-[#a38a67]">
-                      {group.category}
-                    </p>
-
-                    <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
-                      {group.title}
-                    </h3>
-                  </div>
-
-                  <p className="max-w-md text-sm leading-6 text-neutral-500">
-                    {group.description}
-                  </p>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {group.images.map((item) => (
-                    <div
-                      key={item.src}
-                      className="group relative aspect-[16/10] overflow-hidden bg-neutral-200"
-                    >
-                      <Photo
-                        src={item.src}
-                        alt={item.alt}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ))}
+            <Link href="/complex/4" className="complex-button">
+              <span className="complex-number">04</span>
+              <div>
+                <small>CHEONAN IPARK CITY</small>
+                <h3>4단지</h3>
+                <p>4단지 상세정보 확인</p>
+              </div>
+              <span className="complex-arrow">↗</span>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* RESERVATION */}
-      <section
-        id="reservation"
-        className="relative overflow-hidden bg-[#18202a] py-24 text-white md:py-32"
-      >
-        <div className="absolute inset-0 opacity-20">
-          <Image
-            src={photos.exteriorNight}
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
+      <section id="reservation" className="reservation-section">
+        <div className="home-container">
+          <div className="section-heading">
+            <span>VISIT RESERVATION</span>
+            <div className="heading-line" />
+            <h2>방문예약 등록</h2>
+            <p>
+              천안 아이파크 시티 3·4단지
+              <br />
+              방문 상담을 안내해 드립니다.
+            </p>
+          </div>
+
+          <div className="reservation-box">
+            <div className="reservation-intro">
+              <span>PRIVATE CONSULTATION</span>
+              <h3>
+                방문 상담을
+                <br />
+                준비하고 계신가요?
+              </h3>
+              <p>
+                희망하시는 단지와 방문 일정을
+                선택해 주세요.
+                <br />
+                상담 전화를 통해 방문 가능 여부를
+                확인하실 수 있습니다.
+              </p>
+
+              <div className="reservation-phone">
+                <small>상담 대표번호</small>
+                <a href={TEL}>{PHONE}</a>
+              </div>
+            </div>
+
+            <form
+              className="reservation-form"
+              onSubmit={handleReservation}
+            >
+              <div className="form-heading">
+                <span>RESERVATION FORM</span>
+                <h3>방문 상담 정보 입력</h3>
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="visitor-name">
+                  성함 <b>*</b>
+                </label>
+                <input
+                  id="visitor-name"
+                  type="text"
+                  placeholder="성함을 입력해 주세요"
+                  autoComplete="name"
+                  required
+                  maxLength={30}
+                  value={form.name}
+                  onChange={(e) =>
+                    updateForm("name", e.target.value)
+                  }
+                />
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="visitor-phone">
+                  연락처 <b>*</b>
+                </label>
+                <input
+                  id="visitor-phone"
+                  type="tel"
+                  placeholder="010-0000-0000"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  required
+                  pattern="[0-9+\-\s]{9,20}"
+                  title="올바른 전화번호를 입력해 주세요"
+                  value={form.phone}
+                  onChange={(e) =>
+                    updateForm("phone", e.target.value)
+                  }
+                />
+              </div>
+
+              <div className="form-field">
+                <label htmlFor="visitor-complex">
+                  관심 단지 <b>*</b>
+                </label>
+                <select
+                  id="visitor-complex"
+                  required
+                  value={form.complex}
+                  onChange={(e) =>
+                    updateForm("complex", e.target.value)
+                  }
+                >
+                  <option value="3단지">3단지</option>
+                  <option value="4단지">4단지</option>
+                  <option value="3·4단지 모두">
+                    3·4단지 모두
+                  </option>
+                </select>
+              </div>
+
+              <div className="form-row">
+                <div className="form-field">
+                  <label htmlFor="visitor-date">
+                    방문 희망일 <b>*</b>
+                  </label>
+                  <input
+                    id="visitor-date"
+                    type="date"
+                    min={todayString}
+                    required
+                    value={form.date}
+                    onChange={(e) =>
+                      updateForm("date", e.target.value)
+                    }
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label htmlFor="visitor-time">
+                    희망 시간
+                  </label>
+                  <select
+                    id="visitor-time"
+                    value={form.time}
+                    onChange={(e) =>
+                      updateForm("time", e.target.value)
+                    }
+                  >
+                    <option value="시간 협의">
+                      시간 협의
+                    </option>
+                    <option value="오전 10시">
+                      오전 10시
+                    </option>
+                    <option value="오전 11시">
+                      오전 11시
+                    </option>
+                    <option value="오후 1시">
+                      오후 1시
+                    </option>
+                    <option value="오후 2시">
+                      오후 2시
+                    </option>
+                    <option value="오후 3시">
+                      오후 3시
+                    </option>
+                    <option value="오후 4시">
+                      오후 4시
+                    </option>
+                    <option value="오후 5시">
+                      오후 5시
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" className="submit-button">
+                방문 상담 정보 확인
+                <span>→</span>
+              </button>
+
+              {submitted && (
+                <div className="reservation-result" role="status">
+                  <strong>입력 내용을 확인해 주세요.</strong>
+                  <p>
+                    {form.name} / {form.complex}
+                    <br />
+                    {form.date} / {form.time}
+                    <br />
+                    연락처: {form.phone}
+                  </p>
+                  <p>
+                    아직 예약이 접수되지 않았습니다.
+                    아래 버튼으로 전화하여 방문 일정을
+                    확정해 주세요.
+                  </p>
+                  <a href={TEL}>
+                    {PHONE} 전화 연결
+                  </a>
+                </div>
+              )}
+
+              <p className="form-notice">
+                ※ 본 양식은 상담 전 입력 내용을 확인하는
+                용도입니다. 입력 정보는 서버로 전송되거나
+                저장되지 않습니다. 실제 방문 예약은 전화
+                상담 후 확정됩니다.
+              </p>
+            </form>
+          </div>
         </div>
+      </section>
 
-        <div className="absolute inset-0 bg-[#18202a]/75" />
-
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <p className="text-xs font-semibold tracking-[0.3em] text-[#d9c4a5]">
-            VISIT & CONSULTATION
-          </p>
-
-          <h2 className="mt-6 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
-            모델하우스 방문 상담 안내
+      {/* CONTACT */}
+      <section className="home-contact">
+        <div className="home-container">
+          <span>CONTACT US</span>
+          <h2>
+            천안 아이파크 시티
+            <br />
+            분양 및 방문 상담
           </h2>
-
-          <p className="mx-auto mt-7 max-w-xl text-sm leading-8 text-white/75 md:text-base">
-            천안 아이파크 시티 3단지·4단지의 분양 정보와
-            방문 관련 사항은 전화로 문의해 주세요.
-            실제 방문 가능 일정은 상담 시 확인해 드립니다.
-          </p>
-
-          <p className="mt-9 text-sm text-[#d9c4a5]">
-            미소부동산 상담 안내
-          </p>
-
-          <p className="mt-2 text-4xl font-semibold tracking-tight md:text-6xl">
-            {PHONE}
-          </p>
-
-          <a
-            href={TEL}
-            className="mx-auto mt-9 inline-flex min-h-[56px] items-center justify-center bg-[#b59b77] px-12 py-4 text-sm font-semibold text-white transition hover:bg-[#a58b68]"
-          >
-            전화로 방문 상담하기
-          </a>
-
-          <p className="mt-6 text-xs text-white/55">
-            방문 예약은 전화 상담을 통해 안내됩니다.
-          </p>
+          <p>미소부동산 상담 안내</p>
+          <a href={TEL}>{PHONE}</a>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#111820] py-12 text-white/60">
-        <div className="mx-auto max-w-7xl px-6 md:px-8">
-          <div className="flex flex-col justify-between gap-8 md:flex-row">
+      <footer className="home-footer">
+        <div className="home-container">
+          <div className="footer-top">
             <div>
-              <p className="text-lg font-bold tracking-[0.12em] text-white">
-                IPARK CITY
-              </p>
-
-              <p className="mt-2 text-xs">
-                천안 아이파크 시티 3·4단지
-              </p>
-
-              <p className="mt-4 text-sm">
-                분양 안내: 미소부동산
-              </p>
-
-              <a
-                href={TEL}
-                className="mt-2 inline-block text-sm text-white"
-              >
-                {PHONE}
-              </a>
+              <strong>IPARK CITY</strong>
+              <p>천안 아이파크 시티 3·4단지</p>
             </div>
-
-            <div className="max-w-lg text-xs leading-7">
-              <p>
-                본 사이트는 미소부동산이 운영하는 비공식 분양 안내
-                홈페이지이며, 시행사·시공사의 공식 홈페이지가 아닙니다.
-              </p>
-
-              <p className="mt-2">
-                이미지 및 표현은 이해를 돕기 위한 것으로 실제 시공,
-                설계 및 공급 내용과 차이가 있을 수 있습니다.
-                정확한 내용은 공식 분양 자료를 확인하시기 바랍니다.
-              </p>
-            </div>
+            <a href={TEL}>{PHONE}</a>
           </div>
 
-          <div className="mt-10 border-t border-white/10 pt-6 text-xs">
+          <p>
+            운영: 미소부동산
+          </p>
+          <p>
+            본 홈페이지는 미소부동산이 운영하는
+            비공식 부동산 분양 정보 안내 사이트입니다.
+            시행사, 시공사 또는 공식 분양사무소의
+            공식 홈페이지가 아닙니다.
+          </p>
+          <p>
+            이미지와 안내 내용은 실제 설계 및 공급
+            조건과 다를 수 있습니다. 정확한 정보는
+            공식 입주자모집공고와 분양 자료를
+            확인하시기 바랍니다.
+          </p>
+
+          <div className="footer-copy">
             © {new Date().getFullYear()} IPARK CITY INFORMATION.
           </div>
         </div>
       </footer>
 
-      {/* MOBILE CALL BUTTON */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#17202a] p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] md:hidden">
-        <a
-          href={TEL}
-          className="flex min-h-[52px] items-center justify-center rounded-sm bg-[#b59b77] px-5 py-4 text-sm font-bold text-white"
-        >
-          방문예약 · 전화상담 {PHONE}
+      {/* MOBILE CALL */}
+      <div className="mobile-call">
+        <a href={TEL}>
+          ☎ 방문 상담 {PHONE}
         </a>
       </div>
 
-      <div className="h-20 md:hidden" />
+      <style jsx global>{`
+        .ipark-home {
+          background: #f7f5f0;
+          color: #24282d;
+          overflow-x: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+
+        .ipark-home * {
+          box-sizing: border-box;
+        }
+
+        .ipark-home a {
+          text-decoration: none;
+        }
+
+        .home-container {
+          width: min(1160px, calc(100% - 40px));
+          margin: 0 auto;
+        }
+
+        /* HEADER */
+        .ipark-header {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 50;
+          height: 88px;
+          padding: 0 5%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          color: #fff;
+          border-bottom: 1px solid #ffffff30;
+        }
+
+        .ipark-logo {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          flex-shrink: 0;
+        }
+
+        .ipark-logo strong {
+          font-family: Georgia, serif;
+          font-size: 25px;
+          letter-spacing: 2px;
+        }
+
+        .ipark-logo small {
+          font-size: 9px;
+          letter-spacing: 3px;
+          color: #e4d3b4;
+        }
+
+        .ipark-nav {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+        }
+
+        .ipark-nav a {
+          font-size: 13px;
+          color: #fff;
+        }
+
+        .header-phone {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          text-align: right;
+        }
+
+        .header-phone span {
+          font-size: 10px;
+          color: #c9ab78;
+        }
+
+        .header-phone strong {
+          font-size: 17px;
+        }
+
+        /* HERO */
+        .ipark-hero {
+          position: relative;
+          height: 100svh;
+          min-height: 640px;
+          max-height: 1050px;
+          overflow: hidden;
+          background: #101c2a;
+          color: #fff;
+        }
+
+        .hero-slide {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          transition: opacity 1.4s ease;
+        }
+
+        .hero-slide.active {
+          opacity: 1;
+        }
+
+        .hero-image {
+          object-fit: cover;
+          object-position: center;
+        }
+
+        .hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(10, 20, 33, 0.85) 0%,
+            rgba(10, 20, 33, 0.45) 65%,
+            rgba(10, 20, 33, 0.25) 100%
+          );
+        }
+
+        .hero-inner {
+          position: relative;
+          z-index: 2;
+          width: min(1160px, calc(100% - 40px));
+          height: 100%;
+          margin: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 110px 0 80px;
+        }
+
+        .hero-eyebrow {
+          font-size: 12px;
+          letter-spacing: 4px;
+          color: #e4d3b4;
+        }
+
+        .hero-line {
+          width: 55px;
+          height: 1px;
+          background: #c9ab78;
+          margin: 28px 0;
+        }
+
+        .hero-inner h1 {
+          margin: 0;
+          font-size: clamp(42px, 6vw, 80px);
+          font-weight: 400;
+          letter-spacing: -3px;
+          line-height: 1.3;
+        }
+
+        .hero-inner h1 em {
+          font-family: Georgia, serif;
+          font-style: normal;
+          color: #e4d3b4;
+          font-weight: 400;
+        }
+
+        .hero-inner p {
+          margin: 28px 0 0;
+          font-size: 17px;
+          font-weight: 300;
+          line-height: 2;
+          color: #ffffffd9;
+        }
+
+        .hero-action {
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 45px;
+          margin-top: 40px;
+          padding: 18px 25px;
+          border: 1px solid #c9ab78;
+          color: #fff;
+          font-size: 13px;
+          transition: 0.3s;
+        }
+
+        .hero-action:hover {
+          background: #c9ab78;
+          color: #101c2a;
+        }
+
+        .slider-controls {
+          position: absolute;
+          right: 6%;
+          bottom: 65px;
+          z-index: 5;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .slider-controls button {
+          border: 1px solid #ffffff70;
+          background: transparent;
+          color: #fff;
+          width: 42px;
+          height: 42px;
+          font-size: 27px;
+          cursor: pointer;
+        }
+
+        .slider-controls span {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 12px;
+          color: #fff;
+        }
+
+        .slider-controls i {
+          width: 35px;
+          height: 1px;
+          background: #c9ab78;
+        }
+
+        .hero-bottom {
+          position: absolute;
+          bottom: 32px;
+          left: 5%;
+          right: 5%;
+          z-index: 3;
+          display: flex;
+          justify-content: space-between;
+          font-size: 9px;
+          letter-spacing: 2px;
+          color: #ffffffa0;
+        }
+
+        /* SECTION */
+        .complex-section,
+        .reservation-section {
+          padding: 110px 0;
+        }
+
+        .complex-section {
+          background: #f7f5f0;
+        }
+
+        .section-heading {
+          text-align: center;
+          margin-bottom: 55px;
+        }
+
+        .section-heading > span {
+          color: #b59b77;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 3px;
+        }
+
+        .heading-line {
+          width: 45px;
+          height: 1px;
+          background: #c9ab78;
+          margin: 24px auto;
+        }
+
+        .section-heading h2 {
+          margin: 0;
+          font-size: clamp(32px, 4vw, 52px);
+          font-weight: 400;
+          line-height: 1.45;
+          letter-spacing: -2px;
+        }
+
+        .section-heading h2 strong {
+          font-weight: 600;
+        }
+
+        .section-heading p {
+          margin: 23px 0 0;
+          color: #777;
+          font-size: 15px;
+          line-height: 2;
+        }
+
+        /* COMPLEX BUTTONS */
+        .complex-buttons {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+
+        .complex-button {
+          min-height: 230px;
+          padding: 35px;
+          display: flex;
+          align-items: center;
+          gap: 25px;
+          position: relative;
+          background: #fff;
+          border: 1px solid #e7e3dc;
+          transition: 0.3s;
+        }
+
+        .complex-button:hover {
+          background: #101c2a;
+          color: #fff;
+          border-color: #101c2a;
+          transform: translateY(-4px);
+        }
+
+        .complex-number {
+          font-family: Georgia, serif;
+          font-size: 70px;
+          color: #c9ab78;
+          line-height: 1;
+        }
+
+        .complex-button small {
+          font-size: 10px;
+          letter-spacing: 2px;
+          color: #b59b77;
+        }
+
+        .complex-button h3 {
+          margin: 10px 0;
+          font-size: 30px;
+        }
+
+        .complex-button p {
+          margin: 0;
+          font-size: 13px;
+          color: #888;
+        }
+
+        .complex-button:hover p {
+          color: #ddd;
+        }
+
+        .complex-arrow {
+          position: absolute;
+          top: 25px;
+          right: 28px;
+          font-size: 22px;
+          color: #b59b77;
+        }
+
+        /* RESERVATION */
+        .reservation-section {
+          background: #fff;
+        }
+
+        .reservation-box {
+          display: grid;
+          grid-template-columns: 0.85fr 1.15fr;
+          background: #f7f5f0;
+        }
+
+        .reservation-intro {
+          background: #101c2a;
+          color: #fff;
+          padding: 65px 45px;
+        }
+
+        .reservation-intro > span {
+          color: #c9ab78;
+          font-size: 11px;
+          letter-spacing: 3px;
+        }
+
+        .reservation-intro h3 {
+          margin: 35px 0 25px;
+          font-size: 36px;
+          font-weight: 400;
+          line-height: 1.5;
+        }
+
+        .reservation-intro > p {
+          color: #c5cbd0;
+          font-size: 14px;
+          line-height: 2;
+        }
+
+        .reservation-phone {
+          margin-top: 65px;
+          padding-top: 25px;
+          border-top: 1px solid #ffffff35;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .reservation-phone small {
+          color: #c9ab78;
+          font-size: 12px;
+        }
+
+        .reservation-phone a {
+          font-size: 28px;
+          font-weight: 600;
+        }
+
+        .reservation-form {
+          padding: 50px;
+        }
+
+        .form-heading {
+          margin-bottom: 35px;
+        }
+
+        .form-heading span {
+          color: #b59b77;
+          font-size: 10px;
+          letter-spacing: 3px;
+        }
+
+        .form-heading h3 {
+          margin: 12px 0 0;
+          font-size: 25px;
+          font-weight: 600;
+        }
+
+        .form-field {
+          margin-bottom: 23px;
+          min-width: 0;
+        }
+
+        .form-field label {
+          display: block;
+          margin-bottom: 10px;
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .form-field label b {
+          color: #b59b77;
+        }
+
+        .form-field input,
+        .form-field select {
+          display: block;
+          width: 100%;
+          min-width: 0;
+          height: 53px;
+          padding: 0 15px;
+          border: 1px solid #dedbd5;
+          border-radius: 0;
+          background: #fff;
+          color: #24282d;
+          font-family: inherit;
+          font-size: 14px;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+          outline: 1px solid #b59b77;
+          border-color: #b59b77;
+        }
+
+        .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 15px;
+        }
+
+        .submit-button {
+          width: 100%;
+          min-height: 58px;
+          margin-top: 10px;
+          padding: 16px 22px;
+          border: 0;
+          background: #b59b77;
+          color: #fff;
+          font-size: 15px;
+          font-weight: 600;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: pointer;
+        }
+
+        .submit-button span {
+          font-size: 23px;
+        }
+
+        .reservation-result {
+          margin-top: 20px;
+          padding: 20px;
+          background: #fff;
+          border: 1px solid #c9ab78;
+          font-size: 13px;
+          line-height: 1.9;
+        }
+
+        .reservation-result strong {
+          display: block;
+          font-size: 15px;
+        }
+
+        .reservation-result a {
+          display: block;
+          padding: 12px;
+          margin-top: 15px;
+          background: #101c2a;
+          color: #fff;
+          text-align: center;
+          font-weight: 600;
+        }
+
+        .form-notice {
+          margin: 20px 0 0;
+          font-size: 11px;
+          color: #888;
+          line-height: 1.9;
+        }
+
+        /* CONTACT */
+        .home-contact {
+          padding: 90px 20px;
+          text-align: center;
+          background: #1b2b3d;
+          color: #fff;
+        }
+
+        .home-contact span {
+          color: #c9ab78;
+          font-size: 11px;
+          letter-spacing: 3px;
+        }
+
+        .home-contact h2 {
+          margin: 25px 0;
+          font-size: clamp(30px, 4vw, 45px);
+          font-weight: 400;
+          line-height: 1.5;
+        }
+
+        .home-contact p {
+          color: #c5cbd0;
+          font-size: 14px;
+        }
+
+        .home-contact a {
+          display: inline-block;
+          margin-top: 20px;
+          padding: 17px 35px;
+          border: 1px solid #c9ab78;
+          color: #e4d3b4;
+          font-size: 23px;
+          font-weight: 600;
+        }
+
+        /* FOOTER */
+        .home-footer {
+          padding: 50px 0 35px;
+          background: #101820;
+          color: #fff;
+        }
+
+        .footer-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20px;
+          margin-bottom: 25px;
+        }
+
+        .footer-top strong {
+          font-family: Georgia, serif;
+          font-size: 23px;
+          letter-spacing: 2px;
+        }
+
+        .footer-top p {
+          margin: 8px 0 0;
+        }
+
+        .footer-top a {
+          font-size: 17px;
+          font-weight: 600;
+          color: #e4d3b4;
+        }
+
+        .home-footer p {
+          max-width: 900px;
+          font-size: 11px;
+          color: #a5adb4;
+          line-height: 2;
+        }
+
+        .footer-copy {
+          margin-top: 35px;
+          padding-top: 20px;
+          border-top: 1px solid #ffffff20;
+          font-size: 10px;
+          color: #888;
+        }
+
+        .mobile-call {
+          display: none;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+          .ipark-header {
+            height: 70px;
+            padding: 0 20px;
+          }
+
+          .ipark-logo strong {
+            font-size: 19px;
+          }
+
+          .ipark-logo small {
+            font-size: 8px;
+          }
+
+          .ipark-nav {
+            display: none;
+          }
+
+          .header-phone span {
+            font-size: 9px;
+          }
+
+          .header-phone strong {
+            font-size: 13px;
+          }
+
+          .ipark-hero {
+            height: 77svh;
+            min-height: 560px;
+            max-height: 760px;
+          }
+
+          .hero-image {
+            object-position: center;
+          }
+
+          .hero-inner {
+            padding: 100px 0 95px;
+          }
+
+          .hero-eyebrow {
+            font-size: 9px;
+            letter-spacing: 2px;
+          }
+
+          .hero-line {
+            margin: 22px 0;
+          }
+
+          .hero-inner h1 {
+            font-size: clamp(34px, 9vw, 49px);
+            letter-spacing: -2px;
+          }
+
+          .hero-inner p {
+            font-size: 13px;
+            line-height: 1.9;
+          }
+
+          .hero-action {
+            margin-top: 28px;
+            padding: 15px 19px;
+            font-size: 12px;
+          }
+
+          .slider-controls {
+            right: 20px;
+            bottom: 50px;
+            gap: 10px;
+          }
+
+          .slider-controls button {
+            width: 34px;
+            height: 34px;
+          }
+
+          .slider-controls i {
+            width: 18px;
+          }
+
+          .hero-bottom {
+            bottom: 15px;
+          }
+
+          .hero-bottom span {
+            font-size: 8px;
+          }
+
+          .complex-section,
+          .reservation-section {
+            padding: 75px 0;
+          }
+
+          .section-heading {
+            margin-bottom: 35px;
+          }
+
+          .section-heading h2 {
+            font-size: 34px;
+          }
+
+          .section-heading p {
+            font-size: 13px;
+          }
+
+          .complex-buttons {
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+
+          .complex-button {
+            min-height: 145px;
+            padding: 25px;
+            gap: 20px;
+          }
+
+          .complex-number {
+            font-size: 55px;
+          }
+
+          .complex-button h3 {
+            font-size: 24px;
+          }
+
+          .complex-button p {
+            font-size: 12px;
+          }
+
+          .reservation-box {
+            grid-template-columns: 1fr;
+          }
+
+          .reservation-intro {
+            padding: 35px 25px;
+          }
+
+          .reservation-intro h3 {
+            font-size: 27px;
+            margin: 20px 0;
+          }
+
+          .reservation-intro > p {
+            font-size: 12px;
+          }
+
+          .reservation-phone {
+            margin-top: 25px;
+          }
+
+          .reservation-phone a {
+            font-size: 23px;
+          }
+
+          .reservation-form {
+            padding: 35px 22px;
+          }
+
+          .form-heading h3 {
+            font-size: 22px;
+          }
+
+          .form-row {
+            gap: 10px;
+          }
+
+          .form-field input,
+          .form-field select {
+            font-size: 13px;
+            padding: 0 10px;
+          }
+
+          .home-contact {
+            padding: 75px 20px;
+          }
+
+          .home-contact a {
+            font-size: 21px;
+          }
+
+          .home-footer {
+            padding-bottom: 115px;
+          }
+
+          .footer-top {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+
+          .mobile-call {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 10px 15px;
+            padding-bottom: calc(
+              10px + env(safe-area-inset-bottom)
+            );
+            background: #101c2a;
+          }
+
+          .mobile-call a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
+            background: #c9ab78;
+            color: #101c2a;
+            font-size: 15px;
+            font-weight: 700;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-slide,
+          .complex-button {
+            transition: none;
+          }
+        }
+      `}</style>
     </main>
   );
 }
