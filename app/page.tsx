@@ -11,21 +11,15 @@ const TEL = "tel:0415560303";
 const SLIDES = [
   {
     image: "/IMG_2192.jpeg",
-    label: "CHEONAN IPARK CITY",
     title: "천안 아이파크 시티",
-    subtitle: "3·4단지",
   },
   {
     image: "/IMG_2191.jpeg",
-    label: "PREMIUM RESIDENCE",
-    title: "새로운 주거 공간",
-    subtitle: "천안 아이파크 시티",
+    title: "천안 아이파크 시티 외관",
   },
   {
     image: "/IMG_2161.jpeg",
-    label: "THE NEW LIFESTYLE",
-    title: "일상의 새로운 가치",
-    subtitle: "IPARK CITY",
+    title: "천안 아이파크 시티 야경",
   },
 ];
 
@@ -45,14 +39,36 @@ const INITIAL_FORM: Reservation = {
   time: "시간 협의",
 };
 
+const COMPLEXES = [
+  {
+    number: "03",
+    name: "3단지",
+    english: "COMPLEX THREE",
+    image: "/IMG_2182.jpeg",
+    href: "/complex/3",
+    description: "천안 아이파크 시티 3단지",
+  },
+  {
+    number: "04",
+    name: "4단지",
+    english: "COMPLEX FOUR",
+    image: "/IMG_2183.jpeg",
+    href: "/complex/4",
+    description: "천안 아이파크 시티 4단지",
+  },
+];
+
 export default function HomePage() {
   const [slide, setSlide] = useState(0);
-  const [form, setForm] = useState<Reservation>(INITIAL_FORM);
+  const [form, setForm] =
+    useState<Reservation>(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setSlide((current) => (current + 1) % SLIDES.length);
+      setSlide(
+        (current) => (current + 1) % SLIDES.length
+      );
     }, 5000);
 
     return () => window.clearInterval(timer);
@@ -74,7 +90,11 @@ export default function HomePage() {
   ) => {
     event.preventDefault();
 
-    if (!form.name.trim() || !form.phone.trim() || !form.date) {
+    if (
+      !form.name.trim() ||
+      !form.phone.trim() ||
+      !form.date
+    ) {
       return;
     }
 
@@ -151,7 +171,10 @@ export default function HomePage() {
             천안 아이파크 시티를 만나보세요.
           </p>
 
-          <a href="#complex-select" className="hero-action">
+          <a
+            href="#complex-select"
+            className="hero-action"
+          >
             단지별 정보 확인
             <span>↗</span>
           </a>
@@ -182,7 +205,8 @@ export default function HomePage() {
             type="button"
             onClick={() =>
               setSlide(
-                (current) => (current + 1) % SLIDES.length
+                (current) =>
+                  (current + 1) % SLIDES.length
               )
             }
             aria-label="다음 사진"
@@ -197,11 +221,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* COMPLEX SELECT */}
-      <section id="complex-select" className="complex-section">
+      {/* PREMIUM COMPLEX SELECT */}
+      <section
+        id="complex-select"
+        className="complex-section"
+      >
         <div className="home-container">
           <div className="section-heading">
-            <span>SELECT YOUR COMPLEX</span>
+            <span>THE COMPLEX</span>
             <div className="heading-line" />
             <h2>
               천안 아이파크 시티
@@ -209,38 +236,71 @@ export default function HomePage() {
               <strong>3 · 4단지</strong>
             </h2>
             <p>
-              관심 있는 단지를 선택하여
+              각 단지의 특별한 공간을
               <br />
-              상세 정보를 확인해 보세요.
+              직접 확인해 보세요.
             </p>
           </div>
 
-          <div className="complex-buttons">
-            <Link href="/complex/3" className="complex-button">
-              <span className="complex-number">03</span>
-              <div>
-                <small>CHEONAN IPARK CITY</small>
-                <h3>3단지</h3>
-                <p>3단지 상세정보 확인</p>
-              </div>
-              <span className="complex-arrow">↗</span>
-            </Link>
+          <div className="premium-complex-grid">
+            {COMPLEXES.map((item) => (
+              <Link
+                key={item.number}
+                href={item.href}
+                className="premium-complex-card"
+                aria-label={`${item.description} 상세정보 보기`}
+              >
+                <Image
+                  src={item.image}
+                  alt={`${item.description} 정문 조감도`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="premium-complex-image"
+                />
 
-            <Link href="/complex/4" className="complex-button">
-              <span className="complex-number">04</span>
-              <div>
-                <small>CHEONAN IPARK CITY</small>
-                <h3>4단지</h3>
-                <p>4단지 상세정보 확인</p>
-              </div>
-              <span className="complex-arrow">↗</span>
-            </Link>
+                <div className="premium-complex-shade" />
+
+                <div className="premium-complex-top">
+                  <span>CHEONAN IPARK CITY</span>
+                  <span>{item.number}</span>
+                </div>
+
+                <div className="premium-complex-content">
+                  <span className="premium-complex-label">
+                    {item.english}
+                  </span>
+
+                  <h3>
+                    천안 아이파크 시티
+                    <br />
+                    <strong>{item.name}</strong>
+                  </h3>
+
+                  <div className="premium-complex-bottom">
+                    <span>단지 상세정보 보기</span>
+
+                    <span className="premium-complex-circle">
+                      ↗
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
+
+          <p className="complex-disclaimer">
+            ※ 게재된 이미지는 이해를 돕기 위한
+            조감도 및 연출 이미지로 실제 시공
+            내용과 차이가 있을 수 있습니다.
+          </p>
         </div>
       </section>
 
       {/* RESERVATION */}
-      <section id="reservation" className="reservation-section">
+      <section
+        id="reservation"
+        className="reservation-section"
+      >
         <div className="home-container">
           <div className="section-heading">
             <span>VISIT RESERVATION</span>
@@ -256,11 +316,13 @@ export default function HomePage() {
           <div className="reservation-box">
             <div className="reservation-intro">
               <span>PRIVATE CONSULTATION</span>
+
               <h3>
                 방문 상담을
                 <br />
                 준비하고 계신가요?
               </h3>
+
               <p>
                 희망하시는 단지와 방문 일정을
                 선택해 주세요.
@@ -288,6 +350,7 @@ export default function HomePage() {
                 <label htmlFor="visitor-name">
                   성함 <b>*</b>
                 </label>
+
                 <input
                   id="visitor-name"
                   type="text"
@@ -297,7 +360,10 @@ export default function HomePage() {
                   maxLength={30}
                   value={form.name}
                   onChange={(e) =>
-                    updateForm("name", e.target.value)
+                    updateForm(
+                      "name",
+                      e.target.value
+                    )
                   }
                 />
               </div>
@@ -306,6 +372,7 @@ export default function HomePage() {
                 <label htmlFor="visitor-phone">
                   연락처 <b>*</b>
                 </label>
+
                 <input
                   id="visitor-phone"
                   type="tel"
@@ -313,11 +380,14 @@ export default function HomePage() {
                   autoComplete="tel"
                   inputMode="tel"
                   required
-                  pattern="[0-9+\-\s]{9,20}"
+                  pattern="[0-9+\\-\\s]{9,20}"
                   title="올바른 전화번호를 입력해 주세요"
                   value={form.phone}
                   onChange={(e) =>
-                    updateForm("phone", e.target.value)
+                    updateForm(
+                      "phone",
+                      e.target.value
+                    )
                   }
                 />
               </div>
@@ -326,16 +396,24 @@ export default function HomePage() {
                 <label htmlFor="visitor-complex">
                   관심 단지 <b>*</b>
                 </label>
+
                 <select
                   id="visitor-complex"
                   required
                   value={form.complex}
                   onChange={(e) =>
-                    updateForm("complex", e.target.value)
+                    updateForm(
+                      "complex",
+                      e.target.value
+                    )
                   }
                 >
-                  <option value="3단지">3단지</option>
-                  <option value="4단지">4단지</option>
+                  <option value="3단지">
+                    3단지
+                  </option>
+                  <option value="4단지">
+                    4단지
+                  </option>
                   <option value="3·4단지 모두">
                     3·4단지 모두
                   </option>
@@ -347,6 +425,7 @@ export default function HomePage() {
                   <label htmlFor="visitor-date">
                     방문 희망일 <b>*</b>
                   </label>
+
                   <input
                     id="visitor-date"
                     type="date"
@@ -354,7 +433,10 @@ export default function HomePage() {
                     required
                     value={form.date}
                     onChange={(e) =>
-                      updateForm("date", e.target.value)
+                      updateForm(
+                        "date",
+                        e.target.value
+                      )
                     }
                   />
                 </div>
@@ -363,11 +445,15 @@ export default function HomePage() {
                   <label htmlFor="visitor-time">
                     희망 시간
                   </label>
+
                   <select
                     id="visitor-time"
                     value={form.time}
                     onChange={(e) =>
-                      updateForm("time", e.target.value)
+                      updateForm(
+                        "time",
+                        e.target.value
+                      )
                     }
                   >
                     <option value="시간 협의">
@@ -398,14 +484,23 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <button type="submit" className="submit-button">
+              <button
+                type="submit"
+                className="submit-button"
+              >
                 방문 상담 정보 확인
                 <span>→</span>
               </button>
 
               {submitted && (
-                <div className="reservation-result" role="status">
-                  <strong>입력 내용을 확인해 주세요.</strong>
+                <div
+                  className="reservation-result"
+                  role="status"
+                >
+                  <strong>
+                    입력 내용을 확인해 주세요.
+                  </strong>
+
                   <p>
                     {form.name} / {form.complex}
                     <br />
@@ -413,11 +508,13 @@ export default function HomePage() {
                     <br />
                     연락처: {form.phone}
                   </p>
+
                   <p>
                     아직 예약이 접수되지 않았습니다.
-                    아래 버튼으로 전화하여 방문 일정을
-                    확정해 주세요.
+                    아래 버튼으로 전화하여 방문
+                    일정을 확정해 주세요.
                   </p>
+
                   <a href={TEL}>
                     {PHONE} 전화 연결
                   </a>
@@ -425,10 +522,11 @@ export default function HomePage() {
               )}
 
               <p className="form-notice">
-                ※ 본 양식은 상담 전 입력 내용을 확인하는
-                용도입니다. 입력 정보는 서버로 전송되거나
-                저장되지 않습니다. 실제 방문 예약은 전화
-                상담 후 확정됩니다.
+                ※ 본 양식은 상담 전 입력 내용을
+                확인하는 용도입니다. 입력 정보는
+                서버로 전송되거나 저장되지 않습니다.
+                실제 방문 예약은 전화 상담 후
+                확정됩니다.
               </p>
             </form>
           </div>
@@ -439,12 +537,15 @@ export default function HomePage() {
       <section className="home-contact">
         <div className="home-container">
           <span>CONTACT US</span>
+
           <h2>
             천안 아이파크 시티
             <br />
             분양 및 방문 상담
           </h2>
+
           <p>미소부동산 상담 안내</p>
+
           <a href={TEL}>{PHONE}</a>
         </div>
       </section>
@@ -455,29 +556,34 @@ export default function HomePage() {
           <div className="footer-top">
             <div>
               <strong>IPARK CITY</strong>
-              <p>천안 아이파크 시티 3·4단지</p>
+              <p>
+                천안 아이파크 시티 3·4단지
+              </p>
             </div>
+
             <a href={TEL}>{PHONE}</a>
           </div>
 
-          <p>
-            운영: 미소부동산
-          </p>
+          <p>운영: 미소부동산</p>
+
           <p>
             본 홈페이지는 미소부동산이 운영하는
-            비공식 부동산 분양 정보 안내 사이트입니다.
-            시행사, 시공사 또는 공식 분양사무소의
-            공식 홈페이지가 아닙니다.
+            비공식 부동산 분양 정보 안내
+            사이트입니다. 시행사, 시공사 또는
+            공식 분양사무소의 공식 홈페이지가
+            아닙니다.
           </p>
+
           <p>
-            이미지와 안내 내용은 실제 설계 및 공급
-            조건과 다를 수 있습니다. 정확한 정보는
-            공식 입주자모집공고와 분양 자료를
-            확인하시기 바랍니다.
+            이미지와 안내 내용은 실제 설계 및
+            공급 조건과 다를 수 있습니다.
+            정확한 정보는 공식 입주자모집공고와
+            분양 자료를 확인하시기 바랍니다.
           </p>
 
           <div className="footer-copy">
-            © {new Date().getFullYear()} IPARK CITY INFORMATION.
+            © {new Date().getFullYear()} IPARK CITY
+            INFORMATION.
           </div>
         </div>
       </footer>
@@ -773,66 +879,130 @@ export default function HomePage() {
           line-height: 2;
         }
 
-        /* COMPLEX BUTTONS */
-        .complex-buttons {
+        /* PREMIUM COMPLEX CARDS */
+        .premium-complex-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 20px;
+          gap: 22px;
         }
 
-        .complex-button {
-          min-height: 230px;
+        .premium-complex-card {
+          position: relative;
+          display: block;
+          height: 570px;
+          overflow: hidden;
+          background: #101c2a;
+          color: #fff;
+          isolation: isolate;
+        }
+
+        .premium-complex-image {
+          object-fit: cover;
+          object-position: center;
+          transition: transform 0.8s ease;
+        }
+
+        .premium-complex-card:hover
+        .premium-complex-image {
+          transform: scale(1.055);
+        }
+
+        .premium-complex-shade {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(
+            180deg,
+            rgba(5, 13, 23, 0.38) 0%,
+            rgba(5, 13, 23, 0.05) 38%,
+            rgba(5, 13, 23, 0.35) 62%,
+            rgba(5, 13, 23, 0.94) 100%
+          );
+        }
+
+        .premium-complex-top {
+          position: absolute;
+          top: 30px;
+          left: 30px;
+          right: 30px;
+          z-index: 2;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 10px;
+          letter-spacing: 2.5px;
+          color: #fff;
+        }
+
+        .premium-complex-top span:last-child {
+          font-family: Georgia, serif;
+          font-size: 25px;
+          letter-spacing: 0;
+          color: #e4d3b4;
+        }
+
+        .premium-complex-content {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: 2;
           padding: 35px;
+        }
+
+        .premium-complex-label {
+          color: #e4d3b4;
+          font-size: 11px;
+          letter-spacing: 3px;
+        }
+
+        .premium-complex-content h3 {
+          margin: 18px 0 28px;
+          font-size: 29px;
+          font-weight: 400;
+          line-height: 1.5;
+          letter-spacing: -1px;
+        }
+
+        .premium-complex-content h3 strong {
+          font-size: 47px;
+          font-weight: 500;
+        }
+
+        .premium-complex-bottom {
           display: flex;
           align-items: center;
-          gap: 25px;
-          position: relative;
-          background: #fff;
-          border: 1px solid #e7e3dc;
+          justify-content: space-between;
+          border-top: 1px solid #ffffff60;
+          padding-top: 22px;
+          font-size: 13px;
+        }
+
+        .premium-complex-circle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 46px;
+          height: 46px;
+          border: 1px solid #e4d3b4;
+          border-radius: 50%;
+          color: #e4d3b4;
+          font-size: 23px;
           transition: 0.3s;
         }
 
-        .complex-button:hover {
-          background: #101c2a;
-          color: #fff;
-          border-color: #101c2a;
-          transform: translateY(-4px);
+        .premium-complex-card:hover
+        .premium-complex-circle {
+          background: #c9ab78;
+          color: #101c2a;
         }
 
-        .complex-number {
-          font-family: Georgia, serif;
-          font-size: 70px;
-          color: #c9ab78;
-          line-height: 1;
-        }
-
-        .complex-button small {
-          font-size: 10px;
-          letter-spacing: 2px;
-          color: #b59b77;
-        }
-
-        .complex-button h3 {
-          margin: 10px 0;
-          font-size: 30px;
-        }
-
-        .complex-button p {
-          margin: 0;
-          font-size: 13px;
+        .complex-disclaimer {
+          margin-top: 20px;
           color: #888;
-        }
-
-        .complex-button:hover p {
-          color: #ddd;
-        }
-
-        .complex-arrow {
-          position: absolute;
-          top: 25px;
-          right: 28px;
-          font-size: 22px;
-          color: #b59b77;
+          font-size: 11px;
+          line-height: 1.8;
+          text-align: center;
         }
 
         /* RESERVATION */
@@ -1196,27 +1366,43 @@ export default function HomePage() {
             font-size: 13px;
           }
 
-          .complex-buttons {
+          /* PREMIUM MOBILE CARDS */
+          .premium-complex-grid {
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 18px;
           }
 
-          .complex-button {
-            min-height: 145px;
+          .premium-complex-card {
+            height: 440px;
+          }
+
+          .premium-complex-top {
+            top: 22px;
+            left: 22px;
+            right: 22px;
+            font-size: 9px;
+          }
+
+          .premium-complex-content {
             padding: 25px;
-            gap: 20px;
           }
 
-          .complex-number {
-            font-size: 55px;
+          .premium-complex-label {
+            font-size: 10px;
           }
 
-          .complex-button h3 {
-            font-size: 24px;
+          .premium-complex-content h3 {
+            font-size: 23px;
+            margin: 12px 0 20px;
           }
 
-          .complex-button p {
-            font-size: 12px;
+          .premium-complex-content h3 strong {
+            font-size: 39px;
+          }
+
+          .premium-complex-circle {
+            width: 42px;
+            height: 42px;
           }
 
           .reservation-box {
@@ -1307,7 +1493,7 @@ export default function HomePage() {
 
         @media (prefers-reduced-motion: reduce) {
           .hero-slide,
-          .complex-button {
+          .premium-complex-image {
             transition: none;
           }
         }
