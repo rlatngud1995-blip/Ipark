@@ -1,7 +1,7 @@
 
-@import "tailwindcss";
-
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap");
+
+@import "tailwindcss";
 
 :root {
   --navy: #101c2a;
@@ -12,6 +12,10 @@
   --white: #ffffff;
   --text: #24282d;
   --muted: #74777c;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
@@ -25,10 +29,21 @@ body {
   color: var(--text);
   font-family: "Noto Sans KR", sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 button {
+  font: inherit;
   cursor: pointer;
+}
+
+img {
+  max-width: 100%;
 }
 
 ::selection {
@@ -38,7 +53,7 @@ button {
 
 .container {
   width: min(1200px, calc(100% - 40px));
-  margin-inline: auto;
+  margin: 0 auto;
 }
 
 .section {
