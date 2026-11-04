@@ -1,8 +1,8 @@
 
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 type ComplexNumber = 3 | 4;
@@ -19,16 +19,11 @@ const DATA = {
     developer: "IPARK현대산업개발",
     builder: "IPARK현대산업개발",
     other: 4,
-    images: {
-      hero: "/IMG_2161.jpeg",
-      overview: "/IMG_2162.jpeg",
-      aerial: "/IMG_2166.jpeg",
-      landscape: "/IMG_2163.jpeg",
-      exterior: "/IMG_2164.jpeg",
-      community: "/IMG_2180.jpeg",
-      special: "/IMG_2181.jpeg",
-      entrance: "/IMG_2182.jpeg",
-    },
+    hero: "/IMG_2182.jpeg",
+    overview: "/IMG_2162.jpeg",
+    entrance: "/IMG_2182.jpeg",
+    landscape: "/IMG_2163.jpeg",
+    community: "/IMG_2184.jpeg",
   },
   4: {
     number: "04",
@@ -38,16 +33,11 @@ const DATA = {
     developer: "㈜하나자산신탁",
     builder: "IPARK현대산업개발",
     other: 3,
-    images: {
-      hero: "/IMG_2191.jpeg",
-      overview: "/IMG_2190.jpeg",
-      aerial: "/IMG_2192.jpeg",
-      landscape: "/IMG_2193.jpeg",
-      exterior: "/IMG_2189.jpeg",
-      community: "/IMG_2185.jpeg",
-      special: "/IMG_2184.jpeg",
-      entrance: "/IMG_2183.jpeg",
-    },
+    hero: "/IMG_2183.jpeg",
+    overview: "/IMG_2166.jpeg",
+    entrance: "/IMG_2183.jpeg",
+    landscape: "/IMG_2193.jpeg",
+    community: "/IMG_2185.jpeg",
   },
 } as const;
 
@@ -65,29 +55,29 @@ const LOCATION = [
     num: "01",
     title: "자연환경",
     headline: "자연과 가까운 일상",
-    text: "성성호수공원과 노태근린공원 등 주변 녹지와 휴식공간을 통해 생활환경을 살펴볼 수 있습니다.",
-    detail: "공원 접근 경로와 실제 이동거리는 출발 위치에 따라 달라질 수 있습니다.",
+    text: "성성호수공원과 노태근린공원 등 주변 녹지 및 휴식공간을 살펴볼 수 있습니다.",
+    detail: "공원 접근 경로와 이동거리는 출발 위치에 따라 달라질 수 있습니다.",
   },
   {
     num: "02",
     title: "교육환경",
     headline: "자녀를 위한 교육 여건",
-    text: "주변 교육시설과 학교 신설 계획 등을 살펴보고 자녀의 통학 여건을 확인할 수 있도록 안내합니다.",
-    detail: "학교 신설·개교 및 통학구역은 관계기관의 최종 결정에 따릅니다.",
+    text: "주변 교육시설과 학교 신설 계획 등을 살펴보고 통학 여건을 확인할 수 있습니다.",
+    detail: "학교 신설 및 통학구역은 관계기관의 최종 결정에 따릅니다.",
   },
   {
     num: "03",
     title: "생활환경",
-    headline: "일상에 필요한 생활 인프라",
-    text: "대형마트와 상업시설, 의료시설 등 천안 북부 생활권의 다양한 편의시설을 소개합니다.",
-    detail: "시설별 운영 여부와 이동시간은 별도 확인이 필요합니다.",
+    headline: "편리한 생활 인프라",
+    text: "상업시설과 의료시설 등 천안 북부 생활권의 다양한 편의시설을 소개합니다.",
+    detail: "시설 운영 여부와 실제 이동시간은 별도 확인이 필요합니다.",
   },
   {
     num: "04",
     title: "교통환경",
-    headline: "광역 이동을 고려한 교통 여건",
-    text: "천안IC와 경부고속도로 접근 여건, 부성역 신설 계획 등 주변 교통환경을 살펴봅니다.",
-    detail: "부성역 등 예정 사업의 일정과 세부 계획은 변경될 수 있습니다.",
+    headline: "광역 이동을 고려한 입지",
+    text: "천안IC와 경부고속도로 접근 여건 및 주변 교통환경을 살펴봅니다.",
+    detail: "예정된 교통 개발계획은 변경되거나 지연될 수 있습니다.",
   },
 ];
 
@@ -95,45 +85,59 @@ const PREMIUM = [
   {
     num: "01",
     title: "단지 설계",
-    text: "동 배치, 주동 구성 및 주거동 사이 공간을 중심으로 단지 설계 정보를 안내합니다.",
+    text: "주동 배치와 단지 내 보행 동선을 중심으로 설계 정보를 살펴봅니다.",
   },
   {
     num: "02",
     title: "주거 평면",
-    text: "전용 84㎡·102㎡·116㎡ 주택형별 구조와 공간 활용 계획을 살펴봅니다. 세부 구조는 공식 평면도 기준입니다.",
+    text: "주택형별 공간 구성과 실내 구조를 평면 자료를 통해 확인할 수 있습니다.",
   },
   {
     num: "03",
     title: "조경 공간",
-    text: "단지 내 조경 및 휴식공간의 구성과 실제 적용 계획을 공식 자료에 맞춰 안내합니다.",
+    text: "단지 내 조경과 휴식공간의 계획 이미지를 소개합니다.",
   },
   {
     num: "04",
     title: "커뮤니티 시설",
-    text: "피트니스, 골프연습장, 독서·휴게공간 등 커뮤니티 관련 시설의 적용 여부와 이용 조건을 안내합니다.",
+    text: "커뮤니티 및 공용시설의 계획 정보를 안내합니다.",
   },
   {
     num: "05",
     title: "생활 편의",
-    text: "주차, 보행 동선, 수납 및 기타 생활 편의 요소를 공식 설계자료에 따라 안내합니다.",
+    text: "주차, 보행 동선 및 생활 편의 요소를 살펴봅니다.",
   },
 ];
 
-const FLOOR_TYPES = [
+const THREE_FLOORS = [
+  {
+    id: "A",
+    name: "평면도 A",
+    image: "/IMG_2225.webp",
+  },
+  {
+    id: "B",
+    name: "평면도 B",
+    image: "/IMG_2226.webp",
+  },
+  {
+    id: "C",
+    name: "평면도 C",
+    image: "/IMG_2227.webp",
+  },
+  {
+    id: "D",
+    name: "평면도 D",
+    image: "/IMG_2228.webp",
+  },
+];
+
+const FOUR_FLOORS = [
   "84㎡ A",
   "84㎡ B",
   "102㎡ A",
   "102㎡ B",
   "116㎡",
-];
-
-const SALES = [
-  ["01", "공급안내", "주택형별 공급 세대수 및 공급 조건"],
-  ["02", "분양일정", "입주자모집공고 및 청약 일정"],
-  ["03", "분양가격", "공급금액과 납부 조건"],
-  ["04", "청약안내", "청약 자격 및 신청 방법"],
-  ["05", "계약안내", "계약 일정과 필요 서류"],
-  ["06", "유의사항", "공식 공고 및 계약 조건 확인"],
 ];
 
 function SectionTitle({
@@ -158,57 +162,45 @@ function SectionTitle({
   );
 }
 
-function Photo({
+function DetailPhoto({
   src,
   alt,
-  caption,
+  contain = false,
   priority = false,
-  variant = "wide",
 }: {
   src: string;
   alt: string;
-  caption?: string;
+  contain?: boolean;
   priority?: boolean;
-  variant?: "wide" | "standard" | "hero";
 }) {
   return (
-    <figure className={`photo photo-${variant}`}>
-      <div className="photo-frame">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority={priority}
-          sizes={
-            variant === "standard"
-              ? "(max-width: 700px) 100vw, 50vw"
-              : "100vw"
-          }
-          className="photo-image"
-        />
-      </div>
-      {caption && (
-        <figcaption>{caption}</figcaption>
-      )}
-    </figure>
+    <div
+      className={`detail-photo ${
+        contain ? "contain" : ""
+      }`}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        sizes="(max-width: 768px) 100vw, 1100px"
+        className="detail-image"
+      />
+    </div>
   );
 }
 
-function InfoPlaceholder({
-  title,
-  description,
+function PhotoSlot({
+  label,
 }: {
-  title: string;
-  description?: string;
+  label: string;
 }) {
   return (
-    <div className="info-placeholder">
-      <span>OFFICIAL DOCUMENT</span>
-      <strong>{title}</strong>
-      <p>
-        {description ||
-          "정확한 정보는 공식 자료를 기준으로 확인해 주세요."}
-      </p>
+    <div className="photo-slot">
+      <span>＋</span>
+      <strong>{label}</strong>
+      <small>자료 확인 후 등록 예정</small>
     </div>
   );
 }
@@ -219,11 +211,15 @@ export default function ComplexDetail({
   complex: ComplexNumber;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [selectedFloor, setSelectedFloor] =
+    useState(0);
+
   const data = DATA[complex];
-  const images = data.images;
+  const isThree = complex === 3;
 
   return (
     <main className="ipark-detail">
+      {/* HEADER */}
       <header className="site-header">
         <Link href="/" className="brand">
           <strong>IPARK CITY</strong>
@@ -241,7 +237,9 @@ export default function ComplexDetail({
         <button
           type="button"
           className="mobile-toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() =>
+            setMenuOpen(!menuOpen)
+          }
           aria-label="메뉴 열기 및 닫기"
           aria-expanded={menuOpen}
         >
@@ -268,55 +266,66 @@ export default function ComplexDetail({
         </nav>
       )}
 
+      {/* COMPLEX SWITCH */}
       <div className="complex-switch">
         <Link
           href="/complex/3"
-          className={complex === 3 ? "active" : ""}
+          className={
+            isThree ? "active" : ""
+          }
         >
           3단지
         </Link>
+
         <Link
           href="/complex/4"
-          className={complex === 4 ? "active" : ""}
+          className={
+            !isThree ? "active" : ""
+          }
         >
           4단지
         </Link>
       </div>
 
-      {/* 메인 */}
-      <section className="hero">
-        <div className="hero-bg">
-          <Photo
-            src={images.hero}
-            alt={`천안 아이파크 시티 ${data.name} 아파트 외관 조감도`}
-            priority
-            variant="hero"
-          />
-        </div>
+      {/* HERO */}
+      <section className="detail-hero">
+        <Image
+          src={data.hero}
+          alt={`천안 아이파크 시티 ${data.name} 조감도`}
+          fill
+          priority
+          sizes="100vw"
+          className="hero-image"
+        />
 
         <div className="hero-shade" />
 
         <div className="hero-content container">
           <span>CHEONAN IPARK CITY</span>
+
           <h1>
             천안 아이파크 시티
             <br />
             <strong>{data.name}</strong>
           </h1>
+
           <p>
             새로운 주거 공간,
             <br />
             천안 아이파크 시티를 만나다.
           </p>
 
-          <a href="#overview" className="hero-button">
-            {data.name} 자세히 보기 <span>↗</span>
+          <a
+            href="#overview"
+            className="hero-button"
+          >
+            {data.name} 자세히 보기 ↗
           </a>
         </div>
       </section>
 
-      {/* 사업개요 */}
-      <section id="overview" className="section">
+      {/* OVERVIEW */}
+      <section id="overview" className="detail-section">
         <div className="container">
           <SectionTitle
             index="01"
@@ -325,15 +334,16 @@ export default function ComplexDetail({
             description={`${data.name}의 주요 사업 정보를 소개합니다.`}
           />
 
-          <Photo
-            src={images.overview}
-            alt={`천안 아이파크 시티 ${data.name} 전체 조감도`}
-            caption={`${data.name} 조감도 · 이미지 내용은 실제 시공 및 인허가 과정에서 변경될 수 있습니다.`}
+          <DetailPhoto
+            src={data.overview}
+            alt={`천안 아이파크 시티 ${data.name} 단지 조감도`}
           />
 
           <div className="overview-heading">
             <span>Overview</span>
-            <h3>천안 아이파크 시티 {data.name}</h3>
+            <h3>
+              천안 아이파크 시티 {data.name}
+            </h3>
           </div>
 
           <div className="overview-grid">
@@ -352,13 +362,13 @@ export default function ComplexDetail({
             </div>
 
             <div className="overview-item">
-              <h4>전용면적</h4>
+              <h4>주택형</h4>
               <p>
-                84㎡ A·B
+                전용 84㎡
                 <br />
-                102㎡ A·B
+                전용 102㎡
                 <br />
-                116㎡
+                전용 116㎡
               </p>
             </div>
 
@@ -373,17 +383,18 @@ export default function ComplexDetail({
           </div>
 
           <p className="disclaimer">
-            ※ 상기 사업 정보는 제공된 안내자료를
-            기준으로 작성하였습니다. 건축물 외관,
-            색채계획, 부대시설 및 조경계획 등은
-            관계기관 협의와 사업 진행에 따라
-            변경될 수 있습니다.
+            ※ 사업 정보 및 설계 내용은
+            공식 자료와 관계기관의 최종
+            승인 내용에 따라 달라질 수 있습니다.
           </p>
         </div>
       </section>
 
-      {/* 입지환경 */}
-      <section id="location" className="section soft">
+      {/* LOCATION */}
+      <section
+        id="location"
+        className="detail-section soft"
+      >
         <div className="container">
           <SectionTitle
             index="02"
@@ -392,61 +403,42 @@ export default function ComplexDetail({
             description="자연과 교육, 생활과 교통을 아우르는 주변 환경"
           />
 
-          <Photo
-            src={images.aerial}
-            alt={`천안 아이파크 시티 ${data.name} 단지 및 주변 조감도`}
-            caption="단지 조감 이미지이며 실제 입지 안내도와는 다릅니다."
-          />
-
           <div className="location-list">
-            {LOCATION.map((item, index) => {
-              const photo =
-                index === 0
-                  ? images.landscape
-                  : index === 1
-                    ? images.community
-                    : index === 2
-                      ? images.special
-                      : images.exterior;
+            {LOCATION.map((item) => (
+              <article
+                className="location-item"
+                key={item.num}
+              >
+                <div className="location-number">
+                  {item.num}
+                </div>
 
-              return (
-                <article
-                  className="location-item"
-                  key={item.num}
-                >
-                  <Photo
-                    src={photo}
-                    alt={`${data.name} ${item.title} 관련 단지 이미지`}
-                    variant="standard"
-                  />
+                <div className="location-copy">
+                  <span>
+                    {item.num} / LOCATION
+                  </span>
 
-                  <div className="location-copy">
-                    <span>
-                      {item.num} / LOCATION
-                    </span>
-                    <h3>{item.headline}</h3>
-                    <h4>{item.title}</h4>
-                    <p>{item.text}</p>
-                    <small>{item.detail}</small>
-                  </div>
-                </article>
-              );
-            })}
+                  <h3>{item.headline}</h3>
+                  <h4>{item.title}</h4>
+                  <p>{item.text}</p>
+                  <small>{item.detail}</small>
+                </div>
+              </article>
+            ))}
           </div>
 
           <p className="disclaimer">
-            ※ 이 섹션의 이미지는 단지 조감
-            자료로서 주변 학교, 도로, 상업시설
-            등의 실제 사진이나 위치도는 아닙니다.
-            주변 개발계획, 학교 신설, 철도역 및
-            교통시설은 관계기관 사정에 따라
-            변경되거나 지연될 수 있습니다.
+            ※ 주변 개발계획, 교육시설 및
+            교통시설의 계획은 변경될 수 있습니다.
           </p>
         </div>
       </section>
 
-      {/* 프리미엄 */}
-      <section id="premium" className="section">
+      {/* PREMIUM */}
+      <section
+        id="premium"
+        className="detail-section"
+      >
         <div className="container">
           <SectionTitle
             index="03"
@@ -457,6 +449,7 @@ export default function ComplexDetail({
 
           <div className="premium-intro">
             <span>PREMIUM LIVING</span>
+
             <h3>
               생활의 가치를 더하는
               <br />
@@ -477,126 +470,230 @@ export default function ComplexDetail({
             ))}
           </div>
 
-          <Photo
-            src={images.landscape}
-            alt={`${data.name} 조경 및 녹지 공간 조감도`}
-            caption="단지 조경 및 휴식공간 조감 이미지"
-          />
+          <div className="premium-photo-grid">
+            <DetailPhoto
+              src={data.landscape}
+              alt={`${data.name} 조경 이미지`}
+            />
 
-          <div className="feature-grid">
-            <div>
-              <Photo
-                src={images.community}
-                alt={`${data.name} 커뮤니티 관련 건축 이미지`}
-                variant="standard"
-              />
-              <h3>커뮤니티와 생활 공간</h3>
-              <p>
-                단지 내 생활공간과 커뮤니티 관련
-                계획을 살펴보세요.
-              </p>
-            </div>
-
-            <div>
-              <Photo
-                src={images.special}
-                alt={`${data.name} 특화 주거공간 조감 이미지`}
-                variant="standard"
-              />
-              <h3>특화 주거 설계</h3>
-              <p>
-                주거동 외관과 특화 공간의
-                조감 이미지를 소개합니다.
-              </p>
-            </div>
+            <DetailPhoto
+              src={data.community}
+              alt={`${data.name} 커뮤니티 이미지`}
+            />
           </div>
 
           <p className="disclaimer">
-            ※ 커뮤니티 및 편의시설의 실제 설치
-            여부, 규모, 운영 방식은 공식 설계도서와
-            계약 관련 자료를 기준으로 확인해야 합니다.
+            ※ 커뮤니티 및 조경시설의 실제
+            설치 여부와 규모는 공식 설계자료를
+            기준으로 확인해야 합니다.
           </p>
         </div>
       </section>
 
-      {/* 단지안내 */}
-      <section id="complex" className="section soft">
+      {/* COMPLEX GUIDE */}
+      <section
+        id="complex"
+        className="detail-section soft"
+      >
         <div className="container">
           <SectionTitle
             index="04"
             english="COMPLEX GUIDE"
             title="단지안내"
-            description="단지 조감도와 주택형별 공간 구성을 안내합니다."
+            description="단지배치도와 주택형별 공간 구성을 안내합니다."
           />
 
           <div className="guide-block">
-            <h3>단지 전체 조감도</h3>
-            <Photo
-              src={images.aerial}
-              alt={`${data.name} 항공 조감도 및 단지 전체 배치 모습`}
-              caption="항공 조감 이미지로, 공식 단지배치도와는 다릅니다."
-            />
-          </div>
+            <h3>단지 조감도</h3>
 
-          <div className="guide-block">
-            <h3>단지 외관 안내</h3>
-            <Photo
-              src={images.exterior}
-              alt={`${data.name} 아파트 외관 조감도`}
-            />
-          </div>
-
-          <div className="guide-block">
-            <h3>단지 주출입구</h3>
-            <Photo
-              src={images.entrance}
-              alt={`${data.name} 주출입구 조감도`}
+            <DetailPhoto
+              src={data.overview}
+              alt={`${data.name} 단지 조감도`}
             />
           </div>
 
           <div className="guide-block">
             <h3>동·호수 배치도</h3>
-            <InfoPlaceholder
-              title={`${data.name} 동·호수 배치도`}
-              description="정확한 동·호수 배치는 공식 배치도와 분양자료를 기준으로 확인해 주세요."
-            />
+
+            {isThree ? (
+              <>
+                <div className="document-photo">
+                  <Image
+                    src="/IMG_2218.webp"
+                    alt="천안 아이파크 시티 3단지 동·호수 배치도"
+                    width={1800}
+                    height={2400}
+                    sizes="(max-width: 768px) 100vw, 1100px"
+                    className="document-image"
+                  />
+                </div>
+
+                <p className="guide-description">
+                  3단지 동별 층수, 호수 및
+                  주택형 배치를 확인할 수 있습니다.
+                  작은 글씨는 이미지를 확대하여
+                  확인해 주세요.
+                </p>
+
+                <a
+                  href="/IMG_2218.webp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="document-link"
+                >
+                  동·호수 배치도 크게 보기 ↗
+                </a>
+              </>
+            ) : (
+              <PhotoSlot
+                label="4단지 동·호수 배치도"
+              />
+            )}
           </div>
 
           <div className="guide-block">
             <h3>주택형별 평면도</h3>
+
             <p className="guide-description">
-              전용면적별 세부 평면과 공간 구성은
-              공식 평면도를 기준으로 안내합니다.
+              전용면적별 공간 구성과
+              실내 구조를 확인해 보세요.
             </p>
 
-            <div className="floor-grid">
-              {FLOOR_TYPES.map((type) => (
-                <div
-                  className="floor-card"
-                  key={type}
-                >
-                  <InfoPlaceholder
-                    title={`${type} 평면도`}
-                    description="공식 평면도 확인 필요"
-                  />
-                  <strong>{type}</strong>
+            {isThree ? (
+              <>
+                <div className="floor-tabs">
+                  {THREE_FLOORS.map(
+                    (item, index) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        className={
+                          selectedFloor === index
+                            ? "selected"
+                            : ""
+                        }
+                        onClick={() =>
+                          setSelectedFloor(index)
+                        }
+                      >
+                        {item.name}
+                      </button>
+                    )
+                  )}
                 </div>
-              ))}
-            </div>
-          </div>
 
-          <p className="disclaimer">
-            ※ 조감도는 이해를 돕기 위한
-            이미지입니다. 정확한 동 배치,
-            평면 구성, 면적 및 시설은
-            공식 설계도서와 입주자모집공고를
-            기준으로 확인해 주세요.
-          </p>
+                <div className="floor-viewer">
+                  <div className="floor-viewer-top">
+                    <span>
+                      FLOOR PLAN
+                    </span>
+
+                    <strong>
+                      {
+                        THREE_FLOORS[
+                          selectedFloor
+                        ].name
+                      }
+                    </strong>
+                  </div>
+
+                  <div className="floor-image-wrap">
+                    <Image
+                      src={
+                        THREE_FLOORS[
+                          selectedFloor
+                        ].image
+                      }
+                      alt={`천안 아이파크 시티 3단지 ${
+                        THREE_FLOORS[
+                          selectedFloor
+                        ].name
+                      }`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 1000px"
+                      className="floor-image"
+                    />
+                  </div>
+
+                  <a
+                    href={
+                      THREE_FLOORS[
+                        selectedFloor
+                      ].image
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="document-link"
+                  >
+                    평면도 원본 크게 보기 ↗
+                  </a>
+                </div>
+
+                <div className="floor-grid">
+                  {THREE_FLOORS.map(
+                    (item, index) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        className={`floor-card ${
+                          selectedFloor === index
+                            ? "selected"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          setSelectedFloor(index)
+                        }
+                      >
+                        <div className="floor-thumbnail">
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            fill
+                            sizes="(max-width: 768px) 50vw, 25vw"
+                            className="floor-image"
+                          />
+                        </div>
+
+                        <strong>{item.name}</strong>
+                      </button>
+                    )
+                  )}
+                </div>
+
+                <p className="disclaimer">
+                  ※ 평면도 A~D는 등록된 이미지
+                  구분명입니다. 실제 주택형과의
+                  대응 관계는 공식 평면도 표기를
+                  확인한 후 적용해야 합니다.
+                  실내 구조와 마감재는 실제
+                  시공 내용과 차이가 있을 수
+                  있습니다.
+                </p>
+              </>
+            ) : (
+              <div className="floor-grid">
+                {FOUR_FLOORS.map((type) => (
+                  <div
+                    className="floor-card"
+                    key={type}
+                  >
+                    <PhotoSlot
+                      label={`${type} 평면도`}
+                    />
+                    <strong>{type}</strong>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* 분양안내 */}
-      <section id="sales" className="section">
+      {/* SALES */}
+      <section
+        id="sales"
+        className="detail-section"
+      >
         <div className="container">
           <SectionTitle
             index="05"
@@ -606,7 +703,38 @@ export default function ComplexDetail({
           />
 
           <div className="sales-grid">
-            {SALES.map(([num, title, desc]) => (
+            {[
+              [
+                "01",
+                "공급안내",
+                "주택형별 공급 세대수 및 공급 조건",
+              ],
+              [
+                "02",
+                "분양일정",
+                "입주자모집공고 및 청약 일정",
+              ],
+              [
+                "03",
+                "분양가격",
+                "공급금액과 납부 조건",
+              ],
+              [
+                "04",
+                "청약안내",
+                "청약 자격 및 신청 방법",
+              ],
+              [
+                "05",
+                "계약안내",
+                "계약 일정과 필요 서류",
+              ],
+              [
+                "06",
+                "유의사항",
+                "공식 공고 및 계약 조건 확인",
+              ],
+            ].map(([num, title, desc]) => (
               <div
                 className="sales-card"
                 key={num}
@@ -621,35 +749,23 @@ export default function ComplexDetail({
             ))}
           </div>
 
-          <div className="sales-contact">
-            <div>
-              <span>SALES INFORMATION</span>
-              <h3>
-                {data.name} 분양 관련 상담
-              </h3>
-              <p>
-                분양 관련 문의는
-                미소부동산으로 연락해 주세요.
-              </p>
-            </div>
-            <a href={TEL}>
-              전화 상담하기 ↗
-            </a>
-          </div>
-
           <p className="disclaimer">
             ※ 분양가, 청약 일정, 계약 조건 및
-            공급 가능 여부는 시점에 따라 달라질 수
-            있습니다. 반드시 최신 입주자모집공고와
-            공식 안내를 확인해 주세요.
+            공급 가능 여부는 변경될 수 있습니다.
+            최신 입주자모집공고와 공식 안내를
+            확인해 주세요.
           </p>
         </div>
       </section>
 
-      {/* 상담 */}
-      <section id="contact" className="contact">
+      {/* CONTACT */}
+      <section
+        id="contact"
+        className="detail-contact"
+      >
         <div className="container">
           <span>CONTACT US</span>
+
           <h2>
             천안 아이파크 시티
             <br />
@@ -657,12 +773,15 @@ export default function ComplexDetail({
           </h2>
 
           <p>
-            부동산 관련 상담은
+            분양 정보 및 방문 관련 상담은
             <br />
             미소부동산으로 문의해 주세요.
           </p>
 
-          <a href={TEL} className="contact-call">
+          <a
+            href={TEL}
+            className="contact-call"
+          >
             ☎ {PHONE}
           </a>
 
@@ -675,10 +794,12 @@ export default function ComplexDetail({
         </div>
       </section>
 
-      <footer className="footer">
+      {/* FOOTER */}
+      <footer className="detail-footer">
         <div className="container">
           <div className="footer-heading">
             <strong>미소부동산</strong>
+
             <Link href="/">
               메인으로 돌아가기 ↗
             </Link>
@@ -686,52 +807,45 @@ export default function ComplexDetail({
 
           <p>
             본 홈페이지는 미소부동산이 운영하는
-            부동산 정보 및 상담 안내 사이트입니다.
-            시행사·시공사·공식 분양사무소의
-            공식 홈페이지가 아닙니다.
+            비공식 부동산 정보 및 상담 안내
+            사이트입니다. 시행사·시공사·공식
+            분양사무소의 공식 홈페이지가
+            아닙니다.
           </p>
 
           <p>
-            제공된 사업 및 분양 정보는
-            변경될 수 있으므로 최신 공식 자료를
+            사업 및 분양 정보는 변경될 수
+            있으므로 최신 공식 자료를
             우선하여 확인해 주세요.
           </p>
         </div>
       </footer>
 
       <style jsx global>{`
-        * {
-          box-sizing: border-box;
-        }
-
-        html {
-          scroll-behavior: smooth;
-          scroll-padding-top: 115px;
-        }
-
-        body {
-          margin: 0;
+        .ipark-detail {
           background: #fff;
           color: #262c30;
+          overflow-x: hidden;
           font-family: "Noto Sans KR", sans-serif;
         }
 
-        a {
+        .ipark-detail * {
+          box-sizing: border-box;
+        }
+
+        .ipark-detail a {
           color: inherit;
           text-decoration: none;
         }
 
-        button {
+        .ipark-detail button {
           font: inherit;
+          cursor: pointer;
         }
 
-        .ipark-detail {
-          overflow: clip;
-        }
-
-        .container {
+        .ipark-detail .container {
           width: min(1180px, calc(100% - 40px));
-          margin: auto;
+          margin: 0 auto;
         }
 
         .site-header {
@@ -787,7 +901,6 @@ export default function ComplexDetail({
           border: 0;
           background: none;
           font-size: 25px;
-          cursor: pointer;
         }
 
         .mobile-menu {
@@ -828,25 +941,20 @@ export default function ComplexDetail({
           color: #fff;
         }
 
-        .hero {
+        /* HERO */
+        .detail-hero {
           position: relative;
           min-height: 640px;
           display: flex;
           align-items: center;
+          overflow: hidden;
           background: #283c4b;
           color: #fff;
-          overflow: hidden;
         }
 
-        .hero-bg {
-          position: absolute;
-          inset: 0;
-        }
-
-        .hero-bg .photo,
-        .hero-bg .photo-frame {
-          width: 100%;
-          height: 100%;
+        .hero-image {
+          object-fit: cover;
+          object-position: center;
         }
 
         .hero-shade {
@@ -854,9 +962,9 @@ export default function ComplexDetail({
           inset: 0;
           background: linear-gradient(
             90deg,
-            #142330e8,
-            #14233080,
-            #14233018
+            rgba(20, 35, 48, 0.9),
+            rgba(20, 35, 48, 0.55),
+            rgba(20, 35, 48, 0.12)
           );
         }
 
@@ -869,9 +977,10 @@ export default function ComplexDetail({
         .hero-content > span {
           font-size: 11px;
           letter-spacing: 3px;
+          color: #e4d3b4;
         }
 
-        .hero h1 {
+        .hero-content h1 {
           margin: 24px 0;
           font-size: clamp(42px, 6vw, 75px);
           font-weight: 300;
@@ -879,7 +988,7 @@ export default function ComplexDetail({
           letter-spacing: -2px;
         }
 
-        .hero h1 strong {
+        .hero-content h1 strong {
           font-weight: 700;
         }
 
@@ -891,19 +1000,19 @@ export default function ComplexDetail({
         .hero-button {
           display: inline-flex;
           align-items: center;
-          gap: 40px;
           margin-top: 25px;
           padding: 17px 23px;
           background: #fff;
-          color: #202c35;
+          color: #202c35 !important;
           font-size: 14px;
         }
 
-        .section {
+        /* SECTIONS */
+        .detail-section {
           padding: 100px 0;
         }
 
-        .soft {
+        .detail-section.soft {
           background: #f5f6f6;
         }
 
@@ -930,39 +1039,52 @@ export default function ComplexDetail({
           line-height: 1.8;
         }
 
-        .photo {
-          margin: 0;
-          width: 100%;
-        }
-
-        .photo-frame {
+        /* PHOTOS */
+        .detail-photo {
           position: relative;
           width: 100%;
-          height: 410px;
+          height: 470px;
           overflow: hidden;
           background: #e7ebed;
         }
 
-        .photo-standard .photo-frame {
-          height: 320px;
-        }
-
-        .photo-hero .photo-frame {
-          height: 100%;
-        }
-
-        .photo-image {
+        .detail-photo .detail-image {
           object-fit: cover;
-          object-position: center;
         }
 
-        .photo figcaption {
-          padding: 12px 0;
-          color: #858b90;
+        .detail-photo.contain .detail-image {
+          object-fit: contain;
+        }
+
+        .photo-slot {
+          min-height: 230px;
+          padding: 25px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          background: #e7ebed;
+          border: 1px dashed #adb7bd;
+          color: #697984;
+          text-align: center;
+        }
+
+        .photo-slot span {
+          font-size: 34px;
+          font-weight: 200;
+        }
+
+        .photo-slot strong {
+          font-size: 15px;
+          font-weight: 500;
+        }
+
+        .photo-slot small {
           font-size: 11px;
-          line-height: 1.8;
         }
 
+        /* OVERVIEW */
         .overview-heading {
           margin: 40px 0 25px;
         }
@@ -1004,22 +1126,26 @@ export default function ComplexDetail({
           line-height: 2;
         }
 
+        /* LOCATION */
         .location-list {
           margin-top: 50px;
           display: flex;
           flex-direction: column;
-          gap: 55px;
+          gap: 20px;
         }
 
         .location-item {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 100px 1fr;
           align-items: center;
-          gap: 45px;
+          gap: 30px;
+          padding: 35px;
+          background: #fff;
         }
 
-        .location-item:nth-child(even) .photo {
-          order: 2;
+        .location-number {
+          font: 55px Georgia, serif;
+          color: #c9ab78;
         }
 
         .location-copy > span {
@@ -1051,6 +1177,7 @@ export default function ComplexDetail({
           line-height: 1.8;
         }
 
+        /* PREMIUM */
         .premium-intro {
           margin-bottom: 40px;
           padding: 45px;
@@ -1061,6 +1188,7 @@ export default function ComplexDetail({
         .premium-intro span {
           font-size: 11px;
           letter-spacing: 3px;
+          color: #e4d3b4;
         }
 
         .premium-intro h3 {
@@ -1099,26 +1227,19 @@ export default function ComplexDetail({
           line-height: 1.9;
         }
 
-        .feature-grid {
+        .premium-photo-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 20px;
-          margin-top: 30px;
+          gap: 15px;
         }
 
-        .feature-grid h3 {
-          margin: 20px 0 10px;
-          font-size: 21px;
+        .premium-photo-grid .detail-photo {
+          height: 340px;
         }
 
-        .feature-grid p {
-          color: #777;
-          font-size: 13px;
-          line-height: 1.9;
-        }
-
+        /* GUIDE */
         .guide-block {
-          margin-bottom: 55px;
+          margin-bottom: 65px;
         }
 
         .guide-block > h3 {
@@ -1129,56 +1250,129 @@ export default function ComplexDetail({
         .guide-description {
           color: #777;
           font-size: 14px;
-          line-height: 1.8;
+          line-height: 1.9;
         }
 
-        .info-placeholder {
-          min-height: 230px;
-          padding: 25px;
+        .document-photo {
+          width: 100%;
+          padding: 20px;
+          background: #fff;
+          border: 1px solid #e5e5e5;
+          overflow: hidden;
+        }
+
+        .document-image {
+          display: block;
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+        }
+
+        .document-link {
+          display: inline-flex;
+          margin-top: 15px;
+          padding: 13px 20px;
+          background: #253745;
+          color: #fff !important;
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        /* FLOOR PLAN */
+        .floor-tabs {
           display: flex;
-          flex-direction: column;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin: 30px 0 20px;
+        }
+
+        .floor-tabs button {
+          padding: 13px 22px;
+          border: 1px solid #d5d9dc;
+          background: #fff;
+          color: #333;
+          font-size: 14px;
+        }
+
+        .floor-tabs button.selected {
+          background: #253745;
+          border-color: #253745;
+          color: #fff;
+        }
+
+        .floor-viewer {
+          padding: 25px;
+          background: #fff;
+          border: 1px solid #e1e4e6;
+          margin-bottom: 25px;
+        }
+
+        .floor-viewer-top {
+          display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 12px;
-          background: #e7ebed;
-          border: 1px dashed #adb7bd;
-          color: #697984;
-          text-align: center;
+          justify-content: space-between;
+          gap: 15px;
+          margin-bottom: 20px;
         }
 
-        .info-placeholder span {
-          font-size: 10px;
+        .floor-viewer-top span {
+          font-size: 11px;
           letter-spacing: 2px;
+          color: #b59b77;
         }
 
-        .info-placeholder strong {
-          font-size: 17px;
+        .floor-viewer-top strong {
+          font-size: 20px;
         }
 
-        .info-placeholder p {
-          margin: 0;
-          font-size: 12px;
-          line-height: 1.8;
+        .floor-image-wrap {
+          position: relative;
+          width: 100%;
+          height: 550px;
+          background: #fff;
+        }
+
+        .floor-image {
+          object-fit: contain;
         }
 
         .floor-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 15px;
-          margin-top: 25px;
         }
 
         .floor-card {
+          display: block;
+          min-width: 0;
+          padding: 0 0 20px;
           background: #fff;
-          padding-bottom: 20px;
+          border: 1px solid #e1e4e6;
+          text-align: left;
+          color: #262c30;
+        }
+
+        .floor-card.selected {
+          border: 2px solid #c9ab78;
         }
 
         .floor-card > strong {
           display: block;
           padding: 20px 20px 0;
-          font-size: 17px;
+          font-size: 16px;
         }
 
+        .floor-thumbnail {
+          position: relative;
+          height: 185px;
+          background: #fff;
+        }
+
+        .floor-card .photo-slot {
+          min-height: 180px;
+        }
+
+        /* SALES */
         .sales-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -1212,60 +1406,28 @@ export default function ComplexDetail({
           font-size: 11px;
         }
 
-        .sales-contact {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 25px;
-          margin-top: 35px;
-          padding: 35px;
-          background: #f5f6f7;
-        }
-
-        .sales-contact span {
-          color: #89939a;
-          font-size: 11px;
-          letter-spacing: 2px;
-        }
-
-        .sales-contact h3 {
-          margin: 12px 0;
-          font-size: 23px;
-        }
-
-        .sales-contact p {
-          color: #777;
-          font-size: 13px;
-        }
-
-        .sales-contact a {
-          flex-shrink: 0;
-          padding: 16px 25px;
-          background: #253745;
-          color: #fff;
-          font-size: 14px;
-        }
-
-        .contact {
+        /* CONTACT */
+        .detail-contact {
           padding: 100px 0;
           background: #243846;
           color: #fff;
           text-align: center;
         }
 
-        .contact .container > span {
+        .detail-contact .container > span {
+          color: #e4d3b4;
           font-size: 11px;
           letter-spacing: 3px;
         }
 
-        .contact h2 {
+        .detail-contact h2 {
           margin: 25px 0;
           font-size: clamp(30px, 4vw, 45px);
           font-weight: 400;
           line-height: 1.5;
         }
 
-        .contact p {
+        .detail-contact p {
           color: #d5dce1;
           font-size: 15px;
           line-height: 1.8;
@@ -1277,7 +1439,7 @@ export default function ComplexDetail({
           margin: 30px auto;
           padding: 18px 35px;
           background: #fff;
-          color: #243846;
+          color: #243846 !important;
           font-size: 25px;
           font-weight: 700;
         }
@@ -1288,7 +1450,8 @@ export default function ComplexDetail({
           font-size: 14px;
         }
 
-        .footer {
+        /* FOOTER */
+        .detail-footer {
           padding: 35px 0;
           background: #111a20;
           color: #fff;
@@ -1308,7 +1471,7 @@ export default function ComplexDetail({
           font-size: 12px;
         }
 
-        .footer p {
+        .detail-footer p {
           max-width: 950px;
           color: #a7b1b8;
           font-size: 11px;
@@ -1352,11 +1515,11 @@ export default function ComplexDetail({
             margin: 12px 18px;
           }
 
-          .hero {
+          .detail-hero {
             min-height: 530px;
           }
 
-          .hero h1 {
+          .hero-content h1 {
             font-size: 39px;
           }
 
@@ -1364,7 +1527,7 @@ export default function ComplexDetail({
             font-size: 14px;
           }
 
-          .section {
+          .detail-section {
             padding: 75px 0;
           }
 
@@ -1376,12 +1539,8 @@ export default function ComplexDetail({
             font-size: 13px;
           }
 
-          .photo-frame {
-            height: 240px;
-          }
-
-          .photo-standard .photo-frame {
-            height: 240px;
+          .detail-photo {
+            height: 260px;
           }
 
           .overview-heading > span {
@@ -1406,15 +1565,12 @@ export default function ComplexDetail({
 
           .location-item {
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 10px;
+            padding: 25px;
           }
 
-          .location-item:nth-child(even) .photo {
-            order: 0;
-          }
-
-          .location-list {
-            gap: 50px;
+          .location-number {
+            font-size: 38px;
           }
 
           .location-copy h3 {
@@ -1447,8 +1603,34 @@ export default function ComplexDetail({
             font-size: 12px;
           }
 
-          .feature-grid {
+          .premium-photo-grid {
             grid-template-columns: 1fr;
+          }
+
+          .premium-photo-grid .detail-photo {
+            height: 260px;
+          }
+
+          .document-photo {
+            padding: 5px;
+          }
+
+          .floor-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+          }
+
+          .floor-tabs button {
+            padding: 12px 8px;
+            font-size: 12px;
+          }
+
+          .floor-viewer {
+            padding: 12px;
+          }
+
+          .floor-image-wrap {
+            height: 330px;
           }
 
           .floor-grid {
@@ -1456,22 +1638,16 @@ export default function ComplexDetail({
             gap: 9px;
           }
 
-          .floor-card .info-placeholder {
-            min-height: 165px;
-            padding: 12px;
+          .floor-thumbnail {
+            height: 150px;
           }
 
-          .sales-contact {
-            flex-direction: column;
-            align-items: stretch;
-            padding: 25px;
+          .floor-card > strong {
+            padding: 12px 10px 0;
+            font-size: 13px;
           }
 
-          .sales-contact a {
-            text-align: center;
-          }
-
-          .contact {
+          .detail-contact {
             padding: 75px 0;
           }
 
