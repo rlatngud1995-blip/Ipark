@@ -1,4 +1,6 @@
 
+@import "tailwindcss";
+
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap");
 
 :root {
@@ -12,12 +14,9 @@
   --muted: #74777c;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -28,18 +27,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 button {
-  font: inherit;
   cursor: pointer;
-}
-
-img {
-  max-width: 100%;
 }
 
 ::selection {
@@ -49,7 +38,7 @@ img {
 
 .container {
   width: min(1200px, calc(100% - 40px));
-  margin: 0 auto;
+  margin-inline: auto;
 }
 
 .section {
