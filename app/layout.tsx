@@ -2,60 +2,34 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-const SITE = "https://cheonaniparkcity34.com";
-const PHONE = "041-556-0303";
+const SITE_URL = "https://cheonaniparkcity34.com";
 
-const SITE_NAME = "천안 아이파크 시티 3·4단지 분양정보";
+const SITE_NAME = "천안 아이파크 시티 3·4단지";
 
-const DEFAULT_TITLE =
-  "천안아이파크시티 3·4단지 | 모델하우스·견본주택·분양정보";
-
-const DEFAULT_DESCRIPTION =
-  "천안아이파크시티3단지·천안아이파크시티4단지 분양정보 안내. 성성아이파크시티 3·4단지 조감도, 단지 소개, 입지환경 및 모델하우스·견본주택 방문 상담. 미소부동산 운영 비공식 안내 홈페이지. 전화 041-556-0303.";
-
-const OG_IMAGE = "/IMG_2192.jpeg";
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#17202a",
-};
+const SITE_DESCRIPTION =
+  "천안 아이파크 시티 3단지·4단지 분양정보 안내. " +
+  "성성 아이파크 시티 3·4단지 사업개요, " +
+  "주택형별 평면도, 동호수 배치도, " +
+  "모델하우스·견본주택 관련 정보와 방문 상담 안내. " +
+  "미소부동산 운영 비공식 안내 사이트. " +
+  "상담전화 041-556-0303.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE),
+  metadataBase: new URL(SITE_URL),
+
+  title: {
+    default:
+      "천안 아이파크 시티 3·4단지 | 분양정보·모델하우스·견본주택 안내",
+    template: "%s | 천안 아이파크 시티",
+  },
+
+  description: SITE_DESCRIPTION,
 
   applicationName: SITE_NAME,
 
-  title: {
-    default: DEFAULT_TITLE,
-    template: `%s | ${SITE_NAME}`,
+  alternates: {
+    canonical: "/",
   },
-
-  description: DEFAULT_DESCRIPTION,
-
-  keywords: [
-    "천안아이파크시티",
-    "천안 아이파크 시티",
-    "천안아이파크시티3단지",
-    "천안아이파크시티4단지",
-    "천안 아이파크 시티 3단지",
-    "천안 아이파크 시티 4단지",
-    "천안아이파크시티3단지 모델하우스",
-    "천안아이파크시티4단지 모델하우스",
-    "천안아이파크시티3단지 견본주택",
-    "천안아이파크시티4단지 견본주택",
-    "성성아이파크시티3단지",
-    "성성아이파크시티4단지",
-    "성성아이파크시티3단지 모델하우스",
-    "성성아이파크시티4단지 모델하우스",
-    "성성아이파크시티3단지 견본주택",
-    "성성아이파크시티4단지 견본주택",
-    "천안아이파크시티3단지 분양",
-    "천안아이파크시티4단지 분양",
-    "천안 아이파크 모델하우스",
-    "천안 아이파크 견본주택",
-    "천안 성성동 아파트 분양",
-  ],
 
   robots: {
     index: true,
@@ -65,65 +39,40 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
-      "max-video-preview": -1,
     },
   },
 
   openGraph: {
     type: "website",
     locale: "ko_KR",
-    url: SITE,
+    url: SITE_URL,
     siteName: SITE_NAME,
-    title: DEFAULT_TITLE,
-    description: DEFAULT_DESCRIPTION,
+    title:
+      "천안 아이파크 시티 3·4단지 | 분양정보 및 방문 상담",
+    description: SITE_DESCRIPTION,
     images: [
       {
-        url: OG_IMAGE,
-        alt: "천안 아이파크 시티 3·4단지 조감도",
+        url: "/IMG_2162.jpeg",
+        width: 1200,
+        height: 630,
+        alt: "천안 아이파크 시티 3·4단지 안내",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: DEFAULT_TITLE,
-    description: DEFAULT_DESCRIPTION,
-    images: [OG_IMAGE],
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: ["/IMG_2162.jpeg"],
   },
 
   category: "real estate",
 };
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${SITE}/#website`,
-      url: SITE,
-      name: SITE_NAME,
-      description: DEFAULT_DESCRIPTION,
-      inLanguage: "ko-KR",
-      publisher: {
-        "@id": `${SITE}/#organization`,
-      },
-    },
-    {
-      "@type": "Organization",
-      "@id": `${SITE}/#organization`,
-      name: "미소부동산",
-      description:
-        "천안 아이파크 시티 3·4단지 관련 비공식 분양 정보 및 방문 상담 안내",
-      url: SITE,
-      telephone: PHONE,
-      contactPoint: {
-        "@type": "ContactPoint",
-        telephone: PHONE,
-        contactType: "customer service",
-        availableLanguage: ["Korean"],
-      },
-    },
-  ],
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -133,19 +82,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
-        {children}
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData).replace(
-              /</g,
-              "\\u003c"
-            ),
-          }}
-        />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
