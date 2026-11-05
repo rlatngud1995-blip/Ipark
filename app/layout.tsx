@@ -27,6 +27,13 @@ export const metadata: Metadata = {
 
   applicationName: SITE_NAME,
 
+  verification: {
+    other: {
+      "naver-site-verification":
+        "86e9ef5054ee634a071b3b47d354676071413d8a",
+    },
+  },
+
   alternates: {
     canonical: "/",
   },
