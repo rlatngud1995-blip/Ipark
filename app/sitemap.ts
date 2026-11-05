@@ -1,24 +1,27 @@
 
 import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const site = "https://cheonaniparkcity34.com";
+const SITE_URL = "https://cheonaniparkcity34.com";
 
-  return [
+export default function sitemap(): MetadataRoute.Sitemap {
+  const pages = [
     {
-      url: site,
-      changeFrequency: "weekly",
+      path: "/",
       priority: 1,
     },
     {
-      url: `${site}/complex/3`,
-      changeFrequency: "weekly",
+      path: "/complex/3",
       priority: 0.9,
     },
     {
-      url: `${site}/complex/4`,
-      changeFrequency: "weekly",
+      path: "/complex/4",
       priority: 0.9,
     },
   ];
+
+  return pages.map((page) => ({
+    url: `${SITE_URL}${page.path === "/" ? "" : page.path}`,
+    changeFrequency: "weekly" as const,
+    priority: page.priority,
+  }));
 }
