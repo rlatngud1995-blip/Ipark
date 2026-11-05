@@ -1,7 +1,7 @@
 
 import type { MetadataRoute } from "next";
 
-const SITE = "https://cheonaniparkcity34.com";
+const SITE_URL = "https://cheonaniparkcity34.com";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: `${SITE}/sitemap.xml`,
-    host: SITE,
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }
