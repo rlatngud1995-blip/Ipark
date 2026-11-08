@@ -59,54 +59,41 @@ const LOCATION = [
     num: "01",
     title: "자연환경",
     headline: "자연과 가까운 일상",
-    text:
-      "성성호수공원과 노태근린공원 등 주변 녹지와 휴식공간을 통해 쾌적한 생활환경을 살펴볼 수 있습니다.",
-    detail:
-      "공원 접근 경로와 실제 이동거리는 출발 위치에 따라 달라질 수 있습니다.",
+    text: "성성호수공원과 노태근린공원 등 주변 녹지와 휴식공간을 통해 쾌적한 생활환경을 살펴볼 수 있습니다.",
+    detail: "공원 접근 경로와 실제 이동거리는 출발 위치에 따라 달라질 수 있습니다.",
     image: commonsImage("Seongseong Lake Park.jpg"),
-    alt: "천안 성성호수공원 실제 풍경",
-    credit:
-      "사진: 김영호 / 한국관광공사 포토코리아 · 공공누리 제1유형",
+    alt: "천안 성성호수공원 참고 사진",
+    credit: "사진: Wikimedia Commons / 참고 이미지",
   },
   {
     num: "02",
     title: "교육환경",
     headline: "자녀를 위한 교육 여건",
-    text:
-      "주변 교육시설과 학교 신설 계획 등을 살펴보고, 자녀의 통학 여건을 확인할 수 있도록 안내합니다.",
-    detail:
-      "학교 신설·개교 및 통학구역은 관계기관의 최종 결정에 따릅니다. 사진은 교육시설 참고 이미지입니다.",
+    text: "주변 교육시설과 학교 신설 계획 등을 살펴보고, 자녀의 통학 여건을 확인할 수 있도록 안내합니다.",
+    detail: "학교 신설·개교 및 통학구역은 관계기관의 최종 결정에 따릅니다.",
     image: commonsImage("입장초등학교 정문.jpg"),
-    alt: "천안 지역 초등학교 교육시설 참고 사진",
-    credit: "사진: Wikimedia Commons · 교육시설 참고 이미지",
+    alt: "천안 지역 교육시설 참고 사진",
+    credit: "사진: Wikimedia Commons / 참고 이미지",
   },
   {
     num: "03",
     title: "생활환경",
     headline: "일상에 필요한 생활 인프라",
-    text:
-      "대형마트와 상업시설, 의료시설 등 천안 북부 생활권의 다양한 편의시설을 소개합니다.",
-    detail:
-      "시설별 운영 여부와 이동시간은 별도 확인이 필요합니다. 사진은 천안 지역 상업시설 참고 이미지입니다.",
-    image: commonsImage(
-      "천안남산중앙시장 20200401 142622.jpg"
-    ),
+    text: "대형마트와 상업시설, 의료시설 등 천안 북부 생활권의 다양한 편의시설을 소개합니다.",
+    detail: "시설별 운영 여부와 이동시간은 별도 확인이 필요합니다.",
+    image: commonsImage("천안남산중앙시장 20200401 142622.jpg"),
     alt: "천안 지역 상업시설 참고 사진",
-    credit: "사진: Wikimedia Commons · 생활시설 참고 이미지",
+    credit: "사진: Wikimedia Commons / 참고 이미지",
   },
   {
     num: "04",
     title: "교통환경",
     headline: "광역 이동을 고려한 교통 여건",
-    text:
-      "천안IC와 경부고속도로 접근 여건, 부성역 신설 계획 등 주변 교통환경을 살펴봅니다.",
-    detail:
-      "부성역 등 예정 사업의 일정과 세부 계획은 변경될 수 있습니다. 사진은 천안 지역 교통시설 참고 이미지입니다.",
-    image: commonsImage(
-      "천안지하도-보행자길-20200411 163101.jpg"
-    ),
+    text: "천안IC와 경부고속도로 접근 여건, 부성역 신설 계획 등 주변 교통환경을 살펴봅니다.",
+    detail: "부성역 등 예정 사업의 일정과 세부 계획은 변경될 수 있습니다.",
+    image: commonsImage("천안지하도-보행자길-20200411 163101.jpg"),
     alt: "천안 지역 교통시설 참고 사진",
-    credit: "사진: Wikimedia Commons · 교통시설 참고 이미지",
+    credit: "사진: Wikimedia Commons / 참고 이미지",
   },
 ];
 
@@ -114,39 +101,40 @@ const PREMIUM = [
   {
     num: "01",
     title: "단지 설계",
-    text:
-      "동 배치와 주거동 사이 공간을 중심으로 단지 설계 정보를 안내합니다.",
+    text: "동 배치와 주거동 사이 공간을 중심으로 단지 설계 정보를 안내합니다.",
     image: "/IMG_2191.jpeg",
   },
   {
     num: "02",
     title: "주거 평면",
-    text:
-      "전용 84㎡·102㎡·116㎡ 주택형별 구조와 공간 활용 계획을 살펴봅니다.",
+    text: "전용 84㎡·102㎡·116㎡ 주택형별 구조와 공간 활용 계획을 살펴봅니다.",
     image: "/IMG_2225.webp",
   },
   {
     num: "03",
     title: "조경 공간",
-    text:
-      "단지 내 조경 및 휴식공간의 구성과 적용 계획을 안내합니다.",
+    text: "단지 내 조경 및 휴식공간의 구성과 적용 계획을 안내합니다.",
     image: "/IMG_2163.jpeg",
   },
   {
     num: "04",
     title: "커뮤니티 시설",
-    text:
-      "커뮤니티 시설의 적용 여부와 이용 조건을 안내합니다.",
+    text: "커뮤니티 시설의 적용 여부와 이용 조건을 안내합니다.",
     image: "/IMG_2184.jpeg",
   },
   {
     num: "05",
     title: "생활 편의",
-    text:
-      "주차, 보행 동선과 생활 편의 요소를 공식 설계자료에 따라 안내합니다.",
+    text: "주차, 보행 동선과 생활 편의 요소를 공식 설계자료에 따라 안내합니다.",
     image: "/IMG_2186.jpeg",
   },
 ];
+
+/* =========================================
+   평면도 5개
+   102㎡ A/B 표기 수정
+   116㎡ 신규 이미지 추가
+========================================= */
 
 const FLOOR_PLANS = [
   {
@@ -158,12 +146,16 @@ const FLOOR_PLANS = [
     image: "/IMG_2226.webp",
   },
   {
-    name: "추가 세대 안내",
+    name: "102㎡ A",
     image: "/IMG_2227.webp",
   },
   {
-    name: "추가 세대 안내",
+    name: "102㎡ B",
     image: "/IMG_2228.webp",
+  },
+  {
+    name: "116㎡",
+    image: "/IMG_2367.jpeg",
   },
 ];
 
@@ -230,7 +222,6 @@ function ExternalPhoto({
 }) {
   return (
     <figure className="ip-external-photo">
-      {/* 외부 공용 이미지: Next 이미지 설정 불필요 */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
@@ -253,6 +244,7 @@ export default function ComplexDetail({
 
   return (
     <main className="ipark-detail">
+      {/* HEADER */}
       <header className="ip-header">
         <Link href="/" className="ip-brand">
           <strong>IPARK CITY</strong>
@@ -297,6 +289,7 @@ export default function ComplexDetail({
         </nav>
       )}
 
+      {/* 단지 선택 */}
       <div className="ip-switch">
         <Link
           href="/complex/3"
@@ -312,7 +305,7 @@ export default function ComplexDetail({
         </Link>
       </div>
 
-      {/* 메인 조감도 */}
+      {/* HERO */}
       <section className="ip-hero">
         <Image
           src={data.aerial}
@@ -327,6 +320,7 @@ export default function ComplexDetail({
 
         <div className="ip-hero-content ip-container">
           <span>CHEONAN IPARK CITY</span>
+
           <h1>
             천안 아이파크 시티
             <br />
@@ -383,11 +377,11 @@ export default function ComplexDetail({
             <div className="ip-overview-item">
               <h4>주택형</h4>
               <p>
-                전용 84㎡
+                전용 84㎡ A·B
                 <br />
-                102㎡
+                전용 102㎡ A·B
                 <br />
-                116㎡
+                전용 116㎡
               </p>
             </div>
 
@@ -409,7 +403,7 @@ export default function ComplexDetail({
         </div>
       </section>
 
-      {/* 입지환경: 3단지·4단지 공통 사진 */}
+      {/* 입지환경 */}
       <section id="location" className="ip-section ip-soft">
         <div className="ip-container">
           <SectionTitle
@@ -432,10 +426,7 @@ export default function ComplexDetail({
                 />
 
                 <div className="ip-location-copy">
-                  <span>
-                    {item.num} / LOCATION
-                  </span>
-
+                  <span>{item.num} / LOCATION</span>
                   <h3>{item.headline}</h3>
                   <h4>{item.title}</h4>
                   <p>{item.text}</p>
@@ -448,8 +439,7 @@ export default function ComplexDetail({
           <p className="ip-disclaimer">
             ※ 학교 신설, 주변 개발계획 및 교통시설은
             관계기관 사정에 따라 변경되거나 지연될
-            수 있습니다. 참고 사진은 단지에서의
-            실제 접근거리나 조망을 의미하지 않습니다.
+            수 있습니다.
           </p>
         </div>
       </section>
@@ -534,6 +524,7 @@ export default function ComplexDetail({
 
           <div className="ip-guide-block">
             <h3>{data.name} 동·호수 배치도</h3>
+
             <p className="ip-guide-description">
               동별 층수와 호수 구성을 확인할 수 있는
               안내자료입니다.
@@ -551,45 +542,41 @@ export default function ComplexDetail({
             </p>
           </div>
 
+          {/* 수정된 평면도 */}
           <div className="ip-guide-block">
-            <h3>세대 안내 및 공간 구성</h3>
+            <h3>{data.name} 주택형별 평면도</h3>
 
             <p className="ip-guide-description">
-              3단지와 4단지의 주택형별 공간 구성을
-              참고 이미지로 살펴보세요.
-              정확한 타입별 구조는 공식 평면도를
-              기준으로 확인해야 합니다.
+              천안 아이파크 시티 84㎡ A·B,
+              102㎡ A·B, 116㎡ 주택형의
+              공간 구성을 확인해 보세요.
             </p>
 
             <div className="ip-floor-grid">
-              {FLOOR_PLANS.map((item, index) => (
-                <div
+              {FLOOR_PLANS.map((item) => (
+                <article
                   className="ip-floor-card"
-                  key={item.image}
+                  key={item.name}
                 >
                   <div className="ip-floor-photo">
                     <Image
                       src={item.image}
-                      alt={`${item.name} 세대 공간 구성 참고 이미지`}
+                      alt={`천안 아이파크 시티 ${item.name} 공간 구성 이미지`}
                       fill
                       sizes="(max-width: 768px) 50vw, 33vw"
                       className="ip-image-contain"
                     />
                   </div>
 
-                  <strong>
-                    {index + 1 < 3
-                      ? item.name
-                      : `세대 구성 ${index + 1}`}
-                  </strong>
-                </div>
+                  <strong>{item.name}</strong>
+                </article>
               ))}
             </div>
 
             <p className="ip-disclaimer">
-              ※ 위 세대 이미지는 공간 구성 참고용입니다.
-              주택형과 이미지의 정확한 대응 여부는
-              공식 평면도로 재확인해야 합니다.
+              ※ 주택형 명칭과 이미지의 최종 대응,
+              세부 면적 및 구조는 공식 평면도를
+              기준으로 확인해 주세요.
             </p>
           </div>
         </div>
@@ -632,7 +619,7 @@ export default function ComplexDetail({
         </div>
       </section>
 
-      {/* 상담안내 */}
+      {/* 상담안내: 수정 */}
       <section id="contact" className="ip-contact">
         <div className="ip-container">
           <span>CONTACT US</span>
@@ -643,11 +630,7 @@ export default function ComplexDetail({
             {data.name} 상담안내
           </h2>
 
-          <p>
-            부동산 관련 상담은
-            <br />
-            미소부동산으로 문의해 주세요.
-          </p>
+          <p>분양 및 방문 상담</p>
 
           <a href={TEL} className="ip-contact-call">
             ☎ {PHONE}
@@ -662,26 +645,31 @@ export default function ComplexDetail({
         </div>
       </section>
 
+      {/* 간결한 푸터 */}
       <footer className="ip-footer">
         <div className="ip-container">
           <div className="ip-footer-heading">
-            <strong>미소부동산</strong>
+            <strong>IPARK CITY</strong>
+
             <Link href="/">
               메인으로 돌아가기 ↗
             </Link>
           </div>
 
           <p>
-            본 홈페이지는 미소부동산이 운영하는
-            부동산 정보 및 상담 안내 사이트입니다.
-            시행사·시공사·공식 분양사무소의
-            공식 홈페이지가 아닙니다.
+            천안 아이파크 시티 {data.name}
+            분양정보 및 방문 상담
           </p>
 
-          <p>
-            제공된 사업 및 분양 정보는 변경될 수
-            있으므로 최신 공식 자료를 우선하여
-            확인해 주세요.
+          <a href={TEL} className="ip-footer-phone">
+            {PHONE}
+          </a>
+
+          <p className="ip-footer-notice">
+            미소부동산 운영 · 비공식 분양정보 안내
+            <br />
+            본 사이트는 시행사·시공사 또는
+            공식 분양사무소의 홈페이지가 아닙니다.
           </p>
         </div>
       </footer>
@@ -691,7 +679,7 @@ export default function ComplexDetail({
           color: #262c30;
           background: #fff;
           font-family: "Noto Sans KR", sans-serif;
-          overflow: clip;
+          overflow-x: hidden;
         }
 
         .ipark-detail *,
@@ -1119,7 +1107,7 @@ export default function ComplexDetail({
         .ip-floor-photo {
           position: relative;
           height: 330px;
-          background: white;
+          background: #fff;
         }
 
         .ip-floor-card > strong {
@@ -1205,7 +1193,7 @@ export default function ComplexDetail({
         }
 
         .ip-footer {
-          padding: 35px 0;
+          padding: 40px 0;
           background: #111a20;
           color: white;
         }
@@ -1213,11 +1201,13 @@ export default function ComplexDetail({
         .ip-footer-heading {
           display: flex;
           justify-content: space-between;
+          align-items: center;
           gap: 20px;
         }
 
         .ip-footer-heading strong {
-          font-size: 17px;
+          font: 24px Georgia, serif;
+          letter-spacing: 1px;
         }
 
         .ip-footer-heading a {
@@ -1225,10 +1215,23 @@ export default function ComplexDetail({
         }
 
         .ip-footer p {
-          max-width: 950px;
           color: #a7b1b8;
-          font-size: 11px;
-          line-height: 2;
+          font-size: 12px;
+          line-height: 1.9;
+        }
+
+        .ip-footer-phone {
+          display: inline-block;
+          margin: 10px 0;
+          font-size: 24px;
+          font-weight: 700;
+          color: #e4d3b4 !important;
+        }
+
+        .ip-footer-notice {
+          margin-top: 25px;
+          padding-top: 20px;
+          border-top: 1px solid #ffffff20;
         }
 
         @media (max-width: 1050px) {
@@ -1393,12 +1396,6 @@ export default function ComplexDetail({
 
           .ip-contact-call {
             font-size: 22px;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .ipark-detail {
-            scroll-behavior: auto;
           }
         }
       `}</style>
