@@ -993,8 +993,8 @@ export default function HomePage() {
           </div>
 
           <p className="footer-disclaimer">
-            본 사이트는 공식 분양 홈페이지가
-            아닌 부동산 정보 안내 페이지입니다.
+          
+        
             이미지·사업 정보·분양 조건은
             변경될 수 있으므로 정확한 내용은
             공식 입주자모집공고 및 관련 자료를
