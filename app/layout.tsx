@@ -7,7 +7,11 @@ const SITE_URL = "https://cheonaniparkcity34.com";
 const SITE_NAME = "천안 아이파크 시티 3·4단지";
 
 const DESCRIPTION =
-  "천안 아이파크 시티 3·4단지 분양정보 안내. 단지별 분양가, 평면도, 입지환경과 방문 상담 정보를 확인하세요.";
+  "천안 아이파크 시티 3·4단지 분양정보 안내. " +
+  "단지별 분양가, 평면도, 입지환경과 " +
+  "방문 상담 정보를 확인하세요.";
+
+const FAVICON = "/ipark_favicon.ico";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -30,6 +34,7 @@ export const metadata: Metadata = {
     "천안 아이파크 시티 평면도",
     "천안 아이파크 시티 모델하우스",
     "천안 아이파크 시티 견본주택",
+    "천안 아이파크 시티 3단지 4단지 비교",
   ],
 
   verification: {
@@ -39,9 +44,21 @@ export const metadata: Metadata = {
     },
   },
 
+  icons: {
+    icon: [
+      {
+        url: FAVICON,
+        type: "image/x-icon",
+        sizes: "any",
+      },
+    ],
+    shortcut: FAVICON,
+  },
+
   robots: {
     index: true,
     follow: true,
+
     googleBot: {
       index: true,
       follow: true,
@@ -54,15 +71,18 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     siteName: SITE_NAME,
+
     title:
       "천안 아이파크 시티 3·4단지 | 분양정보",
+
     description: DESCRIPTION,
+
     images: [
       {
         url: "/IMG_2162.jpeg",
         width: 1200,
         height: 630,
-        alt: "천안 아이파크 시티 3·4단지",
+        alt: SITE_NAME,
       },
     ],
   },
