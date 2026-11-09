@@ -1,5 +1,6 @@
 
 import type { Metadata } from "next";
+import SeoStructuredData from "../components/SeoStructuredData";
 
 const SITE_URL =
   "https://cheonaniparkcity34.com";
@@ -30,16 +31,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     url: PAGE_URL,
-    siteName:
-      "천안 아이파크 시티 3·4단지",
     title: TITLE,
     description: DESCRIPTION,
-
     images: [
       {
         url: "/IMG_2162.jpeg",
-        alt:
-          "천안 아이파크 시티 3단지 4단지 비교",
+        alt: TITLE,
       },
     ],
   },
@@ -62,5 +59,10 @@ export default function CompareLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return (
+    <>
+      <SeoStructuredData page="compare" />
+      {children}
+    </>
+  );
 }
