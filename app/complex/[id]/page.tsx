@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ComplexDetail from "../ComplexDetail";
+import SeoStructuredData from "../../components/SeoStructuredData";
 
 const SITE_URL =
   "https://cheonaniparkcity34.com";
@@ -25,24 +26,17 @@ const COMPLEX_SEO: Record<
   "3": {
     title:
       "천안 아이파크 시티 3단지 분양정보·평면도",
-
     description:
       "천안 아이파크 시티 3단지 896세대. " +
-      "분양가, 평면도, 사업개요와 " +
-      "입지환경을 확인하세요.",
-
+      "분양가, 평면도, 사업개요와 입지환경을 확인하세요.",
     image: "/IMG_2182.jpeg",
   },
-
   "4": {
     title:
       "천안 아이파크 시티 4단지 분양정보·평면도",
-
     description:
       "천안 아이파크 시티 4단지 818세대. " +
-      "분양가, 평면도, 사업개요와 " +
-      "입지환경을 확인하세요.",
-
+      "분양가, 평면도, 사업개요와 입지환경을 확인하세요.",
     image: "/IMG_2183.jpeg",
   },
 };
@@ -129,8 +123,18 @@ export default async function ComplexPage({
   }
 
   return (
-    <ComplexDetail
-      complexNumber={Number(id) as 3 | 4}
-    />
+    <>
+      <SeoStructuredData
+        page={
+          id === "3"
+            ? "complex3"
+            : "complex4"
+        }
+      />
+
+      <ComplexDetail
+        complex={Number(id) as 3 | 4}
+      />
+    </>
   );
 }
