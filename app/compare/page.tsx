@@ -367,9 +367,9 @@ export default function ComparePage() {
         <div className="compare-container">
           <strong>IPARK CITY</strong>
           <p>
-            본 사이트는 공식 분양 홈페이지가
-            아닌 비공식 부동산 정보 안내
-            페이지입니다. 사업 내용과 분양
+            
+            
+            사업 내용과 분양
             조건은 공식 입주자모집공고를
             확인하시기 바랍니다.
           </p>
