@@ -8,6 +8,9 @@ import type { MetadataRoute } from "next";
 
 const SITE_URL = "https://cheonaniparkcity34.com";
 
+/** 내용을 고친 날짜 — 다시 손보면 바꿔 주세요. */
+const UPDATED = new Date("2026-11-22");
+
 /* =====================================
    검색엔진 수집 대상 페이지
 ===================================== */
@@ -42,6 +45,7 @@ const PAGES = [
 export default function sitemap(): MetadataRoute.Sitemap {
   return PAGES.map((page) => ({
     url: `${SITE_URL}${page.path === "/" ? "" : page.path}`,
+    lastModified: UPDATED,
     changeFrequency: page.changeFrequency,
     priority: page.priority,
   }));

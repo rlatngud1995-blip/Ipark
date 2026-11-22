@@ -26,6 +26,10 @@ export const metadata: Metadata = {
 
   applicationName: SITE_NAME,
 
+  alternates: {
+    canonical: "/",
+  },
+
   keywords: [
     "천안 아이파크 시티",
     "천안 아이파크 시티 3단지",
